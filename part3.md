@@ -4,7 +4,7 @@
 
 - [14 Acteurs de l'écosystème](#14-acteurs-de-lécosystème)
   - [14.1 Greenfield Validators](#141-validateurs-greenfield)
-  - [14.2 Fournisseurs de stockage (SP)](#142-prestataires-de-services-de-stockage-ps)
+  - [14.2 Fournisseurs de stockage (FS)](#142-prestataires-de-services-de-stockage-ps)
   - [14.3 Greenfield dApps](#143-les-dapps-greenfield)
 - [15 Identifiant de l'utilisateur](#15-identifiant-de-lutilisateur)
   - [15.1 Solde utilisateur](#151-solde-de-lutilisateur)
@@ -60,10 +60,10 @@
     - [22.2.3 Rappels et gaz limité](#2223-callbacks-et-gaz-limité)
     - [22.2.4 Contrats d'infrastructure inter-chaînes sur BSC](#2224-contrats-dinfrastructure-inter-chaînes-sur-bsc)
   - [22.3 Gestion des erreurs et des défaillances](#223-traitement-des-erreurs-et-des-défaillances)
-- [23 API de la PS](#23-api-de-sp)
+- [23 API de la FS](#23-api-de-sp)
   - [23.1 Point de terminaison universel](#231-point-daccès-universel)
     - [23.1.1 URI standard](#2311-norme-uri)
-    - [23.1.2 API REST HTTPS](#2312-https-rest-api)
+    - [23.1.2 API REST HTTFS](#2312-https-rest-api)
     - [23.1.3 P2P RPC](#2313-p2p-rpc)
   - [23.2 Opérations de liste](#232-opérations-de-liste)
 
@@ -91,7 +91,7 @@ blockchain.
 En même temps, ils acceptent et traitent les transactions pour permettre aux utilisateurs de
 d'exploiter leurs objets stockés sur Greenfield. Ils maintiennent les métadonnées
 de Greenfield comme l'état de la blockchain, qui est le panneau de contrôle pour les
-fournisseurs de stockage (SP) et des utilisateurs. Ces deux parties utilisent et mettent à jour
+fournisseurs de stockage (FS) et des utilisateurs. Ces deux parties utilisent et mettent à jour
 ces états pour faire fonctionner le stockage d'objets.
 
 Les validateurs de Greenfield sont également tenus d'exploiter le système de relais
@@ -105,27 +105,27 @@ le schéma ci-dessous.
 <div align="center"><img src="./assets/14.2%20Greenfield%20Blockchain%20Network.jpg"  height="80%" width="80%"></div>
 <div align="center"><i>Figure 14.2: Greenfield Blockchain Network</i></div>
 
-### 14.2 Prestataires de services de stockage (PS)
+### 14.2 Prestataires de services de stockage (FS)
 
 Les fournisseurs de stockage sont des personnes et des organisations professionnelles qui gèrent
 une série de services pour fournir des services de données basés sur la blockchain Greenfield.
 blockchain.
 
-Chaque SP doit avoir une bonne connexion avec le réseau Greenfield en
+Chaque FS doit avoir une bonne connexion avec le réseau Greenfield en
 maintenant son propre nœud complet local afin qu'il puisse regarder l'état
 directement l'évolution de l'état, indexer les données correctement et envoyer des demandes de transaction
 en temps voulu.
 
-Les différents PS sont également interconnectés via des API REST et un réseau P2P.
+Les différents FS sont également interconnectés via des API REST et un réseau P2P.
 tout en fournissant des services aux utilisateurs en répondant à leurs demandes dans les API REST ou le réseau P2P.
 demandes dans les API REST ou les RPC P2P.
 
-La topologie typique d'un réseau de PS connectés est présentée dans la figure ci-dessous.
+La topologie typique d'un réseau de FS connectés est présentée dans la figure ci-dessous.
 
 <div align="center"><img src="./assets/14.3%20Greenfield%20Storage%20Provider%20Network.jpg" height="80%" width="80%"></div>
 <div align="center"><i>Figure 14.3: Greenfield Storage Provider Network</i></div>
 
-Les PS peuvent fournir de nombreux services pratiques pour que les utilisateurs et les dApps obtiennent
+Les FS peuvent fournir de nombreux services pratiques pour que les utilisateurs et les dApps obtiennent
 données sur Greenfield.
 
 ### 14.3 Les dApps Greenfield
@@ -134,9 +134,9 @@ Les dApps Greenfield sont des applications qui fournissent des fonctions basées
 fonctions basées sur le stockage Greenfield et les caractéristiques économiques qui y sont liées pour résoudre certains
 problèmes de leurs utilisateurs.
 
-Ces dApps peuvent interagir avec Greenfield ou interagir à la fois avec la blockchain Greenfield et les SP.
+Ces dApps peuvent interagir avec Greenfield ou interagir à la fois avec la blockchain Greenfield et les FS.
 Greenfield blockchain et les Fournisseurs de Stockage, ou le plus souvent, interagir avec
-la blockchain Greenfield, les PS et la BSC.
+la blockchain Greenfield, les FS et la BSC.
 
 Les dApps peuvent lire les données provenant de toutes ces sources de données pour faciliter
 l'interaction des utilisateurs avec les contrats intelligents et les faire naviguer à travers
@@ -174,7 +174,7 @@ structure des données de transaction et l'API sont différentes de celles de la
 ne supportera pas toutes les fonctions des portefeuilles existants, par exemple le transfert, l'envoi de transactions, etc.
 Transactions, etc. Mais elle permettra aux portefeuilles existants de signer des
 transactions avec le
-Mais il permettra aux portefeuilles existants de signer des transactions avec la norme [EIP712] (https://eips.ethereum.org/EIPS/eip-712).
+Mais il permettra aux portefeuilles existants de signer des transactions avec la norme [EIP712] (https://eips.ethereum.org/EIFS/eip-712).
 Cette norme permet aux portefeuilles d'afficher les données dans les invites de signature dans un format structuré et lisible.
 format structuré et lisible. Il s'agit d'un
 [exemple](https://medium.com/metamask/eip712-is-coming-what-to-expect-and-how-to-use-it-bb92fd1a7a26)
@@ -242,7 +242,7 @@ de la taille de la délégation seront les validateurs actifs. L'élection a lie
 les validateurs existants.
 
 Il convient de souligner que les validateurs de Greenfield sont séparés
-des fournisseurs de stockage Greenfield. Les validateurs Greenfield sont
+des fournisseurs de stockage Greenfield. 
 Les validateurs Greenfield sont responsables de la génération de blocs Greenfield
 la sécurité de la blockchain Greenfield, de vérifier la disponibilité des données et de maintenir la communication entre les chaînes.
 la disponibilité des données et de la communication entre les chaînes.
@@ -317,12 +317,12 @@ nouveau fournisseur de stockage sera créé automatiquement.
 Greenfield sépare les rôles de validateur et de fournisseur de stockage.
 Bien qu'il soit naturel pour les validateurs de maintenir un nombre significatif et sain de fournisseurs de stockage, il devrait y avoir un équilibre entre les deux.
 nombre significatif et sain de fournisseurs de stockage, il devrait toujours y avoir des incitations
-pour les validateurs de gérer un nombre raisonnable de PS. Les validateurs
+pour les validateurs de gérer un nombre raisonnable de FS. Les validateurs
 Les validateurs obtiendront plus de récompenses pour les défis de données s'il y a plus de fournisseurs de stockage.
 fournisseurs de stockage. Le flux de paiement qui est utilisé pour les récompenses de défi de données
 serait le suivant :
 
-Réserves pour les défis de données = (1 - \frac{1}{Nombre de PS + 1}) * Pourcentage maximum $$$
+Réserves pour les défis de données = (1 - \frac{1}{Nombre de FS + 1}) * Pourcentage maximum $$$
 
 Le défi de la disponibilité des données sera abordé dans la section suivante.
 
@@ -334,11 +334,11 @@ service. Les validateurs actifs actuels peuvent voter sur cette proposition. Une
 proposition est adoptée, le fournisseur de stockage ne pourra plus accepter de nouvelles
 d'accepter de nouvelles demandes de stockage d'objets, mais aura toujours l'obligation de répondre aux demandes de requêtes. Autre
 Fournisseurs de Stockage ou les propriétaires de données devraient commencer à demander de déplacer les données de
-données de ce PE "à supprimer". Le SP "à supprimer" doit faciliter le déplacement des données
+données de ce PE "à supprimer". Le FS "à supprimer" doit faciliter le déplacement des données
 données afin qu'il puisse récupérer l'intégralité de son dépôt et éviter de nouvelles coupures.
 En fait, même s'il choisit de ne pas coopérer, les données peuvent être récupérées auprès des
-les autres SP. Une fois que toutes les données ont été migrées, ce PS "à supprimer" peut retirer tout son dépôt et ce PS "à supprimer" peut retirer tout son dépôt.
-peut retirer tout son dépôt, et ce SP sera supprimé.
+les autres FS. Une fois que toutes les données ont été migrées, ce FS "à supprimer" peut retirer tout son dépôt et ce FS "à supprimer" peut retirer tout son dépôt.
+peut retirer tout son dépôt, et ce FS sera supprimé.
 
 ## 17 Modèles de métadonnées de stockage
 
@@ -361,7 +361,7 @@ Bucket est l'unité de regroupement des "objets" de stockage. Le BucketName doit
 unique au monde. Chaque compte utilisateur peut créer un Bucket. Le compte
 deviendra le "propriétaire" du bucket.
 
-Chaque bucket doit être associé à son propre SP primaire, et aux paiements
+Chaque bucket doit être associé à son propre FS primaire, et aux paiements
 de paiement pour Read et Store. L'adresse du propriétaire sera le compte de paiement
 compte de paiement par défaut.
 
@@ -384,7 +384,7 @@ l'objet seront stockées sur la blockchain de Greenfield :
 
 - état du stockage
 
-- informations sur le SP associé
+- informations sur le FS associé
 
 Les métadonnées d'objet sont stockées avec le nom du bucket comme préfixe de la clé.
 Il est possible d'itérer à travers tous les objets sous le même bucket, mais
@@ -487,7 +487,7 @@ scénario de base serait le suivant :
 - Bob accorde à Alice la permission d'action GetObject pour l'objet avatar.jpg,
   il stockera une clé `0x11 | ResourceID(profile_avatar.jpg) | Address(Alice)` dans un arbre d'état de permission.
 
-- Lorsqu'Alice veut lire le fichier avatar.jpg, le SP doit vérifier dans la blockchain Greenfield si la clé est valide.
+- Lorsqu'Alice veut lire le fichier avatar.jpg, le FS doit vérifier dans la blockchain Greenfield si la clé est valide.
   blockchain Greenfield que la clé `Prefix(ObjectPermission) | ResourceID(profile_avatar.jpg) | Address(Alice)` existe dans l'arbre d'état des permissions, et si l'action a été exécutée.
   l'arbre d'état des permissions, et si la liste d'actions contient GetObject.
   Passons à des scénarios plus complexes :
@@ -559,15 +559,15 @@ segment est de 2 Mo et les tailles des autres segments sont toutes de 16 Mo.
 
 #### 18.2.1 Conception de la redondance des données
 
-Bien que chaque SP puisse fournir un service plus stable et ne s'arrêtera pas
-et ne s'éteindra pas, car suffisamment BNB s'associent pour former un SP.
-stratégie de redondance afin de se débarrasser de la dépendance à l'égard d'un seul SP et d'assurer la disponibilité des données dans un système décentralisé.
+Bien que chaque FS puisse fournir un service plus stable et ne s'arrêtera pas
+et ne s'éteindra pas, car suffisamment BNB s'associent pour former un FS.
+stratégie de redondance afin de se débarrasser de la dépendance à l'égard d'un seul FS et d'assurer la disponibilité des données dans un système décentralisé.
 de soutenir la disponibilité des données de manière décentralisée. Voici l'idée de base de la
 idée de base de la conception.
 
-Premièrement, tous les segments de chaque objet sont stockés dans le SP primaire en tant que "morceaux",
+Premièrement, tous les segments de chaque objet sont stockés dans le FS primaire en tant que "morceaux",
 qui peuvent être considérés comme une réplique de l'objet. Les utilisateurs peuvent télécharger
-ces données directement à partir du SP primaire, car il est censé fournir les
+ces données directement à partir du FS primaire, car il est censé fournir les
 données complètes avec une faible latence.
 
 Ensuite, le code d'effacement (EC) est introduit pour obtenir une redondance efficace des données.
@@ -580,16 +580,16 @@ Comme un segment typique est de 16M, un morceau de données typique de EC est de
 Une personnalisation spécialisée des paramètres de l'EC pour chaque utilisateur peut être fournie
 via des transactions spéciales.
 
-Tous les morceaux EC de chaque objet sont stockés dans certains SP secondaires en tant que morceaux,
+Tous les morceaux EC de chaque objet sont stockés dans certains FS secondaires en tant que morceaux,
 qui peuvent être considérés comme plus d'une réplique EC de l'objet. Si un
-Si un ou plusieurs segments de l'objet sont perdus dans le SP primaire, n'importe quel 4
+Si un ou plusieurs segments de l'objet sont perdus dans le FS primaire, n'importe quel 4
 chunks de 6 Fournisseurs de Stockage peuvent récupérer les segments.
 
 Toutes ces informations sur les segments et les Fournisseurs de Stockage sont stockées sur la blockchain Greenfield
 en tant que métadonnées de l'objet. Les répliques EC de chaque segment du même objet
 segments sont stockés dans la même séquence de Fournisseurs de Stockage secondaires.
 Cette convention permet d'économiser la taille des métadonnées. Un exemple d'un objet de 50M
-stocké avec un SP primaire, SP0, et 6 SP secondaires, SP1-SP6.
+stocké avec un FS primaire, FS0, et 6 FS secondaires, FS1-FS6.
 dans le diagramme ci-dessous.
 
 <div align="center"><img src="./assets/18.2%20EC%20for%20Segments%20in%20Different%20Secondary%20SPs.jpg"  height="80%" width="80%"></div>
@@ -632,48 +632,48 @@ Voici une configuration détaillée de l'encodage EC.
 <div align="center"><img src="./assets/18.3%20EC%20Encoding.jpg" height="80%" width="80%"></div>
 <div align="center"><i>Figure 18.3 EC Encoding</i></div>
 
-As the example shown in the figure above, the 50M payload of the object
-will be split into segments(16M each) and each segment will be encoded
-by the Encode function of the EC module. All the segments can be
-processed concurrently. Each segment is encoded into 4 data blocks
-(indicated by an orange rectangle)and 2 parity blocks (indicated in the
-green rectangle).
+Comme dans l'exemple présenté dans la figure ci-dessus, la charge utile de 50M de l'objet
+sera divisée en segments (16M chacun) et chaque segment sera codé par la fonction
+par la fonction Encode du module EC. Tous les segments peuvent être
+traités simultanément. Chaque segment est encodé en 4 blocs de données
+(indiqués par un rectangle orange)et 2 blocs de parité (indiqués dans le
+rectangle vert).
 
-If the size of the last segment is less than 16MB, it will be encoded as
-an independent part. But if it is smaller than 500k, it will be
-considered to be merged with the previous segment.
+Si la taille du dernier segment est inférieure à 16MB, il sera encodé en tant que
+une partie indépendante. Mais si elle est inférieure à 500k, elle sera
+considéré comme étant fusionné avec le segment précédent.
 
-If the size of the last block is not divisible by 4, it will be added by
-1-3 bytes by the automatic padding function of the EC module. After all
-the segments have been encoded, we have got 16 pieces which are 16M, and
-6 pieces which are 0.5M.
+Si la taille du dernier bloc n'est pas divisible par 4, il sera ajouté de
+1-3 octets par la fonction de remplissage automatique du module EC. Après que tous les
+segments ont été codés, nous avons 16 pièces de 16M et 6 pièces de 0,5M.
+6 pièces de 0,5M.
 
-Both the users' client software and the primary SP are responsible for
+Le logiciel client de l'utilisateur et le FS primaire sont tous deux responsables de ce qui suit
 l'encodage de l'EC. Le logiciel client peut ne pas télécharger la parité de l'EC mais seulement
-mais seulement la somme de contrôle pour que le SP primaire la vérifie.
+mais seulement la somme de contrôle pour que le FS primaire la vérifie.
 
-Du SP primaire aux SP secondaires, chaque fragment d'EC est traité comme un objet pièce et un flux de données est maintenu.
-objet et un flux de données est maintenu pour chaque SP secondaire pour un traitement
+Du FS primaire aux FS secondaires, chaque fragment d'EC est traité comme un objet pièce et un flux de données est maintenu.
+objet et un flux de données est maintenu pour chaque FS secondaire pour un traitement
 traitement parallèle. Les morceaux sont stockés dans une structure de données appelée "piece
 store" sur les différents Fournisseurs de Stockage. Comme implémentation de référence, la clé de l'objet
 pièce est *objId_s+segIndex\_ spIndex+ ECIndex* pour chaque segment.
 Le *spIndex* peut indiquer vers quel secondaire le message sera acheminé. L'adresse
 *ECIndex* est l'index des mandrins EC, avec lesquels 0-3 sont des blocs de données et
 4-5 sont des blocs de parité. Par exemple, le morceau appelé obj0Id_s1_sp1 est
-le 2ème segment de l'objet et sera transmis à SP1.
+le 2ème segment de l'objet et sera transmis à FS1.
 
 ##### 18.2.2.2 Décodage : Récupération des données
 
-Lorsque le SP primaire perd un segment, lui ou d'autres SP peuvent récupérer les
+Lorsque le FS primaire perd un segment, lui ou d'autres FS peuvent récupérer les
 données par l'intermédiaire des chunks EC. Tel qu'il est conçu, l'indice ECIndex avec les valeurs 0-3 sont des blocs de données tandis que 4-5 sont des blocs de parité.
 blocs de données tandis que 4-5 sont des blocs de parité. Il existe deux cas de traitement
 pour reconstruire la charge utile de l'objet :
 
-1. Tous les blocs de données sont entièrement stockés dans les PS secondaires. L'initiateur de la récupération
+1. Tous les blocs de données sont entièrement stockés dans les FS secondaires. L'initiateur de la récupération
    initiateur de la récupération peut juste lire les pièces qui sont des blocs de données
    séquentiellement et les assembler ;
 
-2. Certains blocs de données ont été perdus par les PS secondaires. L'initiateur de la récupération
+2. Certains blocs de données ont été perdus par les FS secondaires. L'initiateur de la récupération
    initiateur de récupération doit lire tous les blocs de données et les blocs de parité et
    utiliser la fonction Decode du module EC pour récupérer le contenu de tous les segments.
    tous les segments.
@@ -685,22 +685,22 @@ garantir l'intégrité et la disponibilité des données. La plupart des solutio
 solutions existantes reposent sur le calcul intensif pour générer des preuves. Cependant,
 Greenfield choisit la voie de la surveillance sociale et des défis.
 
-L'objectif global de Greenfield est de s'assurer que le fournisseur de stockage (SP) stocke les données comme prévu.
+L'objectif global de Greenfield est de s'assurer que le fournisseur de stockage (FS) stocke les données comme prévu.
 stocke les données comme prévu sont les suivants :
 
-a. Le SP primaire divise correctement l'objet original que l'utilisateur télécharge en
+a. Le FS primaire divise correctement l'objet original que l'utilisateur télécharge en
 segments correctement.
 
-b. La SP primaire code les segments en morceaux redondants de code d'effacement
-et les distribue au SP secondaire comme convenu.
+b. La FS primaire code les segments en morceaux redondants de code d'effacement
+et les distribue au FS secondaire comme convenu.
 
-c. Le SP stocke les pièces attribuées soit en tant que rôle du SP primaire
-ou de PS secondaire, et les données stockées ne doivent pas être corrompues ou falsifiées.
+c. Le FS stocke les pièces attribuées soit en tant que rôle du FS primaire
+ou de FS secondaire, et les données stockées ne doivent pas être corrompues ou falsifiées.
 ou falsifiés.
 
 Un utilisateur doit s'assurer que l'objet stocké sur Greenfield est bien le sien sans télécharger l'ensemble de l'objet.
 son objet sans télécharger l'objet entier et en comparer le contenu.
-contenu. De plus, chaque SP doit stocker le bon élément pour chaque objet.
+contenu. De plus, chaque FS doit stocker le bon élément pour chaque objet.
 objet, et cette information doit être vérifiée sur la blockchain de Greenfield.
 blockchain Greenfield. Une structure spéciale de métadonnées est introduite pour
 chaque objet pour les défis de données comme ci-dessous :
@@ -708,20 +708,20 @@ chaque objet pour les défis de données comme ci-dessous :
 ```go
 type ObjectInfo struct {
     …
-    root         Hash  // primary SP object root, the hash of segments' hashes
-    subRootList []hash //secondary SP object root, the hash of local pieces' hashes
+    root         Hash  // primary FS object root, the hash of segments' hashes
+    subRootList []hash //secondary FS object root, the hash of local pieces' hashes
     …
 }
 ```
 Each storage provider will keep a local manifest for the pieces of each
-object that are stored on it. For the primary SP, the local manifest
+object that are stored on it. For the primary FS, the local manifest
 records each segment's hashes. The "*root*" field of the object's
 metadata in the above code stores the hash of the whole local manifest
-of the primary SP, e.g., it is the "*PiecesRootHash(SP0)*" in the below
+of the primary FS, e.g., it is the "*PiecesRootHash(FS0)*" in the below
 diagram. For the secondary Fournisseurs de Stockage, the local manifest records each piece's
 hashes, and the hash of their local manifest files are recorded in the
 subRooList field in order, e.g. the 4th element of this list will store
-the 4th secondary SP's "*PiecesRootHash(SP4)*" in the below diagram.
+the 4th secondary FS's "*PiecesRootHash(FS4)*" in the below diagram.
 
 <div align="center"><img src="./assets/19.1%20Hashes%20for%20Data%20Integrity.jpg" height="80%" width="80%"></div>
 <div align="center"><i>Figure 19.1 Hashes for Data Integrity</i></div>
@@ -742,17 +742,17 @@ The user-side client software will perform some work:
 4. Envoyer des transactions à la blockchain Greenfield pour demander la création de
    l'objet avec les informations ci-dessus.
 
-En plus d'envoyer les informations à la blockchain Greenfield, le logiciel client les envoie également à la SP primaire et télécharge l'objet.
-client envoie également les mêmes informations au SP primaire et télécharge les données de
-sur celui-ci. Pour que le SP primaire stocke les segments originaux de l'objet, il doit vérifier l'identité de l'objet.
-l'objet, le SP doit vérifier le hash racine pour vérifier l'intégrité du segment.
-segment. Le SP doit également calculer les pièces EC par lui-même et vérifier le hachage.
+En plus d'envoyer les informations à la blockchain Greenfield, le logiciel client les envoie également à la FS primaire et télécharge l'objet.
+client envoie également les mêmes informations au FS primaire et télécharge les données de
+sur celui-ci. Pour que le FS primaire stocke les segments originaux de l'objet, il doit vérifier l'identité de l'objet.
+l'objet, le FS doit vérifier le hash racine pour vérifier l'intégrité du segment.
+segment. Le FS doit également calculer les pièces EC par lui-même et vérifier le hachage.
 le hachage. Tous les hachages seront enregistrés dans un fichier manifeste stocké
-manifeste stocké localement chez le PS, et le hash racine du fichier sera soumis à la blockchain
+manifeste stocké localement chez le FS, et le hash racine du fichier sera soumis à la blockchain
 la blockchain Greenfield dans la transaction "Seal". La blockchain Greenfield
 vérifiera les hachages de la transaction Seal par rapport à la transaction de demande de création d'objet afin de garantir l'intégrité des données.
 transaction de demande de création d'objet afin d'assurer l'intégrité des données, puisqu'elles sont
-la valeur convenue entre les PS primaires et les utilisateurs.
+la valeur convenue entre les FS primaires et les utilisateurs.
 
 Ces hachages et les fichiers manifestes correspondants seront utilisés pour vérifier les données dans le défi de la disponibilité des données, comme le montre le tableau ci-dessous.
 les données dans le défi de la disponibilité des données, comme décrit ci-dessous.
@@ -762,11 +762,10 @@ les données dans le défi de la disponibilité des données, comme décrit ci-d
 <div align="center"><i>Figure 19.2 Data Availability Challenge</i></div>
 Ce problème de disponibilité des données est illustré dans la figure 19.2 ci-dessus.
 
-Les validateurs Greenfield ont la responsabilité de vérifier la disponibilité des données auprès des PS.
-disponibilité des données auprès des PS. Ils forment un comité de vote pour exécuter cette
-Ils forment un comité de vote pour exécuter cette tâche en incitant les PS à payer des frais et des amendes potentielles (barres obliques).
+Les validateurs Greenfield ont la responsabilité de vérifier la disponibilité des données auprès des FS.
+Ils forment un comité de vote pour exécuter cette tâche en incitant les FS à payer des frais et des amendes potentielles (barres obliques).
 
-Une logique de multi-signature, par exemple une multi-signature basée sur BLS, est utilisée pour atteindre un autre niveau de consensus hors chaîne entre les PS.
+Une logique de multi-signature, par exemple une multi-signature basée sur BLS, est utilisée pour atteindre un autre niveau de consensus hors chaîne entre les FS.
 un autre niveau de consensus hors chaîne parmi les validateurs Greenfield.
 Lorsque le validateur vote pour le défi de données, il cosigne une attestation et la soumet à la chaîne.
 attestation et la soumettent dans la chaîne.
@@ -786,8 +785,8 @@ Le mécanisme global de contestation de la disponibilité des données fonctionn
 3. Chaque validateur doit exécuter un module de vérification de la disponibilité des données hors chaîne.
    module. Ce programme garde la trace des informations de défi sur la chaîne
    et lance ensuite une vérification de la disponibilité des données hors chaîne.
-   de données hors chaîne. Il vérifie si une donnée est disponible dans la PS spécifiée en réponse à l'événement de défi.
-   SP spécifiée en réponse à l'événement de défi, peu importe que l'événement soit
+   de données hors chaîne. Il vérifie si une donnée est disponible dans la FS spécifiée en réponse à l'événement de défi.
+   FS spécifiée en réponse à l'événement de défi, peu importe que l'événement soit
    que l'événement soit déclenché par le challenger individuel ou par la
    chaîne Greenfield elle-même. Il y a trois étapes pour effectuer la
    vérification :
@@ -835,7 +834,7 @@ Le mécanisme global de contestation de la disponibilité des données fonctionn
    aient voté, mais que leurs votes n'aient pas été assemblés par le validateur. Ils
    ne seront pas récompensés pour ces défis de disponibilité des données. De même, pour
    résultats différents, les récompenses seront différentes : le résultat "indisponible" qui
-   Le résultat "indisponible" qui réduit les PS obtiendra plus de récompenses pour les validateurs.
+   Le résultat "indisponible" qui réduit les FS obtiendra plus de récompenses pour les validateurs.
 
 8. Au bout d'un certain nombre de blocs, par exemple 100 blocs, le défi de la disponibilité des données expirera même si les soumissions de données sont toujours en cours.
    défi expirera même si les soumissions d'attestations ne sont pas
@@ -843,7 +842,7 @@ Le mécanisme global de contestation de la disponibilité des données fonctionn
 
 9. Une fois qu'un cas de disponibilité des données est contesté avec succès, c'est-à-dire que
    c'est-à-dire qu'il est confirmé que les données ne sont pas disponibles avec un service de qualité, il y aura un délai de réflexion pour que les données soient disponibles.
-   service de qualité, les PS disposeront d'un délai de réflexion pour retrouver, récupérer ou
+   service de qualité, les FS disposeront d'un délai de réflexion pour retrouver, récupérer ou
    récupérer ou déplacer cette donnée.
 
 10. Une fois le délai de réflexion expiré, la disponibilité de cette donnée peut être à nouveau remise en cause si cette donnée n'est pas disponible.
@@ -855,7 +854,7 @@ Le mécanisme global de contestation de la disponibilité des données fonctionn
 La blockchain Greenfield prend en charge une série de transactions pour créer,
 mettre à jour et supprimer les ressources Greenfield.
 
-Les transactions de création de seaux et d'objets doivent interagir avec les SP pour s'assurer qu'ils sont prêts.
+Les transactions de création de seaux et d'objets doivent interagir avec les FS pour s'assurer qu'ils sont prêts.
 Fournisseurs de Stockage pour s'assurer qu'ils sont prêts, tandis que les opérations liées aux groupes et aux
 n'ont pas besoin de cela.
 
@@ -871,8 +870,8 @@ La transaction CreateBucket doit comporter les informations suivantes :
 
 - nom du bucket
 
-- l'identifiant du SP que le bucket et tous les objets sous ce bucket
-  utiliseront comme SP primaire
+- l'identifiant du FS que le bucket et tous les objets sous ce bucket
+  utiliseront comme FS primaire
 
 Il existe une transaction DeleteBucket correspondante. Elle exige que tous
 les objets sous le bucket doivent être supprimés en premier. Comme décrit dans la
@@ -891,10 +890,10 @@ sont la fonctionnalité de base de l'économie.
 Plus digne d'être souligné, toutes ces transactions peuvent être déclenchées
 via l'infrastructure cross-chain des contrats intelligents de la BSC et des EOA.
 
-Il y a quelques transactions concernant la modification du SP primaire des utilisateurs.
+Il y a quelques transactions concernant la modification du FS primaire des utilisateurs.
 des utilisateurs. Elles seront asynchrones car l'action peut prendre un certain temps en fonction du nombre et de la taille des objets.
 sur le nombre et la taille des objets dans le bucket. Le bucket doit
-être "scellé" à nouveau par le nouveau SP primaire.
+être "scellé" à nouveau par le nouveau FS primaire.
 
 ## 21 Facturation et paiement
 
@@ -913,12 +912,12 @@ stockage d'objets et les frais de lecture :
 
 2. Il existe un quota gratuit pour la lecture des objets des utilisateurs en fonction de leur taille, de leur type de contenu, etc.
    taille, du type de contenu et d'autres paramètres. En cas de dépassement, c'est-à-dire si les données de l'objet
-   données de l'objet ont été téléchargées trop de fois, SP limitera la bande passante
+   données de l'objet ont été téléchargées trop de fois, FS limitera la bande passante
    pour d'autres téléchargements. Les utilisateurs peuvent augmenter le niveau de leur forfait de données pour
    pour obtenir plus de quotas de téléchargement. Chaque paquet de données a un prix fixe.
 
 Comme décrit dans la partie 1, les frais sont payés sur Greenfield à la manière de
-"flux" des utilisateurs vers les PS à un taux constant. Les frais sont facturés
+"flux" des utilisateurs vers les FS à un taux constant. Les frais sont facturés
 chaque seconde au fur et à mesure de leur utilisation.
 
 ### 21.1 Concepts et formules
@@ -952,7 +951,7 @@ s'écoule.
 
 - **Payment Stream:** Chaque fois que les utilisateurs ajoutent/suppriment/modifient un objet de stockage ou téléchargent un paquet de données, ils ajoutent ou modifient un ou plusieurs comptes de paiement.
   de données, ils ajoutent ou modifient un ou plusieurs "flux de paiement" pour ce service.
-  "flux de paiement" pour ce service fourni par les PS.
+  "flux de paiement" pour ce service fourni par les FS.
 
 - **Flow Rate** : Le taux par seconde auquel un expéditeur diminue son flux de sortie net et augmente le flux de réception.
   flux de sortie net et augmente le flux d'entrée net d'un récepteur.
@@ -1060,7 +1059,7 @@ type PaymentKeeperI interface {
 
 #### 21.2.1 Dépôt et retrait
 
-Tous les utilisateurs (y compris les PS) peuvent déposer et retirer des BNB dans le module de paiement.
+Tous les utilisateurs (y compris les FS) peuvent déposer et retirer des BNB dans le module de paiement.
 module. Le StaticBalance dans la structure de données StreamPayment sera
 sera "réglée" en premier : l'horodateur CRUDTimeStamp sera mis à jour et le StaticBalance
 sera compensé par le DeltaBalance. Ensuite, les numéros de dépôt et de retrait
@@ -1085,7 +1084,7 @@ les fonds passent d'abord des comptes d'adresses des utilisateurs à un compte s
 module de paiement, bien que la taille des fonds et les autres paramètres de paiement soient enregistrés sur le compte de flux des utilisateurs.
 seront enregistrés sur le compte de flux des utilisateurs, c'est-à-dire l'enregistrement StreamPayment,
 dans le grand livre du module de paiement. Lorsque le paiement est réglé, les fonds
-passeront du compte système aux comptes d'adresses des PS en fonction de leur
+passeront du compte système aux comptes d'adresses des FS en fonction de leur
 leur calcul du flux entrant.
 
 Chaque fois que les utilisateurs effectuent les actions suivantes, leur enregistrement StreamPayment sera
@@ -1100,9 +1099,9 @@ sera mis à jour :
 
 Le flux du compte système vers les fournisseurs de stockage sera mis à jour
 ensemble lorsque les utilisateurs effectuent les actions ci-dessus. Le débit entrant de
-SP sera également enregistré avec précision dans le module de paiement, comme par exemple
-la taille totale stockée (en tant que PS primaire ou secondaire), etc. Le flux entrant total
-Le flux entrant total sera réparti entre les PS en fonction des enregistrements.
+FS sera également enregistré avec précision dans le module de paiement, comme par exemple
+la taille totale stockée (en tant que FS primaire ou secondaire), etc. Le flux entrant total
+Le flux entrant total sera réparti entre les FS en fonction des enregistrements.
 
 #### 21.2.3 Règlement forcé
 
@@ -1136,7 +1135,7 @@ tampon est inférieur au seuil de règlement forcé, le compte sera réglé de f
 règlement forcé. Tous les flux de paiement du compte seront fermés et le compte sera marqué comme étant hors service.
 et le compte sera marqué comme étant déséquilibré. La vitesse de téléchargement pour tous les
 objets associés au compte ou au compte de paiement sera
-déclassée. Les objets seront supprimés par les PS si aucun financement n'est
+déclassée. Les objets seront supprimés par les FS si aucun financement n'est
 fourni dans le cadre du seuil prédéfini.
 
 Le règlement forcé entraînera également des frais, ce qui constitue une autre incitation pour les utilisateurs à réapprovisionner les fonds de manière proactive.
@@ -1159,7 +1158,7 @@ l'enregistrement de l'utilisateur sera le suivant :
 
 Les validateurs recevront les 0,00345596 $ restants comme récompense. Le compte
 compte sera marqué comme "insuffisant" et ses objets seront déclassés
-par les PS.
+par les FS.
 
 Chaque fois qu'un enregistrement de flux est mis à jour, Greenfield calcule le moment
 où le compte sera déséquilibré. Ainsi, Greenfield peut garder une
@@ -1257,7 +1256,7 @@ l'oracle.
 
 Par exemple, si le prix est de 0,03 USD / GB / mois, le prix actuel de BNB
 actuel sur la chaîne est de 258 USD, 70% des frais de stockage seront reçus par le
-70% des frais de stockage seront perçus par le SP primaire, le reste étant réparti entre les SP secondaires.
+70% des frais de stockage seront perçus par le FS primaire, le reste étant réparti entre les FS secondaires.
 
 Lorsqu'un objet de 123, 456, 789 octets (environ 123 Mo) est scellé,
 il y aura 7 flux de paiement mis à jour. Le taux de frais est de `0.03 / 258 *
@@ -1266,29 +1265,28 @@ BNB/seconde.
 
 Let's set the rate as R.
 
-- User -\> Primary SP flow rate: 0.7 \* R
+- User -\> Primary FS flow rate: 0.7 \* R
 
-- User -\> Secondary SP 1 flow rate: 0.05 \* R
+- User -\> Secondary FS 1 flow rate: 0.05 \* R
 
-- User -\> Secondary SP 2 flow rate: 0.05 \* R
+- User -\> Secondary FS 2 flow rate: 0.05 \* R
 
-- User -\> Secondary SP 3 flow rate: 0.05 \* R
+- User -\> Secondary FS 3 flow rate: 0.05 \* R
 
-- User -\> Secondary SP 4 flow rate: 0.05 \* R
+- User -\> Secondary FS 4 flow rate: 0.05 \* R
 
-- User -\> Secondary SP 5 flow rate: 0.05 \* R
+- User -\> Secondary FS 5 flow rate: 0.05 \* R
 
-- User -\> Secondary SP 6 flow rate: 0.05 \* R
+- User -\> Secondary FS 6 flow rate: 0.05 \* R
 
 Les enregistrements des flux des comptes de paiement seront ajustés. Si la
 temps réservé est de 6 mois, l'utilisateur doit réserver `(R * 6 * 30 * 24 * 60 * 60) = 8,021727529202782e-05` BNB dans le solde tampon.
 le solde tampon. Si le solde du compte de paiement n'est pas suffisant, soit l'opération de déclenchement échouera, soit le compte sera clôturé.
 échouera ou le compte sera marqué comme "insuffisant".
 
-Le prix du BNB sera soumis par un oracle des relais validateurs Greenfield
-validateurs relais périodiquement. Lorsque le prix est mis à jour, tous les prix des paiements
-prix des paiements seront calculés avec le dernier prix. Mais tous les débits
-des paiements existants resteront inchangés jusqu'au prochain règlement,
+Le prix du BNB sera soumis par un oracle des relais validateurs Greenfield périodiquement. 
+Lorsque le prix est mis à jour, tous les prix des paiements seront calculés avec le dernier prix. 
+Mais tous les débits des paiements existants resteront inchangés jusqu'au prochain règlement,
 déclenché soit par les nouvelles actions de l'utilisateur comme mettre un nouvel objet ou
 le règlement automatique.
 
@@ -1296,13 +1294,13 @@ La formule de tarification des frais de stockage des objets devrait être stable
 l'unité de prix est l'USD et que le coût du stockage évolue lentement dans le temps. Le site
 formule pourrait être suffisamment flexible pour être codée en dur sur la chaîne.
 
-Il se peut que les PS veuillent changer la formule (par exemple pour une mise à jour du modèle commercial).
-mise à jour du modèle commercial). Cela sera réalisé par la gouvernance coordonnée des PS et des validateurs.
-gouvernance coordonnée des PS et des validateurs.
+Il se peut que les FS veuillent changer la formule (par exemple pour une mise à jour du modèle commercial).
+mise à jour du modèle commercial). Cela sera réalisé par la gouvernance coordonnée des FS et des validateurs.
+gouvernance coordonnée des FS et des validateurs.
 
 ## 22 Modèles inter-chaînes
 
-Le cadre des chaînes croisées a été présenté dans la partie 1. Ici, plus de
+Le cadre des Cross chains a été présenté dans la partie 1. Ici, plus de
 détails sur la couche de communication et l'économie seront expliqués ici.
 
 ### 22.1 Canaux et paquets de communication
@@ -1470,9 +1468,9 @@ La couche de communication peut attraper n'importe quelle exception lancée par 
 ou la couche applicative, de sorte que la livraison des paquets ne soit pas bloquée par des
 applications personnalisées.
 
-## 23 API de SP
+## 23 API de FS
 
-La PS doit fournir de nombreuses API pour faciliter la recherche d'informations par les utilisateurs, le téléchargement d'objets, la récupération de données, etc.
+La FS doit fournir de nombreuses API pour faciliter la recherche d'informations par les utilisateurs, le téléchargement d'objets, la récupération de données, etc.
 informations, de télécharger les objets, de récupérer les données, et d'envoyer des
 transactions sur la blockchain Greenfield. Cette section sera
 étendue au fil du temps.
@@ -1502,36 +1500,36 @@ nous voulons faire référence au même objet même s'il a été supprimé et re
 ajouter le paramètre `If-Match-Checksum` à l'URI. Par exemple *gnfd://mybucket/myobject?If-Match-Checksum=qUiQTy8PR5uPgZdpSzAYSw0u0cHNKh7A+4XSmaGSpEc=*.
 
 
-#### 23.1.2 HTTPS REST API
+#### 23.1.2 HTTFS REST API
 
-Chaque SP enregistrera plusieurs points de terminaison pour accéder à ses services, par ex.
-"SP1" peut demander à ses utilisateurs de télécharger des objets via
+Chaque FS enregistrera plusieurs points de terminaison pour accéder à ses services, par ex.
+"FS1" peut demander à ses utilisateurs de télécharger des objets via
 [https://greenfield.sp1.com/download](https://greenfield.sp1.com/download).
 
 Le point d'accès le plus important est celui qui permet aux utilisateurs de télécharger des objets. Pour
-Pour télécharger un objet, les utilisateurs n'ont qu'à remplacer le "gnfd://" de l'URI standard par le point d'extrémité SP.
-par le point de terminaison SP. Par exemple, pour accéder à
-gnfd://mybucket/foo/bar.jpg, les utilisateurs peuvent simplement visiter SP1 à l'adresse suivante
+Pour télécharger un objet, les utilisateurs n'ont qu'à remplacer le "gnfd://" de l'URI standard par le point d'extrémité FS.
+par le point de terminaison FS. Par exemple, pour accéder à
+gnfd://mybucket/foo/bar.jpg, les utilisateurs peuvent simplement visiter FS1 à l'adresse suivante
 [https://greenfield.sp1.com/download/mybucket/foo/bar.jpg](https://greenfield.sp1.com/download/mybucket/foo/bar.jpg).
 
-Lorsque SP1 reçoit la requête vers ce chemin d'accès, il doit comprendre que les
+Lorsque FS1 reçoit la requête vers ce chemin d'accès, il doit comprendre que les
 utilisateurs veulent télécharger l'objet à
-gnfd://mybucket/foo/bar/my-cool-object-id. SP1 doit d'abord déterminer quelle SP
-est le SP primaire actuel de cet objet, si c'est le SP1 lui-même, le SP1
-devrait commencer à envoyer les données à l'utilisateur ; sinon, SP1 enverra un
-HTTP 302 pour rediriger la demande vers le point final de téléchargement du SP primaire.
+gnfd://mybucket/foo/bar/my-cool-object-id. FS1 doit d'abord déterminer quelle FS
+est le FS primaire actuel de cet objet, si c'est le FS1 lui-même, le FS1
+devrait commencer à envoyer les données à l'utilisateur ; sinon, FS1 enverra un
+HTTP 302 pour rediriger la demande vers le point final de téléchargement du FS primaire.
 
 #### 23.1.3 P2P RPC
 
-Veuillez noter que les nœuds complets de la blockchain Greenfield (y compris les validateurs) et les SP fourniront des RPC P2P pour accéder à différentes données.
-validateurs) et les PS fourniront des RPC P2P pour accéder à différentes données.
+Veuillez noter que les nœuds complets de la blockchain Greenfield (y compris les validateurs) et les FS fourniront des RPC P2P pour accéder à différentes données.
+validateurs) et les FS fourniront des RPC P2P pour accéder à différentes données.
 
 Les RPC des nœuds complets de la blockchain Greenfield seront des points d'accès pour lire et modifier les données de la blockchain.
 lire et modifier les données de la blockchain, par exemple, les utilisateurs peuvent vérifier la hauteur actuelle du bloc et les informations sur l'ensemble des validateurs.
 les utilisateurs peuvent vérifier la hauteur actuelle des blocs et les informations sur l'ensemble des validateurs, ou envoyer des transactions pour créer un bloc.
 bucket.
 
-Les SP P2P RPCs sont sous un protocole P2P différent principalement pour la lecture des données,
+Les FS P2P RPCs sont sous un protocole P2P différent principalement pour la lecture des données,
 qui est conçu sur la base du protocole BitTorrent. Tout logiciel client
 qui veut utiliser cette fonctionnalité doit intégrer ce protocole P2P.
 
@@ -1542,7 +1540,7 @@ cryptées avec les clés publiques des utilisateurs.
 ### 23.2 Opérations de liste
 
 Il existe de nombreuses opérations permettant de "lister" des informations sur Greenfield.
-Greenfield. Par exemple, il est possible d'énumérer tous les objets d'un bucket, tous les membres d'un groupe ou tous les utilisateurs d'une base de données.
+Par exemple, il est possible d'énumérer tous les objets d'un bucket, tous les membres d'un groupe ou tous les utilisateurs d'une base de données.
 membres d'un groupe ou tous les objets associés à un compte de paiement.
 de paiement. Ces opérations sont généralement trop lourdes pour être prises en charge directement
 par le biais d'une blockchain Greenfield full node RPCs. Les prestataires de services doivent donc fournir

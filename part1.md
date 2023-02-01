@@ -16,12 +16,12 @@
 - [5 Le stockage des données Greenfield](#5-le-stockage-des-données-de-greenfield)
   - [5.1 Données avec consensus](#51-données-avec-consensus)
     - [5.1.1 Comptes et solde](#511-comptes-et-solde)
-    - [5.1.2 Métadonnées du validateur et de la PS](#512-métadonnées-du-validateur-et-du-ps)
+    - [5.1.2 Métadonnées du validateur et de la FS](#512-métadonnées-du-validateur-et-du-ps)
     - [5.1.3 Métadonnées de stockage](#513-métadonnées-de-stockage)
     - [5.1.4 Métadonnées de permission](#514-métadonnées-dautorisation)
     - [5.1.5 Métadonnées de facturation](#515-métadonnées-de-facturation)
   - [5.2 Stockage des données des objets de données utiles hors chaîne](#52-stockage-des-données-utiles-de-lobjet-hors-chaîne)
-    - [5.2.1 PS primaires et secondaires](#521-fournisseurs-de-stockage-primaires-et-secondaires)
+    - [5.2.1 FS primaires et secondaires](#521-fournisseurs-de-stockage-primaires-et-secondaires)
     - [5.2.2 Redondance des données](#522-redondance-des-données)
 - [6 Économie du stockage et ses primitives](#6-économie-du-stockage-et-ses-primitives)
   - [6.1 Création de compte](#61-création-de-compte)
@@ -33,7 +33,7 @@
   - [6.7 Défi d'intégrité et de disponibilité des données](#67-défi-de-lintégrité-et-de-la-disponibilité-des-données)
   - [6.8 Suppression des données](#68-suppression-de-données)
 - [7 Économie des actifs de données](#7-économie-des-actifs-de-données)
-  - [7.1 Chaînes croisées avec BSC](#71-chaînes-croisées-avec-bsc)
+  - [7.1 Cross chains avec BSC](#71-cross-chains-avec-bsc)
   - [7.2 Framework](#72-framework)
   - [7.3 Couche de communication](#73-couche-de-communicationla-couche-de-communication-est-composée-dun-ensemble-de-relais-greenfield)
   - [7.4 Couche miroir de ressources](#74-couche-miroir-de-ressources)
@@ -151,17 +151,17 @@ transféré de la Smart Chain BNB, comme son jeton natif pour le gaz et la
 gouvernance. BNB Greenfield blockchain also has its own staking logic for
 la gouvernance.
 
-Les fournisseurs de stockage (SP) sont des infrastructures de services de stockage que
+Les fournisseurs de stockage (FS) sont des infrastructures de services de stockage que
 organisations ou individus fournissent et les rôles correspondants qu'ils
 qu'ils jouent. Ils utilisent Greenfield comme grand livre de comptes et comme source unique de vérité.
 Chaque fournisseur de services de stockage peut répondre et répondra aux demandes des utilisateurs pour écrire (télécharger) et lire (télécharger) des données.
 read (download) data, and serve as the gatekeeper for user rights and
 authentifications.
 
-Dans un premier temps, un certain nombre de validateurs, gérés soit par la communauté BNB, soit par des PS, se lancent dans la genèse de BNB Greenfield.
+Dans un premier temps, un certain nombre de validateurs, gérés soit par la communauté BNB, soit par des FS, se lancent dans la genèse de BNB Greenfield.
 ou des prestataires de services, passent par la genèse du lancement de BNB Greenfield, tandis que quelques prestataires de services lanceront également l'infrastructure de stockage correspondante et s'inscriront dans la base de données.
 lancent également l'infrastructure de stockage correspondante et s'inscrivent
-sur la blockchain Greenfield. Les PS forment un autre réseau P2P
+sur la blockchain Greenfield. Les FS forment un autre réseau P2P
 pour fournir un ensemble complet de fonctionnalités aux applications et aux utilisateurs pour créer,
 stocker, lire et échanger des données tout en utilisant Greenfield blockchain comme la
 comme couche de métadonnées et de grand livre.
@@ -180,7 +180,7 @@ La blockchain Greenfield contient deux catégories d'états "on-chain" :
 
 1. Les comptes et leur grand livre de comptes BNB
 
-2. Les métadonnées du système de stockage d'objets et des PS, les métadonnées des objets stockés sur ce système de stockage et les informations de permission et de facturation associées à ce système de stockage.
+2. Les métadonnées du système de stockage d'objets et des FS, les métadonnées des objets stockés sur ce système de stockage et les informations de permission et de facturation associées à ce système de stockage.
    informations de permission et de facturation associées à ce système de stockage.
 
 Les transactions de la blockchain Greenfield peuvent modifier les états ci-dessus. Ces
@@ -189,7 +189,7 @@ Greenfield.
 
 Alors que les métadonnées sont stockées sur la chaîne, le système de stockage d'objets stocke
 toutes les données relatives au contenu de l'objet (la charge utile) en dehors de la chaîne, plus précisément sur les systèmes hors chaîne des prestataires de services de paiement dans les pays où ils sont situés.
-Plus précisément, sur les systèmes hors chaîne des PS, de manière décentralisée et redondante.
+Plus précisément, sur les systèmes hors chaîne des FS, de manière décentralisée et redondante.
 
 Lorsque les utilisateurs veulent créer et utiliser les données sur Greenfield, ils peuvent
 interagir avec l'infrastructure centrale de BNB Greenfield par l'intermédiaire de BNB Greenfield
@@ -204,7 +204,7 @@ système de stockage décentralisé, Noyau GreenField Infra ; ou des application
 qui apportent des valeurs réelles à la vie réelle des utilisateurs en utilisant les systèmes Greenfield
 comme leur infrastructure. Ces applications utiliseront les adresses blockchain
 comme identifiants d'utilisateur et interagiront avec les fonctionnalités et les contrats
-contrats intelligents sur la blockchain Greenfield, les SP Greenfield et le BSC.
+contrats intelligents sur la blockchain Greenfield, les FS Greenfield et le BSC.
 
 Il existe des points de terminaison des données, des interfaces de transaction, des réseaux P2P et des kits de développement logiciel (SDK) correspondants pour aider les développeurs à utiliser la blockchain.
 SDK correspondants pour aider les développeurs à créer des dApps BNB Greenfield.
@@ -273,32 +273,28 @@ avec BSC (et Ethereum). Il accepte également la signature et la vérification d
 vérification des transactions EIP712. Ces éléments permettent à l'infrastructure de porte-monnaie existante de
 d'interagir avec Greenfield au début naturellement.
 
-### 4.2 Les fournisseurs de stockage (SP)
+### 4.2 Les fournisseurs de stockage (FS)
 
 Les fournisseurs de stockage jouent un rôle différent de celui des validateurs Greenfield, bien que les mêmes organisations ou individus puissent gérer les deux.
-les mêmes organisations ou individus peuvent gérer à la fois des SP et des validateurs s'ils
+les mêmes organisations ou individus peuvent gérer à la fois des FS et des validateurs s'ils
 s'ils suivent toutes les règles et procédures pour être élus.
 
-Les PS stockent les données réelles des objets, c'est-à-dire les données utiles. Chaque PS gère son propre système de stockage d'objets. Semblable à Amazon
-S3 et d'autres systèmes de stockage d'objets, les objets stockés sur les PS sont immuables. Les utilisateurs peuvent supprimer et recréer l'objet (sous un autre identifiant ou une autre forme).
+Les FS stockent les données réelles des objets, c'est-à-dire les données utiles. Chaque FS gère son propre système de stockage d'objets. Semblable à Amazon
+S3 et d'autres systèmes de stockage d'objets, les objets stockés sur les FS sont immuables. Les utilisateurs peuvent supprimer et recréer l'objet (sous un autre identifiant ou une autre forme).
 objet (sous un autre identifiant, ou sous le même identifiant après certains réglages déclarés publiquement), mais ils ne peuvent pas le modifier.
 mais ils ne peuvent pas le modifier.
 
 Les prestataires de services doivent d'abord s'enregistrer en déposant sur la blockchain Greenfield
-comme leur "Service Stake". Les validateurs Greenfield passeront
-Greenfield passeront par une procédure de gouvernance dédiée pour voter pour les PS de leur
-élection. Les prestataires de services sont encouragés à faire de la publicité pour leurs informations et à prouver à la communauté leurs capacités.
-et à prouver à la communauté leurs capacités, car ils doivent fournir un système de
+comme leur "Service Stake". Les validateurs Greenfield passeront par une procédure de gouvernance dédiée pour voter pour les FS de leur
+élection. Les prestataires de services sont encouragés à faire de la publicité pour leurs informations et à prouver à la communauté leurs capacités, car ils doivent fournir un 
 système de stockage professionnel avec un SLA de haute qualité.
 
 Les prestataires de services fournissent des API accessibles au public pour que les utilisateurs puissent charger, télécharger et gérer les données.
 gérer les données. Ces API sont très similaires aux API d'Amazon S3, de sorte que les développeurs existants peuvent se sentir suffisamment familiers pour écrire des applications de stockage.
-développeurs existants peuvent se sentir suffisamment familiers pour écrire du code pour elle.
 En attendant, ils se fournissent mutuellement des API REST et constituent un autre
 réseau P2P en liste blanche pour communiquer entre eux et garantir la disponibilité et la
-la disponibilité et la redondance des données. Il y aura également un réseau P2P de
-P2P entre les PS et le logiciel client de l'utilisateur pour faciliter les
-pour faciliter les connexions et les téléchargements rapides.
+redondance des données. Il y aura également un réseau P2P de
+P2P entre les FS et le logiciel client de l'utilisateur pour faciliter les connexions et les téléchargements rapides.
 
 
 ## 5 Le stockage des données de Greenfield
@@ -329,17 +325,17 @@ Tant les comptes propriétaires que les comptes de paiement peuvent détenir le 
 Greenfield. Les utilisateurs peuvent déposer des BNB à partir du BSC, accepter des transferts d'autres utilisateurs et les dépenser pour des transactions de gaz et de stockage.
 Les utilisateurs peuvent déposer des BNB auprès du BSC, accepter des transferts d'autres utilisateurs et les dépenser pour des transactions de gaz et de stockage.
 
-#### 5.1.2 Métadonnées du validateur et du PS
+#### 5.1.2 Métadonnées du validateur et du FS
 
-Il s'agit des informations de base sur les validateurs et les PS Greenfield.
-SP Greenfield. Les PS peuvent avoir plus d'informations, car ils doivent publier
+Il s'agit des informations de base sur les validateurs et les FS Greenfield.
+FS Greenfield. Les FS peuvent avoir plus d'informations, car ils doivent publier
 leurs informations de service pour les opérations de données des utilisateurs. Il devrait y avoir un
-mécanisme de réputation pour les PS.
+mécanisme de réputation pour les FS.
 
 #### 5.1.3 Métadonnées de stockage
 
-Les "métadonnées de stockage" comprennent la taille, la propriété, les hachages de somme de contrôle et l'emplacement de la distribution parmi les SP.
-l'emplacement de distribution parmi les PS. Comme pour AWS S3, l'unité de base du stockage est un "*objet*".
+Les "métadonnées de stockage" comprennent la taille, la propriété, les hachages de somme de contrôle et l'emplacement de la distribution parmi les FS.
+l'emplacement de distribution parmi les FS. Comme pour AWS S3, l'unité de base du stockage est un "*objet*".
 l'unité de base du stockage est un "*objet*", qui peut être un morceau de données binaires, des fichiers texte, des photos, des vidéos ou tout autre objet.
 des fichiers texte, des photos, des vidéos ou tout autre format. Les utilisateurs peuvent créer leurs
 objets sous leur "*bucket*". Un bucket est unique au monde. L'objet
@@ -361,8 +357,8 @@ adresse dans le contrôle d'accès. Cependant, il faut également une autorisati
 changer le groupe. L'autre est le "compte de paiement". Ils sont créés par
 les comptes propriétaires.
 
-Ici, le contrôle d'accès est appliqué par les PS hors chaîne. Les gens peuvent
-tester et défier les PS s'ils ne respectent pas le contrôle. Des réductions et des récompenses
+Ici, le contrôle d'accès est appliqué par les FS hors chaîne. Les gens peuvent
+tester et défier les FS s'ils ne respectent pas le contrôle. Des réductions et des récompenses
 se produira pour que les prestataires de services respectent les principes.
 
 #### 5.1.5 Métadonnées de facturation
@@ -383,35 +379,35 @@ Partie 3.
 
 ### 5.2 Stockage des données utiles de l'objet hors chaîne
 
-Les données utiles de l'objet, c'est-à-dire les octets qui composent les fichiers de données, les photos et les vidéos, sont stockées hors chaîne dans plusieurs SP avec un système de gestion des données.
-fichiers de données, les photos et les vidéos, sont stockées hors chaîne dans plusieurs PS avec une
-conception de la redondance des données. Chaque SP peut avoir son édition d'un système de
+Les données utiles de l'objet, c'est-à-dire les octets qui composent les fichiers de données, les photos et les vidéos, sont stockées hors chaîne dans plusieurs FS avec un système de gestion des données.
+fichiers de données, les photos et les vidéos, sont stockées hors chaîne dans plusieurs FS avec une
+conception de la redondance des données. Chaque FS peut avoir son édition d'un système de
 d'un système de stockage d'objets avec un bon accord de niveau de service et une interface très performante pour interagir avec les utilisateurs et les autres fournisseurs de services.
-d'interagir avec les utilisateurs et les autres PS.
+d'interagir avec les utilisateurs et les autres FS.
 
 #### 5.2.1 Fournisseurs de Stockage primaires et secondaires
 
-Parmi les multiples SP sur lesquels un objet est stocké, un SP sera le "SP primaire", tandis que les autres seront les "SP secondaires".
-"SP primaire", tandis que les autres sont des "SP secondaires".
+Parmi les multiples FS sur lesquels un objet est stocké, un FS sera le "FS primaire", tandis que les autres seront les "FS secondaires".
+"FS primaire", tandis que les autres sont des "FS secondaires".
 
-Lorsque les utilisateurs veulent écrire un objet dans Greenfield, eux-mêmes ou le logiciel client qu'ils utilisent doivent spécifier le SP primaire.
-logiciel client qu'ils utilisent doivent spécifier le SP primaire. Le SP primaire doit être utilisé
-comme le seul SP pour télécharger les données. Les utilisateurs peuvent changer le SP primaire pour
+Lorsque les utilisateurs veulent écrire un objet dans Greenfield, eux-mêmes ou le logiciel client qu'ils utilisent doivent spécifier le FS primaire.
+logiciel client qu'ils utilisent doivent spécifier le FS primaire. Le FS primaire doit être utilisé
+comme le seul FS pour télécharger les données. Les utilisateurs peuvent changer le FS primaire pour
 leurs objets par la suite s'ils ne sont pas satisfaits de ce service.
 
 #### 5.2.2 Redondance des données
 
-Après que les utilisateurs aient émis une demande d'"écriture", le SP primaire doit répondre à
+Après que les utilisateurs aient émis une demande d'"écriture", le FS primaire doit répondre à
 demande de téléchargement du client pour accepter le téléchargement de l'utilisateur, découper les données de l'objet en segments et vérifier l'intégrité des données.
 en segments, vérifier l'intégrité des données et stocker tous les segments.
-Ensuite, le Primary SP calcule une solution de redondance des données pour ces segments.
-basée sur le codage par effacement (EC). Ensuite, le SP primaire ou les utilisateurs sélectionneront
+Ensuite, le Primary FS calcule une solution de redondance des données pour ces segments.
+basée sur le codage par effacement (EC). Ensuite, le FS primaire ou les utilisateurs sélectionneront
 quelques serveurs secondaires pour stocker ces répliques de segments et leurs pièces de parité EC.
 Cette communication de distribution de données se fera via le réseau p2p et les API REST
-entre les PS.
+entre les FS.
 
-La configuration de la redondance des données vise à garantir que, même si le SP primaire et quelques SP secondaires deviennent indisponibles à un moment donné, les données ne seront pas perdues.
-quelques PS secondaires deviennent indisponibles, Greenfield peut toujours récupérer les
+La configuration de la redondance des données vise à garantir que, même si le FS primaire et quelques FS secondaires deviennent indisponibles à un moment donné, les données ne seront pas perdues.
+quelques FS secondaires deviennent indisponibles, Greenfield peut toujours récupérer les
 Greenfield peut toujours récupérer l'ensemble des données.
 
 ## 6 Économie du stockage et ses primitives
@@ -419,7 +415,7 @@ Greenfield peut toujours récupérer l'ensemble des données.
 Dans cette section, l'économie sous-jacente et les primitives d'exploitation sont examinées en fonction du cycle de vie.
 sont examinées en fonction du cycle de vie d'un objet de données. Les primitives ci-dessous
 primitives peuvent être exécutées après la genèse de la blockchain Greenfield
-Greenfield et qu'un nombre suffisant de PS se soient enregistrés et aient commencé à travailler
+Greenfield et qu'un nombre suffisant de FS se soient enregistrés et aient commencé à travailler
 correctement.
 
 ### 6.1 Création de compte
@@ -439,26 +435,26 @@ sur Greenfield avec la même adresse sur BSC.
 Les utilisateurs doivent créer des "Buckets" avant de créer des objets. Similaire aux concepts de
 concepts de "Bucket" dans AWS S3, les "buckets" ici sont une ressource de données pour regrouper
 les objets de données d'un utilisateur. Tous les objets sous le même bucket seront
-stockés sur le même SP primaire et téléchargeables depuis ce SP. Les utilisateurs peuvent
+stockés sur le même FS primaire et téléchargeables depuis ce FS. Les utilisateurs peuvent
 créer de nombreux godets et stocker leurs objets de données dans différents godets.
 
-Chaque godet est associé à un SP primaire, ce qui signifie que tous les objets de ce godet utiliseront ce SP primaire.
-objets sous ce godet utiliseront ce SP comme SP primaire. Si le
-SP primaire choisi ne peut pas bien répondre aux demandes, l'utilisateur peut choisir de
-migrer le bucket vers un autre SP complètement via une transaction on-chain.
+Chaque godet est associé à un FS primaire, ce qui signifie que tous les objets de ce godet utiliseront ce FS primaire.
+objets sous ce godet utiliseront ce FS comme FS primaire. Si le
+FS primaire choisi ne peut pas bien répondre aux demandes, l'utilisateur peut choisir de
+migrer le bucket vers un autre FS complètement via une transaction on-chain.
 
 La création d'objets de données s'effectue en deux phases.
 
 1. Phase de demande :
 
-a. Les utilisateurs établissent la connexion avec le SP primaire et envoient un message "get approval" pour demander s'il est prêt à stocker l'objet.
+a. Les utilisateurs établissent la connexion avec le FS primaire et envoient un message "get approval" pour demander s'il est prêt à stocker l'objet.
 message "get approval" pour demander s'il est prêt à stocker l'objet.
-La SP primaire accuse réception de la demande en signant un message sur l'opération et le renvoie au client.
+La FS primaire accuse réception de la demande en signant un message sur l'opération et le renvoie au client.
 opération et le renvoie au client ;
 
-b. Une fois que la SP primaire a décidé d'accepter la demande de stockage des données en tant que SP primaire, le client construit une base de données.
-en tant que SP primaire, le client construit un message de transaction "write" avec la signature du SP primaire et le nom du client.
-signature du SP primaire et les métadonnées initiales de l'objet, telles que le nom de l'objet
+b. Une fois que la FS primaire a décidé d'accepter la demande de stockage des données en tant que FS primaire, le client construit une base de données.
+en tant que FS primaire, le client construit un message de transaction "write" avec la signature du FS primaire et le nom du client.
+signature du FS primaire et les métadonnées initiales de l'objet, telles que le nom de l'objet
 le nom de l'objet, le nom du bucket, la taille, la somme de contrôle, et éventuellement le type de contenu
 le type de contenu et la préférence de stockage, etc.
 à la chaîne Greenfield ;
@@ -469,39 +465,39 @@ d. Greenfield accepte la demande de "création" et verrouille les droits des uti
 
 2. Phase de scellement :
 
-a. Les utilisateurs se connectent à la SP primaire et envoient le hachage de la transaction.
+a. Les utilisateurs se connectent à la FS primaire et envoient le hachage de la transaction.
 utilise le hachage de la transaction pour vérifier si les métadonnées de l'objet sont déjà créées
 sur la chaîne Greenfield ;
 
-b. Les utilisateurs commencent à télécharger les données utiles de l'objet vers le SP primaire si les métadonnées de l'objet sont déjà créées.
-métadonnées de l'objet sont déjà créées ; le SP primaire vérifie si les données utiles
+b. Les utilisateurs commencent à télécharger les données utiles de l'objet vers le FS primaire si les métadonnées de l'objet sont déjà créées.
+métadonnées de l'objet sont déjà créées ; le FS primaire vérifie si les données utiles
 données utiles correspondent aux métadonnées de l'objet en comparant la somme de contrôle de l'objet sur la chaîne Greenfield et la somme de contrôle de l'objet sur la chaîne Greenfield.
 chaîne Greenfield et la somme de contrôle des données utiles.
-SP primaire signe la confirmation "téléchargé" aux utilisateurs ;
+FS primaire signe la confirmation "téléchargé" aux utilisateurs ;
 
-c. Le SP primaire se synchronise avec les SP secondaires pour mettre en place la redondance des données,
+c. Le FS primaire se synchronise avec les FS secondaires pour mettre en place la redondance des données,
 puis il signe une transaction "Seal" avec les métadonnées finalisées pour le stockage.
-Si le SP primaire détermine qu'il ne veut pas stocker le fichier pour une raison quelconque, il peut aussi "sceller" le fichier.
+Si le FS primaire détermine qu'il ne veut pas stocker le fichier pour une raison quelconque, il peut aussi "sceller" le fichier.
 pour quelque raison que ce soit, il peut également "SealRejecter" la demande.
 
 d. Greenfield traite la transaction "Seal" ou "SealReject" pour lancer le cycle de vie du stockage de l'objet.
 cycle de vie du stockage de l'objet. Les utilisateurs peuvent toujours "CancelRequest" pour renoncer à
 la demande de création et être partiellement remboursé.
 
-Il existe des scénarios dans lesquels le SP primaire ne coopère pas bien avec l'utilisateur : 1. Le SP primaire accuse réception de la
-demande de téléchargement, mais n'accepte pas le téléchargement à temps ; 2. le SP primaire signe la confirmation du "téléchargement" mais ne scelle pas la transaction à temps.
-mais ne scelle pas la transaction à temps. Greenfield s'attend à ce que le SP primaire termine la création de l'objet par une transaction "Seal" ou "SealReject" dans les délais impartis.
-soit par une transaction "SealReject" dans une fenêtre de temps prédéfinie ; sinon, le SP primaire ne peut pas terminer la création de l'objet.
+Il existe des scénarios dans lesquels le FS primaire ne coopère pas bien avec l'utilisateur : 1. Le FS primaire accuse réception de la
+demande de téléchargement, mais n'accepte pas le téléchargement à temps ; 2. le FS primaire signe la confirmation du "téléchargement" mais ne scelle pas la transaction à temps.
+mais ne scelle pas la transaction à temps. Greenfield s'attend à ce que le FS primaire termine la création de l'objet par une transaction "Seal" ou "SealReject" dans les délais impartis.
+soit par une transaction "SealReject" dans une fenêtre de temps prédéfinie ; sinon, le FS primaire ne peut pas terminer la création de l'objet.
 
 
 ### 6.3 Stockage des données
 
-Une fois qu'un objet de données est "scellé", le propriétaire de l'objet a de facto conclu un contrat avec les PS pour le stockage.
+Une fois qu'un objet de données est "scellé", le propriétaire de l'objet a de facto conclu un contrat avec les FS pour le stockage.
 contrat avec les prestataires de services pour le stockage, auquel cas les propriétaires doivent
-Dans ce cas, les propriétaires doivent payer des frais pour ce stockage et les PS doivent garantir la disponibilité des données.
+Dans ce cas, les propriétaires doivent payer des frais pour ce stockage et les FS doivent garantir la disponibilité des données.
 disponibilité des données.
 
-Les propriétaires d'objets de données ont toujours le droit de changer de SP principal pour le stockage de leurs données, après avoir réglé les frais de stockage.
+Les propriétaires d'objets de données ont toujours le droit de changer de FS principal pour le stockage de leurs données, après avoir réglé les frais de stockage.
 pour le stockage de leurs données, après avoir réglé les redevances dues.
 
 Les prestataires de services, en particulier les prestataires de services primaires, peuvent également informer les gens qu'ils doivent cesser de stocker les données, que ce soit pour des raisons de santé ou de sécurité.
@@ -515,19 +511,19 @@ l'affaire.
 ### 6.4 Lecture et téléchargement de données
 
 Par conception, les octets qui sont stockés et téléchargés ultérieurement pour l'objet
-sont exactement les mêmes octets que ceux qui ont été téléchargés à l'origine. Les PS peuvent utiliser
+sont exactement les mêmes octets que ceux qui ont été téléchargés à l'origine. Les FS peuvent utiliser
 leur logique de cryptage comme ils le souhaitent, mais lorsque les données sont
 données sont téléchargées, elles affichent les mêmes octets que lors du téléchargement. Les utilisateurs peuvent choisir
 leur propre schéma de cryptage ou utiliser celui par défaut fourni par le logiciel
-logiciel client s'ils veulent que les données soient méconnaissables par les PS ou toute autre personne.
-SP ou toute autre personne, même si les SP ont l'obligation de ne pas faire circuler ces données
+logiciel client s'ils veulent que les données soient méconnaissables par les FS ou toute autre personne.
+FS ou toute autre personne, même si les FS ont l'obligation de ne pas faire circuler ces données
 hors de l'instruction des utilisateurs.
 
 Les objets de données ne peuvent être lus et téléchargés que par les adresses disposant des
-les autorisations de lecture appropriées. Le PS primaire des objets est la principale
-source principale de téléchargement. Si le Primary SP n'est pas disponible, le propriétaire et les validateurs de la blockchain Greenfield peuvent le contester (voir partie 3).
+les autorisations de lecture appropriées. Le FS primaire des objets est la principale
+source principale de téléchargement. Si le Primary FS n'est pas disponible, le propriétaire et les validateurs de la blockchain Greenfield peuvent le contester (voir partie 3).
 validateurs de la blockchain Greenfield peuvent contester (décrit dans la partie 3) et
-changer le SP primaire de l'objet pour récupérer le téléchargement.
+changer le FS primaire de l'objet pour récupérer le téléchargement.
 
 Chaque objet a un quota de bande passante de trafic basé sur le temps, qui est fourni
 gratuite, c'est-à-dire que personne n'a besoin de payer pour télécharger une certaine quantité dans une
@@ -599,13 +595,13 @@ période définie. Une fois le paquet de données choisi, le coût total du tél
 téléchargement sera uniquement lié au temps et au prix du paquet de données,
 jusqu'à ce que les paramètres du paquet de données soient à nouveau modifiés.
 
-Dans ce cas, la confiance règne entre les utilisateurs et les PS pour le téléchargement de données. Comme
+Dans ce cas, la confiance règne entre les utilisateurs et les FS pour le téléchargement de données. Comme
 la bande passante supplémentaire pour le téléchargement est payante et que le journal des téléchargements n'est pas entièrement stocké sur le serveur vert.
 journal de téléchargement n'est pas entièrement stocké sur la blockchain Greenfield. Les prestataires de services doivent
 fournir une interface de point de terminaison permettant aux utilisateurs d'interroger le
 téléchargement avec des journaux détaillés et les signatures des téléchargeurs. Si les utilisateurs et les
 utilisateurs et les prestataires de services ne parviennent pas à se mettre d'accord sur la facture, les utilisateurs peuvent simplement choisir un autre prestataire de services primaires.
-SP PRIMAIRE.
+FS PRIMAIRE.
 
 Par défaut, l'adresse du propriétaire de l'objet sera utilisée pour payer les objets qu'il possède.
 objets qu'il possède. Mais les utilisateurs peuvent aussi créer plusieurs "comptes de paiement".
@@ -636,8 +632,8 @@ ces comptes de paiement souffriront d'une dégradation du service de
 téléchargement, c'est-à-dire que la vitesse de téléchargement et les numéros de connexion seront
 limités. Une fois les fonds transférés sur les comptes de paiement, la qualité du service peut être rétablie immédiatement.
 la qualité du service peut être rétablie immédiatement. Si le service n'est pas rétabli
-Si le service n'est pas rétabli pendant une longue période, les PS peuvent décider d'effacer les données.
-données, de manière similaire à la façon dont les PS prétendent arrêter les services à certains objets.
+Si le service n'est pas rétabli pendant une longue période, les FS peuvent décider d'effacer les données.
+données, de manière similaire à la façon dont les FS prétendent arrêter les services à certains objets.
 certains objets. Dans un tel cas, les données peuvent disparaître complètement de Greenfield
 complètement.
 
@@ -646,41 +642,41 @@ complètement.
 Il existe trois aspects de l'intégrité, de la disponibilité et de la redondance des données.
 comme indiqué ci-dessous :
 
-1. Le SP primaire stocke l'objet correct que l'utilisateur a téléchargé.
+1. Le FS primaire stocke l'objet correct que l'utilisateur a téléchargé.
 
-2. Le SP stocke correctement les segments de données qui lui ont été attribués, soit en tant que rôle de SP primaire, soit en tant que SP secondaire.
-   SP ou SP secondaire, et les éléments de données stockés ne doivent pas être
+2. Le FS stocke correctement les segments de données qui lui ont été attribués, soit en tant que rôle de FS primaire, soit en tant que FS secondaire.
+   FS ou FS secondaire, et les éléments de données stockés ne doivent pas être
    ne sont pas manquants, corrompus ou contrefaits.
 
-3. Les éléments de codage d'effacement stockés dans les PS secondaires peuvent récupérer l'objet original stocké dans la PS primaire.
+3. Les éléments de codage d'effacement stockés dans les FS secondaires peuvent récupérer l'objet original stocké dans la FS primaire.
 
-L'intégrité et la redondance des données doivent être assurées en premier lieu par la mise en place de la somme de contrôle et de la redondance de la SP primaire.
+L'intégrité et la redondance des données doivent être assurées en premier lieu par la mise en place de la somme de contrôle et de la redondance de la FS primaire.
 La somme de contrôle et la configuration de la redondance des objets. Ils font partie des données
-de données, qui doivent être vérifiées par les SP et les utilisateurs lors de la création des
+de données, qui doivent être vérifiées par les FS et les utilisateurs lors de la création des
 objets sont créés. Ces métadonnées seront également stockées sur la blockchain Greenfield
 ainsi que sur la blockchain Greenfield.
 
-Greenfield et les PS doivent travailler ensemble pour garantir l'intégrité et la disponibilité des données, en particulier pour le point # ci-dessus.
+Greenfield et les FS doivent travailler ensemble pour garantir l'intégrité et la disponibilité des données, en particulier pour le point # ci-dessus.
 et la disponibilité des données, en particulier pour le numéro 2 ci-dessus. Contrairement aux autres
 systèmes de stockage décentralisés, ici une " preuve de défi " est introduite
 pour renforcer la confiance des utilisateurs dans le fait que les données sont bien stockées comme promis.
 
 Les challengers peuvent provenir de différentes parties prenantes. Premièrement, les utilisateurs peuvent
 soumettre des transactions de défi ; deuxièmement, tout comme les utilisateurs, les Fournisseurs de Stockage peuvent
-peuvent soumettre des transactions de défi à d'autres SP ; et enfin, la blockchain Greenfield
+peuvent soumettre des transactions de défi à d'autres FS ; et enfin, la blockchain Greenfield
 émettra également des défis internes de manière aléatoire.
 
 Le défi peut être déclenché par des transactions Greenfield ou des événements internes à la fin du blocage.
 des événements internes à la fin du blocage. Lorsque les validateurs Greenfield observent un tel
 challenge, ils doivent exécuter une vérification hors chaîne standard contre les données
-des PS contestés. Ces validateurs voteront pour les
+des FS contestés. Ces validateurs voteront pour les
 résultats de la contestation par le biais d'un multisig agrégé via un réseau P2P
 et les soumettront à la blockchain Greenfield. L'échec du résultat
-d'un défi entraînera la suppression des PS correspondants. L'expéditeur et les
+d'un défi entraînera la suppression des FS correspondants. L'expéditeur et les
 validateurs seront récompensés pour de tels défis.
 
-Les données qui ont échoué le défi ne seront pas contestées dans un certain temps afin de donner aux PS un peu de temps.
-un certain temps afin de laisser aux PS le temps de se rétablir.
+Les données qui ont échoué le défi ne seront pas contestées dans un certain temps afin de donner aux FS un peu de temps.
+un certain temps afin de laisser aux FS le temps de se rétablir.
 
 Une autre section de la partie 3 traitera plus en détail des défis de disponibilité des données.
 données de manière plus détaillée.
@@ -688,7 +684,7 @@ données de manière plus détaillée.
 ### 6.8 Suppression de données
 
 Les utilisateurs peuvent demander la suppression de leurs objets de données. Greenfield supprimera
-les métadonnées de l'état de la blockchain, tandis que le SP primaire devrait
+les métadonnées de l'état de la blockchain, tandis que le FS primaire devrait
 répondre à cette demande et supprimer toutes les répliques et les segments redondants.
 redondants. Le flux de paiement sera fermé avec un rabais de récompense pour encourager la suppression à l'avenir.
 encourager la suppression à l'avenir.
@@ -718,7 +714,7 @@ et peuvent être les propriétaires des objets de données et hériter de diffé
 permissions. Cela va libérer de nombreuses nouvelles opportunités commerciales basées sur les données et leurs opérations.
 les données et leurs opérations.
 
-### 7.1 Chaînes croisées avec BSC
+### 7.1 Cross chains avec BSC
 
 Le modèle cross-chain vise à atteindre les objectifs suivants :
 
