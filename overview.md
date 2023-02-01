@@ -1,73 +1,73 @@
-# Overview
+# Aperçu
 
-After 14 years and a few bull markets, people start getting familiar
-with blockchains, Distributed (or decentralized) Ledger Technology,
-cryptocurrency, DeFi, ..., and derived economy models around these
-concepts and practices. Many hold and exchange tokens and participate in
-related activities that may change or have changed the way how values
-are exchanged and governed.
+Après 14 ans et quelques marchés haussiers, les gens commencent à se familiariser
+avec les blockchains, la technologie des grands livres distribués (ou décentralisés),
+crypto-monnaie, DeFi, ..., et les modèles économiques dérivés autour de ces concepts et pratiques.
+concepts et pratiques. Beaucoup détiennent et échangent des jetons et participent à des activités connexes qui peuvent changer ou avoir changé.
+activités connexes qui peuvent modifier ou ont modifié la manière dont les valeurs
+sont échangées et gouvernées.
 
-"Web3", the term coined in 2014 by Gavin Wood, becomes a popular
-buzzword again in 2021. Among all the definitions of "Web3", we, the BNB
-Foundation and BNB Chain Core Dev, embrace the below narrative
-from [Eshita](https://eshita.mirror.xyz/H5bNIXATsWUv_QbbEz6lckYcgAa2rhXEPDRkecOlCOI)
-the most:
+Le terme "Web3", inventé en 2014 par Gavin Wood, redevient un mot à la mode en 2021.
+mot à la mode en 2021. Parmi toutes les définitions de "Web3", nous, la Fondation BNB et BNB Chain Core Dev, avons choisi d'utiliser le terme "Web3".
+Fondation et BNB Chain Core Dev, nous adoptons le récit ci-dessous
+de [Eshita] (https://eshita.mirror.xyz/H5bNIXATsWUv_QbbEz6lckYcgAa2rhXEPDRkecOlCOI)
+le plus :
 
-***Web3 is adding "Own" to Web2's "Read-Write".***
+***Web3 ajoute "Own" à "Read-Write" de Web2.
 
-We believe what blockchains bring is the freedom of how assets and
-valuable things are owned, exchanged, and transferred among people.
+Nous pensons que ce que les blockchains apportent, c'est la liberté de la façon dont les actifs et les choses de valeur sont possédés, échangés et utilisés.
+Nous pensons que ce que les blockchains apportent, c'est la liberté de la façon dont les actifs et les choses de valeur sont possédés, échangés et transférés entre les personnes.
 
-The crypto industry has already picked up financial assets: the tokens,
-stablecoins, and DeFi cover many economic scenarios. On the other hand,
-NFTs implement arts and collectibles. But there are plenty of items that
-are not innovated well enough, such as credit, real-world asset (RWA)
-tokenizations, and the one we'd like to focus on in this paper:
+L'industrie de la cryptographie a déjà récupéré des actifs financiers : les tokens,
+stablecoins, et DeFi couvrent de nombreux scénarios économiques. D'autre part,
+les NFTs mettent en œuvre les arts et les objets de collection. Mais il y a beaucoup d'éléments qui
+qui n'innovent pas assez, comme le crédit, les actifs réels (RWA), la
+les tokenisations, et celui sur lequel nous aimerions nous concentrer dans cet article :
 
 <div align="center"><strong><i>data.</i></strong></div>
 
-The value of a data asset is not self-evident when it is just held by
-one person. They become much more valuable when they are shared and
-used. It is valuable to possess and exchange the power to write, read,
-grant rights for sharing the data, and even execute one data to generate
-another. These abilities have derived value with financial traits: they
-are tradable and ***the trades can generate even more value and benefit
-the two parties, instead of one***.
+La valeur d'un actif de données n'est pas évidente lorsqu'il est détenu par une seule personne.
+une seule personne. Elles deviennent beaucoup plus précieuses lorsqu'elles sont partagées et
+utilisées. Il est précieux de posséder et d'échanger le pouvoir d'écrire, de lire,
+d'accorder des droits pour partager les données, et même d'exécuter une donnée pour en générer
+une autre. Ces capacités ont une valeur dérivée avec des caractéristiques financières : elles
+sont négociables et ***les échanges peuvent générer encore plus de valeur et profiter aux deux parties, au lieu d'une seule**.
+les deux parties, au lieu d'une seule***.
 
-We foresee the need to create a new Web3 infrastructure for data, as two
-major features are still missing: a performant, convenient, and friendly
-decentralized storage infra, and the data-focused smart contract
-synergy. Thus we decide to create a new BNB side blockchain and relevant
-infrastructure, with which the users and developers can:
+Nous prévoyons la nécessité de créer une nouvelle infrastructure Web3 pour les données, car deux
+deux caractéristiques majeures manquent encore : une infrastructure de stockage décentralisée
+de stockage décentralisé performante, pratique et conviviale, et la synergie des contrats intelligents axés sur les données.
+axée sur les données. Nous décidons donc de créer une nouvelle blockchain côté BNB et l'infrastructure correspondante, grâce à laquelle les utilisateurs de la blockchain seront en mesure d'accéder aux données.
+infrastructure correspondante, grâce à laquelle les utilisateurs et les développeurs pourront
 
-1. "login" with anonymous cryptographic-based keys (IDs);
+1. "Se connecter avec des clés cryptographiques anonymes (ID) ;
 
-2. create, read, share, and even execute data with the user experience and cost close to the state-of-art cloud storage
-   service today;
+2. créer, lire, partager et même exécuter des données avec une expérience utilisateur et un coût proches de l'état de l'art du service de stockage dans le cloud d'aujourd'hui.
+   d'aujourd'hui ;
 
-3. fully own their data assets and control who can use them and how;
+3. être pleinement propriétaires de leurs actifs de données et contrôler qui peut les utiliser et comment ;
 
-4. easily put their data assets into a wide, smart-contract-based economic context to gain financial value with them.
+4. placer facilement leurs données dans un contexte économique large, basé sur des contrats intelligents, pour en tirer une valeur financière.
 
-In short, with this new infrastructure, users can "login", create, own,
-share, execute, and trade their data assets at another level of freedom,
-and what is more, enjoy another level of transparency on how their data
-is owned and used.
+En bref, grâce à cette nouvelle infrastructure, les utilisateurs peuvent se "connecter", créer, posséder,
+partager, exécuter et échanger leurs actifs de données à un autre niveau de liberté,
+et, qui plus est, bénéficier d'un autre niveau de transparence sur la façon dont leurs données
+sont détenues et utilisées.
 
-Transparency of the data lifecycle is key in the Web3 era. It helps to
-show how the data is generated and how it is used so that users can and
-want to control it. More importantly, it encourages the community to
-introduce new business models, which should be more open and fair.
+La transparence du cycle de vie des données est essentielle à l'ère du Web3. Elle permet de
+montrer comment les données sont générées et comment elles sont utilisées afin que les utilisateurs puissent et veuillent les contrôler.
+les utilisateurs puissent et veuillent les contrôler. Plus important encore, elle encourage la communauté à
+nouveaux modèles commerciaux, qui devraient être plus ouverts et plus équitables.
 
-This whitepaper is about the design and implementation of such a series
-of systems, named "BNB Greenfield", and calls for more "buidlers" to
-build their own data infrastructure and business with it.
+Ce livre blanc porte sur la conception et la mise en œuvre d'une telle série de systèmes.
+de systèmes, baptisée "BNB Greenfield", et invite d'autres "bâtisseurs" à construire leur propre infrastructure de données et à en tirer parti.
+construire leur propre infrastructure de données et de faire des affaires avec elle.
 
-The paper contains 3 Parts. Part 1 talks about the design, including the
-main technical logic and economic considerations; Part 2 provides
-showcases that can be imagined in laboratories to inspire how new
-applications may use the new infrastructure; Part 3 is a more detailed
-technical specification for the design in Part 1, although they are
-still simplified to a certain degree. We suggest you read through Part 1
-and Part 2 sequentially, but only refer to Part 3 when you need to dig
-into the details for particular components.
+L'article comporte trois parties. La partie 1 traite de la conception, notamment de la
+principale logique technique et les considérations économiques ; la partie 2 fournit des
+des Showcases qui peuvent être imaginées dans des labs afin d'inspirer la façon dont de nouvelles applications peuvent utiliser la nouvelle infrastructure.
+l'utilisation de la nouvelle infrastructure par de nouvelles applications.
+détaillée de la conception de la partie 1, bien qu'elle soit simplifiée dans une certaine mesure.
+encore simplifiées dans une certaine mesure. Nous vous suggérons de lire la partie 1
+et la partie 2 séquentiellement, et de ne vous référer à la partie 3 que lorsque vous avez besoin
+dans les détails pour des composants particuliers.

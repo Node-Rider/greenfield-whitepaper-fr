@@ -1,929 +1,903 @@
-# Part 1 Design of the BNB Greenfield and the Decentralized Storage Economy
+# Partie 1 Conception de GreenField et de l'économie de stockage décentralisée
 
-## Table of Content
+## Table des matières
 
-- [1 Design Principles](#1-design-principles)
-- [2 Assumptions](#2-assumptions)
-- [3 The Architecture in General](#3-the-architecture-in-general)
-  - [3.1 Greenfield Core](#31-greenfield-core)
-  - [3.2 BNB Greenfield dApps](#32-bnb-greenfield-dapps)
-  - [3.3 The Cross-Chain with BSC](#33-the-cross-chain-with-bsc)
-  - [3.4 The Trinity](#34-the-trinity)
-- [4 BNB Greenfield Core](#4-bnb-greenfield-core)
-  - [4.1 The BNB Greenfield Blockchain](#41-the-bnb-greenfield-blockchain)
-  - [4.2 The Storage Providers, SPs](#42-the-storage-providers-sps)
-  - [4.3 The Pair Synergy](#43-the-pair-synergy)
-- [5 The Greenfield Data Storage](#5-the-greenfield-data-storage)
-  - [5.1 Data with Consensus](#51-data-with-consensus)
-    - [5.1.1 Accounts and Balance](#511-accounts-and-balance)
-    - [5.1.2 Validator and SP Metadata](#512-validator-and-sp-metadata)
-    - [5.1.3 Storage Metadata](#513-storage-metadata)
-    - [5.1.4 Permission Metadata](#514-permission-metadata)
-    - [5.1.5 Billing Metadata](#515-billing-metadata)
-  - [5.2 Off-Chain Payload Object Data Storage](#52-off-chain-payload-object-data-storage)
-    - [5.2.1 Primary and Secondary SPs](#521-primary-and-secondary-sps)
-    - [5.2.2 Data Redundancy](#522-data-redundancy)
-- [6 Storage Economics and Its Primitives](#6-storage-economics-and-its-primitives)
-  - [6.1 Account Creation](#61-account-creation)
-  - [6.2 Data Object Creation](#62-data-object-creation)
-  - [6.3 Data Storage](#63-data-storage)
-  - [6.4 Data Read and Download](#64-data-read-and-download)
-  - [6.5 Permissions and Group](#65-permissions-and-group)
-  - [6.6 Fees and Payments](#66-fees-and-payments)
-  - [6.7 Data Integrity and Availability Challenge](#67-data-integrity-and-availability-challenge)
-  - [6.8 Data Delete](#68-data-delete)
-- [7 Economy of Data Assets](#7-economy-of-data-assets)
-  - [7.1 Cross-Chain with BSC](#71-cross-chain-with-bsc)
+- [1 Principes de conception](#1-principes-de-conception)
+- [2 Hypothèses](#2-hypothèses)
+- [3 L'architecture en général](#3-larchitecture-en-général)
+  - [3.1 Noyau GreenField](#31-noyau-greenfield)
+  - [3.2 Applications Greenfield de BNB](#32-les-dapps-de-bnb-greenfield)
+  - [3.3 La chaîne croisée avec BSC](#33-la-chaîne-croisée-avec-bsc)
+  - [3.4 La trinité](#34-la-trinité)
+- [4 Noyau Greenfield BNB](#4-noyau-de-bnb-greenfield)
+  - [4.1 La blockchain Greenfield de BNB](#41-la-blockchain-bnb-greenfield)
+  - [4.2 Les fournisseurs de stockage](#42-les-fournisseurs-de-stockage-sp)
+  - [4.3 La synergie des paires](#34-la-trinité)
+- [5 Le stockage des données Greenfield](#5-le-stockage-des-données-de-greenfield)
+  - [5.1 Données avec consensus](#51-données-avec-consensus)
+    - [5.1.1 Comptes et solde](#511-comptes-et-solde)
+    - [5.1.2 Métadonnées du validateur et de la PS](#512-métadonnées-du-validateur-et-du-ps)
+    - [5.1.3 Métadonnées de stockage](#513-métadonnées-de-stockage)
+    - [5.1.4 Métadonnées de permission](#514-métadonnées-dautorisation)
+    - [5.1.5 Métadonnées de facturation](#515-métadonnées-de-facturation)
+  - [5.2 Stockage des données des objets de données utiles hors chaîne](#52-stockage-des-données-utiles-de-lobjet-hors-chaîne)
+    - [5.2.1 PS primaires et secondaires](#521-fournisseurs-de-stockage-primaires-et-secondaires)
+    - [5.2.2 Redondance des données](#522-redondance-des-données)
+- [6 Économie du stockage et ses primitives](#6-économie-du-stockage-et-ses-primitives)
+  - [6.1 Création de compte](#61-création-de-compte)
+  - [6.2 Création d'objets de données](#62-création-dobjets-de-données)
+  - [6.3 Stockage des données](#63-stockage-des-données)
+  - [6.4 Lecture et téléchargement des données](#64-lecture-et-téléchargement-de-données)
+  - [6.5 Permissions et Groupe](#65-permissions-et-groupes)
+  - [6.6 Frais et paiements](#66-fees-and-payments)
+  - [6.7 Défi d'intégrité et de disponibilité des données](#67-défi-de-lintégrité-et-de-la-disponibilité-des-données)
+  - [6.8 Suppression des données](#68-suppression-de-données)
+- [7 Économie des actifs de données](#7-économie-des-actifs-de-données)
+  - [7.1 Chaînes croisées avec BSC](#71-chaînes-croisées-avec-bsc)
   - [7.2 Framework](#72-framework)
-  - [7.3 Communication Layer](#73-communication-layer)
-  - [7.4 Resource Mirror Layer](#74-resource-mirror-layer)
-    - [7.4.1 Resource Entity Mirror](#741-resource-entity-mirror)
-    - [7.4.2 Cross-Chain Operating Primitives](#742-cross-chain-operating-primitives)
-- [8 "Not" Ending for the Design](#8-not-ending-for-the-design)
-  - [8.1 Acknowledgement](#81-acknowledgement)
+  - [7.3 Couche de communication](#73-couche-de-communicationla-couche-de-communication-est-composée-dun-ensemble-de-relais-greenfield)
+  - [7.4 Couche miroir de ressources](#74-couche-miroir-de-ressources)
+    - [7.4.1 Miroir d'entité de ressource](#741-miroir-dentité-de-ressource)
+    - [7.4.2 Primitives de fonctionnement inter-chaînes](#742-primitives-dexploitation-inter-chaînes)
+- [8 "Pas" de fin pour la conception](#8-pas-de-fin-pour-la-conception)
+  - [8.1 Remerciements](#81-Remerciements)
 
-Part 1 describes the general principles and considerations for the design of BNB Greenfield. It covers the architecture
-and functionality analysis. Although the true model innovation is at the cross-chain with BSC, the unique storage
-fundamentals are also important to highlight.
+La partie 1 décrit les principes généraux et les considérations relatives à la conception BNB Greenfield. Elle couvre l'architecture
+et l'analyse des fonctionnalités. Bien que la véritable innovation du modèle se situe au niveau de la chaîne croisée avec BSC, il est également important de souligner les principes fondamentaux du stockage unique.
+fondamentaux du stockage sont également importants à souligner.
 
-## 1 Design Principles
+## 1 Principes de conception
 
-1. **Simplicity** - The design prefers this first principle over the other considerations. Simple solutions are not only
-   easy to implement, run, maintain, and extend, but also friendly to software performance, which is a main goal of the
-   design. For example, high computing-intensive proof, like what [Filecoin](https://filecoin.io/filecoin.pdf) adopts,
-   is ruled out according to this principle.
+1. **Simplicité** - La conception privilégie ce premier principe par rapport aux autres considérations. Les solutions simples sont non seulement
+   faciles à mettre en œuvre, à exécuter, à maintenir et à étendre, mais aussi favorables aux performances du logiciel, qui est un objectif principal de la
+   conception. Par exemple, une preuve à forte intensité de calcul, comme celle adoptée par [Filecoin] (https://filecoin.io/filecoin.pdf),
+   est exclue selon ce principe.
 
-2. **Upgradable and continuously evolving** - Perfect system at one go is not the goal of the design. We expect the
-   whole architecture, different components, and even this whitepaper to evolve and get improved based on the community
-   and market feedbacks and future technology development. The infrastructure should have "just enough" establishment to
-   develop and upgrade as time goes on.
+2. **Améliorable et en constante évolution** - Un système parfait en une seule fois n'est pas l'objectif de la conception. Nous nous attendons à ce que l
+   Nous nous attendons à ce que l'ensemble de l'architecture, les différents composants, et même ce livre blanc, évoluent et soient améliorés en fonction des réactions de la communauté et du marché et des futurs développements technologiques.
+   communauté et du marché, ainsi que des développements technologiques futurs. L'infrastructure devrait avoir "juste assez" d'établissement pour
+   se développer et se mettre à niveau au fil du temps.
 
-3. **Open platform** - The biggest lesson learned from the crypto industry and BNB ecosystem is that the community have
-   the most talent and power to build more applications and infrastructure in different self-driven ways. The design
-   should focus on the core platform and technical foundation that provide enough interface, tools, and other
-   facilitation to the developer community to build upon them.
+3. **Plate-forme ouverte - La plus grande leçon tirée de l'industrie de la cryptographie et de l'écosystème de BNB est que la communauté a le plus de talent et de pouvoir pour construire davantage de technologies.
+   est que la communauté a le plus de talent et de pouvoir pour construire plus d'applications et d'infrastructures de différentes manières autonomes. La conception
+   devrait se concentrer sur la plateforme de base et les fondations techniques qui fournissent suffisamment d'interface, d'outils et d'autres facilités à la communauté des développeurs pour qu'ils puissent créer des applications et des infrastructures.
+   et d'autres facilités à la communauté des développeurs pour qu'elle puisse s'appuyer sur elles.
 
-4. **Massive adoption** - The economy targets beyond the existing BNB Chain clients, but also traditional Web2 users and
-   developers. The system design should try to be as compatible as possible with popular Web2 and Web3 standards.
+4. **Adoption massive** - L'économie vise non seulement les clients actuels de la chaîne BNB, mais aussi les utilisateurs et les développeurs traditionnels du Web2.
+   développeurs. La conception du système doit essayer d'être aussi compatible que possible avec les normes populaires du Web2 et du Web3.
 
-5. **Decentralization is a journey** - Take the storage system as an example, there are two ends to the decentralization
-   spectrum. On one extreme end, users have to create and store all their data on a single service supplier; on the
-   other end, users can create and store their data on any household's computing terminal (it does not even have to be a
-   desktop). The design will not force itself to be on the latter end right from day one. It picks up the simplest
-   solution that moves the needle toward higher decentralization and will improve as time goes on. From this sense, the
-   first step Greenfield goes ahead with is to provide the freedom to choose among plenty of service suppliers at any
-   time with trivial costs because they own the data.
+5. **La décentralisation est un voyage** - Prenons l'exemple du système de stockage, il y a deux extrémités au spectre de la décentralisation.
+   de la décentralisation. D'un côté, les utilisateurs doivent créer et stocker toutes leurs données auprès d'un seul fournisseur de services.
+   l'autre extrémité, les utilisateurs peuvent créer et stocker leurs données sur le terminal informatique de n'importe quel foyer (il ne doit même pas s'agir d'un bureau).
+   bureau). La conception ne s'imposera pas dès le départ sur ce dernier point. Elle choisit la solution la plus simple
+   solution la plus simple qui fait avancer l'aiguille vers une plus grande décentralisation et qui s'améliorera au fil du temps. Dans ce sens, la
+   En ce sens, la première étape de Greenfield consiste à offrir la liberté de choisir parmi une multitude de fournisseurs de services à tout moment, avec des
+   à tout moment avec des coûts insignifiants car ils possèdent les données.
 
 <div align="center"><img src="./assets/1%20Decentralization%20Spectrum.png" height="80%" width="80%"></div>
 <div align="center"><i>Figure 1.1: Decentralization Spectrum</i></div>
 
-## 2 Assumptions
+## 2 Hypothèses
 
-The biggest assumption for the design is:
+La plus grande hypothèse pour la conception est :
 
-***Greenfield is an economically sustainable, service-oriented
-ecosystem.***
+***Greenfield est un écosystème économiquement durable, orienté vers les services.
+économiquement durable et orienté vers les services. ***
 
-By "self-sustained", it means that the service providers and
-corresponding service consumers of Greenfield are rational; they
-complement each other. The providers and the blockchain validators will
-get paid a fair amount for the service they supply, while the users are
-willing to pay for the service they use.
+Par "autonome", on entend que les fournisseurs et les consommateurs de services
+consommateurs de services correspondants de Greenfield sont rationnels ; ils se
+se complètent mutuellement. Les fournisseurs et les validateurs de la blockchain seront
+seront payés équitablement pour le service qu'ils fournissent, tandis que les utilisateurs sont prêts à payer pour le service qu'ils utilisent.
+prêts à payer pour le service qu'ils utilisent.
 
-By "service-oriented", it means that the value was created in Greenfield
-by providing service to the users of the ecosystem. It doesn't have
-built-in value by itself.
+Par "orienté service", cela signifie que la valeur a été créée à Greenfield
+en fournissant un service aux utilisateurs de l'écosystème. Il n'y a pas de
+valeur intrinsèque en soi.
 
-The implicit assumption underlying these two traits is that the majority
-of the providers and blockchain validators are reasonable entities and
-individuals. They will not do evil given the profit they earn is larger
-than the fortune they can plunder.
+L'hypothèse implicite qui sous-tend ces deux traits est que la majorité
+des fournisseurs et des validateurs de blockchain sont des entités et des individus
+individus raisonnables. Ils ne feront pas le mal étant donné que le profit qu'ils gagnent est plus grand
+que la fortune qu'ils peuvent piller.
 
-This is a self-justifiable trust for the whole ecosystem to exist: if a
-substantial percentage of providers and blockchain validators do evil
-and the ecosystem cannot heal itself by ruling out these malicious
-players, the whole ecosystem will not be used and have no value to
-existing. If that happens, nobody wins even for a short time.
+Il s'agit d'une confiance auto-justifiable pour que l'ensemble de l'écosystème existe : si un
+pourcentage substantiel de fournisseurs et de validateurs de blockchain font le mal
+et que l'écosystème ne peut pas se guérir en éliminant ces acteurs malveillants, l'ensemble de l'écosystème ne sera pas en mesure d'exister.
+malveillants, l'ensemble de l'écosystème ne sera pas utilisé et n'aura aucune valeur pour
+existant. Si cela se produit, personne ne gagne, même pour une courte période.
 
-With this implicit built-in trust assumed, many designs are simplified
-as described in the below sections.
+Avec cette confiance implicite intégrée, de nombreuses conceptions sont simplifiées.
+comme décrit dans les sections suivantes.
 
-Another assumption is that both the service provider and consumer sides
-would expect the actual "service contracts" between the two to allow
-limited liability and provide exit options, even if the contracts are
-carried out mostly by code. In consumers' interest, they do not want to
-pay a large size of fund upfront and would like to choose a better
-provider within the ecosystems or even outside whenever they want. On
-the other side, in the service providers' interest, they do not want to
-become a data wasteyard or help circulate any content against their own
-principles.
+Une autre hypothèse est que tant le fournisseur de services que le consommateur
+s'attendraient à ce que les "contrats de service" réels entre les deux permettent une responsabilité limitée et offrent des options de sortie, même si elles ne sont pas obligatoires.
+responsabilité limitée et prévoient des options de sortie, même si les contrats sont essentiellement
+exécutés principalement par code. Dans l'intérêt des consommateurs, ils ne veulent pas
+payer d'emblée une somme importante et souhaiteraient pouvoir choisir un meilleur
+meilleur fournisseur au sein des écosystèmes ou même en dehors quand ils le souhaitent. Sur
+De l'autre côté, dans l'intérêt des fournisseurs de services, ils ne veulent pas devenir une poubelle de données ou aider à la circulation des données.
+devenir un gâchis de données ou aider à faire circuler du contenu contre leurs propres principes.
+principes.
 
-The payment, data availability check, and a few other key features are
-designed based on this assumption.
+Le paiement, la vérification de la disponibilité des données et quelques autres fonctions clés sont conçus sur la base de cette hypothèse.
+sont conçues sur la base de cette hypothèse.
 
-The last big assumption is that data has value and users will want to
-extract this value with smart contract automation, privacy, and
-transparency. This results in the considerable design for cross-chain
-between BNB Greenfield and BNB Smart Chain (BSC). This should be the
-most important assumption and hopefully close to the truth.
+La dernière grande hypothèse est que les données ont une valeur et que les utilisateurs voudront extraire cette valeur avec l'automatisation des contrats intelligents.
+extraire cette valeur grâce à l'automatisation des contrats intelligents, à la confidentialité et à la
+transparence. Cela se traduit par une conception considérable de la chaîne croisée
+entre BNB Greenfield et BNB Smart Chain (BSC). Cela devrait être l'hypothèse la plus importante
+hypothèse la plus importante et, espérons-le, proche de la vérité.
 
-## 3 The Architecture in General
+
+## 3 L'architecture en général
 
 <div align="center"><img src="./assets/3%20Greenfield%20Economy%20General%20Architecture.png"></div>
 <div align="center"><i>Figure 3.1: Greenfield Economy General Architecture</i></div>
 
-The ecosystem of Greenfield is a "trinity" as shown in the above figure.
+L'écosystème de Greenfield est une "trinité" comme le montre la figure ci-dessus.
 
-### 3.1 Greenfield Core
+### 3.1 Noyau GreenField
 
-BNB Greenfield Core is the new system infrastructure described in depth
-in this paper. It is the center of the new ecosystem of data. It has two
-layers.
+Le noyau GreenField est la nouvelle infrastructure du système décrite en profondeur
+dans ce document. Il est le centre du nouvel écosystème de données. Il comporte deux
+couches.
 
-1. A new storage-oriented blockchain, and
+1. Une nouvelle blockchain orientée stockage, et
 
-2. A network composed of "storage providers".
+2. Un réseau composé de "fournisseurs de stockage".
 
-The BNB Greenfield blockchain maintains the ledger for the users and the
-storage metadata as the common blockchain state data. It has BNB,
-transferred from BNB Smart Chain, as its native token for gas and
-governance. BNB Greenfield blockchain also has its own staking logic for
-governance.
+La blockchain Greenfield BNB maintient le grand livre pour les utilisateurs et les métadonnées de stockage comme données d'état communes de la blockchain.
+métadonnées de stockage comme données d'état communes de la blockchain. Elle dispose de BNB,
+transféré de la Smart Chain BNB, comme son jeton natif pour le gaz et la
+gouvernance. BNB Greenfield blockchain also has its own staking logic for
+la gouvernance.
 
-Storage Providers (SP) are storage service infrastructures that
-organizations or individuals provide and the corresponding roles they
-play. They use Greenfield as the ledger and the single source of truth.
-Each SP can and will respond to users' requests to write (upload) and
+Les fournisseurs de stockage (SP) sont des infrastructures de services de stockage que
+organisations ou individus fournissent et les rôles correspondants qu'ils
+qu'ils jouent. Ils utilisent Greenfield comme grand livre de comptes et comme source unique de vérité.
+Chaque fournisseur de services de stockage peut répondre et répondra aux demandes des utilisateurs pour écrire (télécharger) et lire (télécharger) des données.
 read (download) data, and serve as the gatekeeper for user rights and
-authentications.
+authentifications.
 
-Initially, a number of validators, run either by the BNB community or
-SPs, go through the genesis to launch BNB Greenfield, while a few SPs
-will also launch the corresponding storage infrastructure and register
-themselves onto the Greenfield blockchain. SPs form another P2P network
-to provide the full feature set to applications and users to create,
-store, read, and trade data while using Greenfield blockchain as the
-metadata and ledger layer.
+Dans un premier temps, un certain nombre de validateurs, gérés soit par la communauté BNB, soit par des PS, se lancent dans la genèse de BNB Greenfield.
+ou des prestataires de services, passent par la genèse du lancement de BNB Greenfield, tandis que quelques prestataires de services lanceront également l'infrastructure de stockage correspondante et s'inscriront dans la base de données.
+lancent également l'infrastructure de stockage correspondante et s'inscrivent
+sur la blockchain Greenfield. Les PS forment un autre réseau P2P
+pour fournir un ensemble complet de fonctionnalités aux applications et aux utilisateurs pour créer,
+stocker, lire et échanger des données tout en utilisant Greenfield blockchain comme la
+comme couche de métadonnées et de grand livre.
 
 <div align="center"><img src="./assets/3.2%20BNB%20Greenfield%20Core.jpg"></div>
-<div align="center"><i>Figure 3.2: BNB Greenfield Core</i></div>
+<div align="center"><i>Figure 3.2: Noyau GreenField</i></div>
 
-BNB Greenfield blockchain and the SPs together comprise the center of
-this new economy, which is actually a decentralized, object storage
-system (with EVM connectivity as explained later).
+La blockchain Greenfield de BNB et les Fournisseurs de Stockage constituent ensemble le centre de
+cette nouvelle économie, qui est en fait un système de stockage d'objets décentralisés
+décentralisé (avec une connectivité EVM comme expliqué plus loin).
 
-In contrast to the centralized alternative, this object storage system
-manages its data in two collaborative parts, on-chain, and off-chain.
+Contrairement à l'alternative centralisée, ce système de stockage d'objets
+gère ses données en deux parties collaboratives, on-chain et off-chain.
 
-The Greenfield blockchain contains two categories of states "on-chain":
+La blockchain Greenfield contient deux catégories d'états "on-chain" :
 
-1. Accounts and their BNB balance ledger
+1. Les comptes et leur grand livre de comptes BNB
 
-2. The metadata of the object storage system and SPs, the metadata of the objects stored on this storage system, and the
-   permission and billing information associated with this storage system.
+2. Les métadonnées du système de stockage d'objets et des PS, les métadonnées des objets stockés sur ce système de stockage et les informations de permission et de facturation associées à ce système de stockage.
+   informations de permission et de facturation associées à ce système de stockage.
 
-Greenfield blockchain transactions can change the above states. These
-states and the transactions comprise the major economic data of BNB
+Les transactions de la blockchain Greenfield peuvent modifier les états ci-dessus. Ces
+états et les transactions constituent les principales données économiques BNB.
 Greenfield.
 
-While the metadata is stored on-chain, the object storage system stores
-all the object content data (the payload) off-chain, more precisely, on
-SPs' off-chain systems in a decentralized and redundant way.
+Alors que les métadonnées sont stockées sur la chaîne, le système de stockage d'objets stocke
+toutes les données relatives au contenu de l'objet (la charge utile) en dehors de la chaîne, plus précisément sur les systèmes hors chaîne des prestataires de services de paiement dans les pays où ils sont situés.
+Plus précisément, sur les systèmes hors chaîne des PS, de manière décentralisée et redondante.
 
-When users want to create and use the data on Greenfield, they may
-interact with the BNB Greenfield Core Infrastructure via BNB Greenfield
-dApps (decentralized applications).
+Lorsque les utilisateurs veulent créer et utiliser les données sur Greenfield, ils peuvent
+interagir avec l'infrastructure centrale de BNB Greenfield par l'intermédiaire de BNB Greenfield
+dApps (applications décentralisées).
 
-### 3.2 BNB Greenfield dApps
 
-BNB Greenfield dApps are new types of decentralized applications. They
-can be the client toolings that facilitate users to interact with the
-decentralized storage system, Greenfield Core Infra; or applications
-that bring real values to users' real life by using Greenfield systems
-as their infrastructure. These applications will use blockchain
-addresses as user identifiers and interact with features and smart
-contracts on the Greenfield blockchain, Greenfield SPs, and BSC.
+### 3.2 Les dApps de BNB Greenfield
 
-There are data endpoints, transaction interfaces, P2P networks, and
-corresponding SDKs to help developers to build BNB Greenfield dApps.
+Les dApps Greenfield BNB sont de nouveaux types d'applications décentralisées. Elles
+peuvent être les outils clients qui facilitent l'interaction des utilisateurs avec le
+système de stockage décentralisé, Noyau GreenField Infra ; ou des applications qui
+qui apportent des valeurs réelles à la vie réelle des utilisateurs en utilisant les systèmes Greenfield
+comme leur infrastructure. Ces applications utiliseront les adresses blockchain
+comme identifiants d'utilisateur et interagiront avec les fonctionnalités et les contrats
+contrats intelligents sur la blockchain Greenfield, les SP Greenfield et le BSC.
 
-BNB Greenfield dApps should be part of the establishment of BNB Chain
-infrastructure built mostly by the community and ecosystem partners.
-They can be decentralized or centralized as they prefer.
+Il existe des points de terminaison des données, des interfaces de transaction, des réseaux P2P et des kits de développement logiciel (SDK) correspondants pour aider les développeurs à utiliser la blockchain.
+SDK correspondants pour aider les développeurs à créer des dApps BNB Greenfield.
 
-Part 2 shows considerations through a list of BNB Greenfield dApp
-showcases.
+Les dApps Greenfield de BNB devraient faire partie de la mise en place de l'infrastructure de la chaîne BNB.
+construite principalement par la communauté et les partenaires de l'écosystème.
+Elles peuvent être décentralisées ou centralisées, selon leurs préférences.
 
-### 3.3 The Cross-Chain with BSC
+La partie 2 présente les considérations à travers une liste de dApps Greenfield BNB
+Greenfield.
 
-There is a native cross-chain bridge between BSC and BNB Greenfield
-blockchain. While the data can be created and read more cheaply on
-Greenfield Core Infra, the relevant data operation can be transferred to
-BSC and integrated with smart contract systems there, such as DeFi, to
-create new business models.
+### 3.3 La chaîne croisée avec BSC
 
-### 3.4 The Trinity
+Il existe un pont natif inter-chaînes entre la BSC et la blockchain de BNB Greenfield.
+blockchain. Alors que les données peuvent être créées et lues de manière plus économique sur
+Noyau GreenField Infra, l'opération pertinente des données peut être transférée à la
+BSC et y être intégrées aux systèmes de contrats intelligents, tels que DeFi, pour créer de nouveaux modèles commerciaux.
+créer de nouveaux modèles commerciaux.
 
-From the viewpoint of BNB Greenfield dApps, these applications can help
-users to create, read, and execute data on the BNB Greenfield,
-Greenfield SPs, and BSC, and serve a purpose to users' needs.
+### 3.4 La trinité
 
-From the viewpoint of BNB Greenfield Core Infrastructure, they accept
-requests and observations from the Greenfield dApps on behalf of the
-users, and also instructions from BSC to operate together for different
-business scenarios.
+Du point de vue des dApps de BNB Greenfield, ces applications peuvent aider à
+utilisateurs à créer, lire et exécuter des données sur BNB Greenfield,
+Greenfield Fournisseurs de Stockage, et BSC, et répondre aux besoins des utilisateurs.
 
-From the viewpoint of BSC, they can accept transferred data assets from
-BNB Greenfield, and provide more business scenarios via smart contracts
-to new types of Greenfield dApps.
+Du point de vue de l'infrastructure centrale de BNB Greenfield, elles acceptent les demandes et les observations des dApps Greenfield.
+les demandes et les observations des dApps Greenfield au nom des utilisateurs, et
+utilisateurs, ainsi que les instructions de BSC pour qu'ils fonctionnent ensemble pour différents
+scénarios commerciaux.
 
-The users can interact with all parts of the trinity for different
-purposes directly or/and indirectly.
+Du point de vue de BSC, elles peuvent accepter les actifs de données transférés de BNB Greenfield et fournir davantage de services.
+de BNB Greenfield, et fournir davantage de scénarios commerciaux via des contrats intelligents
+à de nouveaux types de dApps Greenfield.
 
-## 4 BNB Greenfield Core
+Les utilisateurs peuvent interagir avec toutes les parties de la trinité à différentes fins, directement ou indirectement.
+différents objectifs, directement ou/et indirectement.
 
-### 4.1 The BNB Greenfield Blockchain
+## 4 Noyau de BNB Greenfield
 
-BNB Greenfield blockchain uses Proof-of-Stake based on
-Tendermint-consensus for its own network security. Blocks are created
-every 2 seconds on the Greenfield chain by a group of validators.
+### 4.1 La blockchain BNB Greenfield
 
-BNB will be the gas and governance token on this blockchain. There is a
-native cross-chain bridge between the Greenfield blockchain and BSC. The
-initial BNB will be locked on BSC and re-minted on Greenfield. BNB and
-data operation primitives can flow between Greenfield and BSC.
+La blockchain BNB Greenfield utilise la Proof-of-Stake basée sur le consensus
+Tendermint-consensus pour la sécurité de son propre réseau. Les blocs sont créés
+toutes les 2 secondes sur la chaîne Greenfield par un groupe de validateurs.
 
-Total circulation of BNB will stay unchanged as it is now but flow among
-BNB Beacon Chain, BSC, and Greenfield.
+BNB sera le jeton de gaz et de gouvernance sur cette blockchain. Il existe un
+pont cross-chain natif entre la blockchain Greenfield et BSC. L'adresse
+BNB initial sera verrouillé sur BSC et ré-imprimé sur Greenfield. BNB et
+les primitives d'opération de données peuvent circuler entre Greenfield et BSC.
 
-The validator election and governance are based on a proposal-vote
-mechanism, which is revised based on Cosmos SDK's governance module:
-anyone can create and propose to become a validator, and the election
-into the active set will be based on the stake ranking (initially new
-validators may request the existing validator set's votes to be
-qualified for election). As validators will host all the critical
-metadata and respond to all data operation transactions, they should run
-professionally in terms of performance and stability.
+La circulation totale de BNB restera inchangée, mais le flux entre la chaîne de balises de BNB, la BSC et la BSC ne changera pas.
+la chaîne de balises BNB, BSC et Greenfield.
 
-To facilitate cross-chain operation and convenient asset management, the
-address format of the Greenfield blockchain will be fully compatible
-with BSC (and Ethereum). It also accepts EIP712 transaction signing and
-verification. These enable the existing wallet infrastructure to
-interact with Greenfield at the beginning naturally.
+L'élection et la gouvernance du validateur sont basées sur un mécanisme de proposition et de vote.
+qui est révisé sur la base du module de gouvernance de Cosmos SDK :
+Tout le monde peut créer et proposer de devenir un validateur.
+dans l'ensemble actif sera basée sur le classement des enjeux (initialement les nouveaux
+validateurs peuvent demander les votes de l'ensemble des validateurs existants pour être
+qualifiés pour l'élection). Comme les validateurs hébergeront toutes les métadonnées
+critiques et répondront à toutes les transactions d'opérations de données, ils doivent fonctionner
+professionnels en termes de performances et de stabilité.
 
-### 4.2 The Storage Providers, SPs
+Pour faciliter les opérations inter-chaînes et la gestion des actifs, le format d'adresse de la blockchain Greenfield a été modifié.
+format d'adresse de la blockchain Greenfield sera entièrement compatible avec la
+avec BSC (et Ethereum). Il accepte également la signature et la vérification des transactions EIP712.
+vérification des transactions EIP712. Ces éléments permettent à l'infrastructure de porte-monnaie existante de
+d'interagir avec Greenfield au début naturellement.
 
-SPs play a different role from Greenfield validators, although the same
-organizations or individuals can run both SPs and validators if they
-follow all the rules and procedures to get elected.
+### 4.2 Les fournisseurs de stockage (SP)
 
-SPs store the objects' real data, i.e. the payload data. Each SP runs its own object storage system. Similar to Amazon
-S3 and other object store systems, the objects stored on SPs are immutable. The users may delete and re-create the
-object (under the different ID, or under the same ID after certain publicly declared settings), but they cannot modify
-it.
+Les fournisseurs de stockage jouent un rôle différent de celui des validateurs Greenfield, bien que les mêmes organisations ou individus puissent gérer les deux.
+les mêmes organisations ou individus peuvent gérer à la fois des SP et des validateurs s'ils
+s'ils suivent toutes les règles et procédures pour être élus.
 
-SPs have to register themselves first by depositing on the Greenfield
-blockchain as their "Service Stake". Greenfield validators will go
-through a dedicated governance procedure to vote for the SPs of their
-election. SPs are encouraged to advertise their information and prove to
-the community their capability, as SPs have to provide a professional
-storage system with high-quality SLA.
+Les PS stockent les données réelles des objets, c'est-à-dire les données utiles. Chaque PS gère son propre système de stockage d'objets. Semblable à Amazon
+S3 et d'autres systèmes de stockage d'objets, les objets stockés sur les PS sont immuables. Les utilisateurs peuvent supprimer et recréer l'objet (sous un autre identifiant ou une autre forme).
+objet (sous un autre identifiant, ou sous le même identifiant après certains réglages déclarés publiquement), mais ils ne peuvent pas le modifier.
+mais ils ne peuvent pas le modifier.
 
-SPs provide publicly accessible APIs for users to upload, download, and
-manage data. These APIs are very similar to Amazon S3 APIs so that
-existing developers may feel familiar enough to write code for it.
-Meanwhile, they provide each other REST APIs and form another
-white-listed P2P network to communicate with each other to ensure data
-availability and redundancy. There will also be a P2P-based
-upload/download network across SPs and user-end client software to
-facilitate easy connections and fast data download, which is similar to
-BitTorrent.
+Les prestataires de services doivent d'abord s'enregistrer en déposant sur la blockchain Greenfield
+comme leur "Service Stake". Les validateurs Greenfield passeront
+Greenfield passeront par une procédure de gouvernance dédiée pour voter pour les PS de leur
+élection. Les prestataires de services sont encouragés à faire de la publicité pour leurs informations et à prouver à la communauté leurs capacités.
+et à prouver à la communauté leurs capacités, car ils doivent fournir un système de
+système de stockage professionnel avec un SLA de haute qualité.
 
-More SPs are welcome to ensure decentralization and data redundancy. But
-too many SPs may make SPs unable to make enough to sustain the business.
-Greenfield has an incentive design to make a proper number of SPs
-available. While SPs can choose to stay with the network or leave.
+Les prestataires de services fournissent des API accessibles au public pour que les utilisateurs puissent charger, télécharger et gérer les données.
+gérer les données. Ces API sont très similaires aux API d'Amazon S3, de sorte que les développeurs existants peuvent se sentir suffisamment familiers pour écrire des applications de stockage.
+développeurs existants peuvent se sentir suffisamment familiers pour écrire du code pour elle.
+En attendant, ils se fournissent mutuellement des API REST et constituent un autre
+réseau P2P en liste blanche pour communiquer entre eux et garantir la disponibilité et la
+la disponibilité et la redondance des données. Il y aura également un réseau P2P de
+P2P entre les PS et le logiciel client de l'utilisateur pour faciliter les
+pour faciliter les connexions et les téléchargements rapides.
 
-When the SPs join and leave the network, they have to follow a series of
-actions to ensure data redundancy for the users; otherwise, their
-"Service Stake" will be fined. This is achieved through the data
-availability challenge (described in detail in Part 3) and validator
-governance votes.
 
-### 4.3 The Pair Synergy
+## 5 Le stockage des données de Greenfield
 
-Greenfield validators and SPs form a pair synergy to provide the whole
-storage service. Validators store the metadata and financial ledger with
-consensus, while SPs provide real data storage and downloading.
-Validators have the motivation to ensure enough good SPs to provide
-decent service, while users and SPs rely on a stable and decentralized
-Greenfield blockchain as a single source of truth on metadata.
+Les données stockées sur Greenfield ont deux catégories principales :
 
-## 5 The Greenfield Data Storage
+1. les données avec consensus blockchain - Ce sont les données blockchain Greenfield.
+   Tous les validateurs Greenfield disposent de ces données actives dans leur intégralité (au moins le dernier état).
+   Tout le monde peut rejoindre la blockchain en tant que nœuds complets pour synchroniser ces données gratuitement.
 
-The data stored on Greenfield has two main categories:
+2. les données utiles des objets - en abrégé, les données des objets. Il s'agit des données que les utilisateurs stockent sur Greenfield.
+   Ces données sont soumises à un contrôle d'accès et leur stockage est payant.
+   Elles ne sont pas stockées sur la blockchain mais sur un nombre suffisant d'instances de Fournisseurs de Stockage hors-chaîne.
 
-1. data with blockchain consensus - They are Greenfield blockchain data.
-   All Greenfield validators have such active data in full (at least the latest state).
-   Anyone can join the blockchain as full nodes to synchronize these data for free.
+### 5.1 Données avec consensus
 
-2. object payload data - object data for short. This is the data that users store on Greenfield.
-   Such data has access control and requires fees to store.
-   They are not stored on the blockchain but on enough instances of SPs off-chain.
+Ces données sont sur la blockchain et ne peuvent être modifiées que par des transactions
+sur la blockchain Greenfield. Elles sont de plusieurs types, comme décrit ci-dessous.
 
-### 5.1 Data with Consensus
+#### 5.1.1 Comptes et solde
 
-These data are on-chain and can be only changed through transactions
-onto the Greenfield blockchain. It has several types as described below.
+Chaque utilisateur a son "adresse de propriétaire" comme identifiant pour son compte de propriétaire.
+pour "posséder" les ressources de données. Il existe un autre type de "compte de paiement".
+de paiement" dédié à la facturation et au paiement et détenu par les adresses des
+propriétaire.
 
-#### 5.1.1 Accounts and Balance
+Tant les comptes propriétaires que les comptes de paiement peuvent détenir le solde BNB sur
+Greenfield. Les utilisateurs peuvent déposer des BNB à partir du BSC, accepter des transferts d'autres utilisateurs et les dépenser pour des transactions de gaz et de stockage.
+Les utilisateurs peuvent déposer des BNB auprès du BSC, accepter des transferts d'autres utilisateurs et les dépenser pour des transactions de gaz et de stockage.
 
-Each user has their "Owner Address" as the identifier for their owner
-account to "own" the data resources. There is another "payment account"
-type dedicated to billing and payment purposes and owned by owner
-addresses.
+#### 5.1.2 Métadonnées du validateur et du PS
 
-Both owner accounts and payment accounts can hold the BNB balance on
-Greenfield. Users can deposit BNB from BSC, accept transfers from other
-users, and spend them on transaction gas and storage usage.
+Il s'agit des informations de base sur les validateurs et les PS Greenfield.
+SP Greenfield. Les PS peuvent avoir plus d'informations, car ils doivent publier
+leurs informations de service pour les opérations de données des utilisateurs. Il devrait y avoir un
+mécanisme de réputation pour les PS.
 
-#### 5.1.2 Validator and SP Metadata
+#### 5.1.3 Métadonnées de stockage
 
-These are the basic information about the Greenfield validators and
-Greenfield SPs. SPs may have more information, as it has to publish
-their service information for users' data operations. There should be a
-reputation mechanism for SPs as well.
+Les "métadonnées de stockage" comprennent la taille, la propriété, les hachages de somme de contrôle et l'emplacement de la distribution parmi les SP.
+l'emplacement de distribution parmi les PS. Comme pour AWS S3, l'unité de base du stockage est un "*objet*".
+l'unité de base du stockage est un "*objet*", qui peut être un morceau de données binaires, des fichiers texte, des photos, des vidéos ou tout autre objet.
+des fichiers texte, des photos, des vidéos ou tout autre format. Les utilisateurs peuvent créer leurs
+objets sous leur "*bucket*". Un bucket est unique au monde. L'objet
+peut être référencé via le nom du bucket et l'ID de l'objet. Il peut également être
+également être localisé par le nom du bucket, le préfixe et l'identifiant de l'objet
+des facilités hors chaîne.
 
-#### 5.1.3 Storage Metadata
+#### 5.1.4 Métadonnées d'autorisation
 
-The "storage metadata" includes size, ownership, checksum hashes, and
-distribution location among SPs. Similar to AWS S3, the basic unit of
-the storage is an "*object*", which can be a piece of binary data, text
-files, photos, videos, or any other format. Users can create their
-objects under their "*bucket*". A bucket is globally unique. The object
-can be referred to via the bucket name and the object ID. It can also be
-located by the bucket name, the prefix tag, and the object ID via
-off-chain facilitations.
-
-#### 5.1.4 Permission Metadata
-
-Data resources on Greenfield, such as the data objects and the buckets,
-all have access control, such as which address can create, read, list,
-or even execute the resources, and which address can grant/revoke these
+Les ressources de données sur Greenfield, telles que les objets de données et les seaux,
+ont toutes un contrôle d'accès, tel que l'adresse qui peut créer, lire, lister,
+ou même exécuter les ressources, et quelle adresse peut accorder/révoquer ces permissions.
 permissions.
 
-Two other data resources also have access control. One is "Group". A
-group represents a group of user addresses that have the same
-permissions to the same resources. It can be used in the same way as an
-address in the access control. Meanwhile, it requires permission too to
-change the group. The other is "payment account". They are created by
-the owner accounts.
+Deux autres ressources de données ont également un contrôle d'accès. L'une est le "Groupe". A
+groupe représente un ensemble d'adresses d'utilisateurs qui ont les mêmes
+mêmes permissions pour les mêmes ressources. Il peut être utilisé de la même manière qu'une adresse dans le contrôle d'accès.
+adresse dans le contrôle d'accès. Cependant, il faut également une autorisation pour
+changer le groupe. L'autre est le "compte de paiement". Ils sont créés par
+les comptes propriétaires.
 
-Here the access control is enforced by the SPs off-chain. People can
-test and challenge the SPs if they mess up the control. Slash and reward
-will happen to keep the SPs sticking to the principles.
+Ici, le contrôle d'accès est appliqué par les PS hors chaîne. Les gens peuvent
+tester et défier les PS s'ils ne respectent pas le contrôle. Des réductions et des récompenses
+se produira pour que les prestataires de services respectent les principes.
 
-#### 5.1.5 Billing Metadata
+#### 5.1.5 Métadonnées de facturation
 
-Users have to pay fees to store data objects on Greenfield. While each
-object enjoys a free quota to download by users who are permitted to,
-the excessive download will require extra data packages to be paid for
-the bandwidth. Besides the owner address, users can derive multiple
-"Payment Addresses" to pay these fees. Objects are stored under buckets,
-while each bucket can be associated with these payment addresses, and
-the system will charge these accounts for storing and/or downloading.
-Many buckets can share the same payment address. Such association
-information is also stored on chains with consensus as well.
+Les utilisateurs doivent payer des frais pour stocker des objets de données sur Greenfield. Alors que chaque
+objet bénéficie d'un quota gratuit à télécharger par les utilisateurs qui y sont autorisés,
+le téléchargement excessif nécessitera le paiement de paquets de données supplémentaires pour
+la bande passante. Outre l'adresse du propriétaire, les utilisateurs peuvent dériver plusieurs
+"adresses de paiement" pour payer ces frais. Les objets sont stockés dans des buckets,
+tandis que chaque godet peut être associé à ces adresses de paiement, et
+le système facturera ces comptes pour le stockage et/ou le téléchargement.
+De nombreux bacs peuvent partager la même adresse de paiement. Ces informations d'association
+informations d'association sont également stockées sur des chaînes avec consensus.
 
-The payment of Greenfield is on a stream pay model, which will greatly
-reduce the complexity to implement the billing logic - more described in
-Part 3.
+Le paiement de Greenfield est basé sur un modèle de paiement par flux, ce qui réduit considérablement la complexité de la mise en œuvre de la facturation.
+réduira considérablement la complexité de l'implémentation de la logique de facturation - plus décrite dans la
+Partie 3.
 
-### 5.2 Off-Chain Payload Object Data Storage
+### 5.2 Stockage des données utiles de l'objet hors chaîne
 
-The payload data of the object, i.e. the bytes comprising the data
-files, photos, and videos, are stored off-chain in multiple SPs with a
-data redundancy design. Each SP can have its edition of an object
-storage system with a good SLA and high-performance interface to
-interact with the users and other SPs.
+Les données utiles de l'objet, c'est-à-dire les octets qui composent les fichiers de données, les photos et les vidéos, sont stockées hors chaîne dans plusieurs SP avec un système de gestion des données.
+fichiers de données, les photos et les vidéos, sont stockées hors chaîne dans plusieurs PS avec une
+conception de la redondance des données. Chaque SP peut avoir son édition d'un système de
+d'un système de stockage d'objets avec un bon accord de niveau de service et une interface très performante pour interagir avec les utilisateurs et les autres fournisseurs de services.
+d'interagir avec les utilisateurs et les autres PS.
 
-#### 5.2.1 Primary and Secondary SPs
+#### 5.2.1 Fournisseurs de Stockage primaires et secondaires
 
-Among the multiple SPs that one object is stored on, one SP will be the
-"Primary SP", while the others are "Secondary SP".
+Parmi les multiples SP sur lesquels un objet est stocké, un SP sera le "SP primaire", tandis que les autres seront les "SP secondaires".
+"SP primaire", tandis que les autres sont des "SP secondaires".
 
-When users want to write an object into Greenfield, they or the client
-software they use must specify the primary SP. Primary SP should be used
-as the only SP to download the data. Users can change the primary SP for
-their objects later if they are not satisfied with their service.
+Lorsque les utilisateurs veulent écrire un objet dans Greenfield, eux-mêmes ou le logiciel client qu'ils utilisent doivent spécifier le SP primaire.
+logiciel client qu'ils utilisent doivent spécifier le SP primaire. Le SP primaire doit être utilisé
+comme le seul SP pour télécharger les données. Les utilisateurs peuvent changer le SP primaire pour
+leurs objets par la suite s'ils ne sont pas satisfaits de ce service.
 
-#### 5.2.2 Data Redundancy
+#### 5.2.2 Redondance des données
 
-After the users issue a "write" request, Primary SP should respond to
-the client upload request to accept the user upload, chop the object
-data into segments, verify the data integrity and store all the segments.
-After that, Primary SP computes a data redundancy solution for these segments
-based on Erasure Coding (EC). Then Primary SP or the users will select a
-few secondary SPs to store these segment replicas and their EC parity pieces.
-This data distribution communication will be done via the p2p network and REST
-APIs among SPs.
+Après que les utilisateurs aient émis une demande d'"écriture", le SP primaire doit répondre à
+demande de téléchargement du client pour accepter le téléchargement de l'utilisateur, découper les données de l'objet en segments et vérifier l'intégrité des données.
+en segments, vérifier l'intégrité des données et stocker tous les segments.
+Ensuite, le Primary SP calcule une solution de redondance des données pour ces segments.
+basée sur le codage par effacement (EC). Ensuite, le SP primaire ou les utilisateurs sélectionneront
+quelques serveurs secondaires pour stocker ces répliques de segments et leurs pièces de parité EC.
+Cette communication de distribution de données se fera via le réseau p2p et les API REST
+entre les PS.
 
-The data redundancy setup is to ensure that even if the primary SP and a
-few secondary SPs become unavailable at a later time, Greenfield can
-still recover the full data.
+La configuration de la redondance des données vise à garantir que, même si le SP primaire et quelques SP secondaires deviennent indisponibles à un moment donné, les données ne seront pas perdues.
+quelques PS secondaires deviennent indisponibles, Greenfield peut toujours récupérer les
+Greenfield peut toujours récupérer l'ensemble des données.
 
-## 6 Storage Economics and Its Primitives
+## 6 Économie du stockage et ses primitives
 
-In this section, the underlying economics and the operating primitives
-are discussed aligned with the lifecycle of a data object. The below
-primitives can be executed after the genesis of the Greenfield
-blockchain and enough SPs have registered themselves and started working
-properly.
+Dans cette section, l'économie sous-jacente et les primitives d'exploitation sont examinées en fonction du cycle de vie.
+sont examinées en fonction du cycle de vie d'un objet de données. Les primitives ci-dessous
+primitives peuvent être exécutées après la genèse de la blockchain Greenfield
+Greenfield et qu'un nombre suffisant de PS se soient enregistrés et aient commencé à travailler
+correctement.
 
-### 6.1 Account Creation
+### 6.1 Création de compte
 
-To write a data object into Greenfield, the users must have an account,
-or more specifically, an address on the BNB Greenfield blockchain. This
-can be done by transferring some BNB either from other addresses on
-Greenfield or from BSC.
+Pour écrire un objet de données dans Greenfield, les utilisateurs doivent avoir un compte,
+ou plus précisément, une adresse sur la blockchain BNB Greenfield. Cette adresse
+Cela peut être fait en transférant des BNB depuis d'autres adresses sur Greenfield ou depuis la BSC.
+Greenfield ou de la BSC.
 
-This may be a special route that users can skip this step but issue the
-"transfer and write" request directly from BSC. As Greenfield and BSC
-share the same address protocol, this action de facto creates an account
-on Greenfield with the same address on BSC.
+Il se peut que les utilisateurs puissent sauter cette étape et émettre la demande de "transfert et d'écriture" directement à partir de Greenfield.
+demande de "transfert et d'écriture" directement à partir de BSC. Comme Greenfield et BSC
+partagent le même protocole d'adresse, cette action crée de facto un compte
+sur Greenfield avec la même adresse sur BSC.
 
-### 6.2 Data Object Creation
+### 6.2 Création d'objets de données
 
-Users must create "Buckets" before creating objects. Similar to the
-"Bucket" concepts in AWS S3, "buckets" here are a data resource to group
-data objects from a user. All the objects under the same bucket will be
-stored on the same primary SP and downloadable from that SP. Users can
-create many buckets and store their data objects in different ones.
+Les utilisateurs doivent créer des "Buckets" avant de créer des objets. Similaire aux concepts de
+concepts de "Bucket" dans AWS S3, les "buckets" ici sont une ressource de données pour regrouper
+les objets de données d'un utilisateur. Tous les objets sous le même bucket seront
+stockés sur le même SP primaire et téléchargeables depuis ce SP. Les utilisateurs peuvent
+créer de nombreux godets et stocker leurs objets de données dans différents godets.
 
-Each bucket has a Primary SP associated with it, which means all the
-objects under this bucket will use that SP as the Primary SP. If the
-chosen Primary SP cannot serve the requests well, the user may choose to
-migrate the bucket to another SP completely via an on-chain transaction.
+Chaque godet est associé à un SP primaire, ce qui signifie que tous les objets de ce godet utiliseront ce SP primaire.
+objets sous ce godet utiliseront ce SP comme SP primaire. Si le
+SP primaire choisi ne peut pas bien répondre aux demandes, l'utilisateur peut choisir de
+migrer le bucket vers un autre SP complètement via une transaction on-chain.
 
-Data object creation is performed in two phases.
+La création d'objets de données s'effectue en deux phases.
 
-1. Request phase:
+1. Phase de demande :
 
-a. Users establish the connection with the primary SP and send a
-"get approval" message to ask if it is willing to store the object; The
-primary SP acknowledges the request by signing a message about the
-operation and returns it to the client;
+a. Les utilisateurs établissent la connexion avec le SP primaire et envoient un message "get approval" pour demander s'il est prêt à stocker l'objet.
+message "get approval" pour demander s'il est prêt à stocker l'objet.
+La SP primaire accuse réception de la demande en signant un message sur l'opération et le renvoie au client.
+opération et le renvoie au client ;
 
-b. After the primary SP determines to accept the request to store the data
-as the primary SP, the client constructs a "write" transaction message with
-the primary SP's signature and the initial object metadata, such as the
-object name, the bucket name, size, checksum, while optionally content type
-and the storage preference, etc; Users sign the transaction and submit it
-to Greenfield chain;
+b. Une fois que la SP primaire a décidé d'accepter la demande de stockage des données en tant que SP primaire, le client construit une base de données.
+en tant que SP primaire, le client construit un message de transaction "write" avec la signature du SP primaire et le nom du client.
+signature du SP primaire et les métadonnées initiales de l'objet, telles que le nom de l'objet
+le nom de l'objet, le nom du bucket, la taille, la somme de contrôle, et éventuellement le type de contenu
+le type de contenu et la préférence de stockage, etc.
+à la chaîne Greenfield ;
 
-c. Users get the result of the transaction and transaction hash;
+c. Les utilisateurs obtiennent le résultat de la transaction et le hash de la transaction ;
 
-d. Greenfield accepts the "create" request and locks fees from users.
+d. Greenfield accepte la demande de "création" et verrouille les droits des utilisateurs.
 
-2. Seal phase:
+2. Phase de scellement :
 
-a. Users connect to the primary SP and send transaction hash; The primary SP
-uses the transaction hash to check if the object metadata is already created
-on Greenfield chain;
+a. Les utilisateurs se connectent à la SP primaire et envoient le hachage de la transaction.
+utilise le hachage de la transaction pour vérifier si les métadonnées de l'objet sont déjà créées
+sur la chaîne Greenfield ;
 
-b. Users start uploading the object payload data to the primary SP if the
-object metadata is already created; The primary SP checks if the payload data
-matches the object's metadata by comparing the checksum of the object on
-Greenfield chain and the checksum of the payload data; If it matches the
-primary SP will sign the "uploaded" confirmation to the users;
+b. Les utilisateurs commencent à télécharger les données utiles de l'objet vers le SP primaire si les métadonnées de l'objet sont déjà créées.
+métadonnées de l'objet sont déjà créées ; le SP primaire vérifie si les données utiles
+données utiles correspondent aux métadonnées de l'objet en comparant la somme de contrôle de l'objet sur la chaîne Greenfield et la somme de contrôle de l'objet sur la chaîne Greenfield.
+chaîne Greenfield et la somme de contrôle des données utiles.
+SP primaire signe la confirmation "téléchargé" aux utilisateurs ;
 
-c. The primary SP syncs with secondary SPs to set up the data redundancy,
-and then it signs a "Seal" transaction with the finalized metadata for storage.
-If the primary SP determines that it doesn't want to store the file due to
-whatever reason, it can also "SealReject" the request.
+c. Le SP primaire se synchronise avec les SP secondaires pour mettre en place la redondance des données,
+puis il signe une transaction "Seal" avec les métadonnées finalisées pour le stockage.
+Si le SP primaire détermine qu'il ne veut pas stocker le fichier pour une raison quelconque, il peut aussi "sceller" le fichier.
+pour quelque raison que ce soit, il peut également "SealRejecter" la demande.
 
-d. Greenfield processes the "Seal" or "SealReject" transaction to begin the
-storage life cycle for the object. Users can still "CancelRequest" to give up
-the creation request and get partially refunded.
+d. Greenfield traite la transaction "Seal" ou "SealReject" pour lancer le cycle de vie du stockage de l'objet.
+cycle de vie du stockage de l'objet. Les utilisateurs peuvent toujours "CancelRequest" pour renoncer à
+la demande de création et être partiellement remboursé.
 
-There are scenarios in which the primary SP doesn't cooperate with the user well: 1. The primary SP acknowledges the
-upload request, but doesn't accept the upload in time; 2. the primary SP signs the "uploaded" confirmation but doesn't
-seal the transaction in time. Greenfield expects the primary SP to finish the object creation by either "Seal" or
-"SealReject" transaction in a predefined time window; otherwise, the primary SP will be punished with a fine. Primary SP
-has no rational reasons to not acknowledge the upload request or doesn't seal in time, while the users have no rational
-reasons to create the requests but do not upload in time either.
+Il existe des scénarios dans lesquels le SP primaire ne coopère pas bien avec l'utilisateur : 1. Le SP primaire accuse réception de la
+demande de téléchargement, mais n'accepte pas le téléchargement à temps ; 2. le SP primaire signe la confirmation du "téléchargement" mais ne scelle pas la transaction à temps.
+mais ne scelle pas la transaction à temps. Greenfield s'attend à ce que le SP primaire termine la création de l'objet par une transaction "Seal" ou "SealReject" dans les délais impartis.
+soit par une transaction "SealReject" dans une fenêtre de temps prédéfinie ; sinon, le SP primaire ne peut pas terminer la création de l'objet.
 
-There may be a special case in which the "create" is triggered from BSC
-as a cross-chain transaction, the primary SP cannot get requests
-directly. The primary SP can observe such requests and perform other
-actions in the same way.
 
-### 6.3 Data Storage
+### 6.3 Stockage des données
 
-Once a data object is "Sealed", the owner of the object has de facto
-entered a contract with the SPs for the storage, in which case the
-owners should pay fees for such storage and the SPs should guarantee the
-data availability.
+Une fois qu'un objet de données est "scellé", le propriétaire de l'objet a de facto conclu un contrat avec les PS pour le stockage.
+contrat avec les prestataires de services pour le stockage, auquel cas les propriétaires doivent
+Dans ce cas, les propriétaires doivent payer des frais pour ce stockage et les PS doivent garantir la disponibilité des données.
+disponibilité des données.
 
-The data object owners always have the right to change the primary SP to
-store their data, after settling the outstanding fees.
+Les propriétaires d'objets de données ont toujours le droit de changer de SP principal pour le stockage de leurs données, après avoir réglé les frais de stockage.
+pour le stockage de leurs données, après avoir réglé les redevances dues.
 
-The SPs, especially the primary SPs, can also inform people to stop
-storing the data, due to either their own opinions or decision. Both
-other SPs and the owners can observe corresponding notifications. Other
-SPs can voluntarily propose themselves to be successors to store the
-data objects on Greenfield if the owners do not react to the
-notification in a predefined time, as other SPs do like to take the
-business.
+Les prestataires de services, en particulier les prestataires de services primaires, peuvent également informer les gens qu'ils doivent cesser de stocker les données, que ce soit pour des raisons de santé ou de sécurité.
+de cesser de stocker les données, en raison de leurs propres opinions ou décisions. Les deux
+les autres prestataires de services et les propriétaires peuvent observer les notifications correspondantes. Autres
+Fournisseurs de Stockage peuvent volontairement se proposer comme successeurs pour stocker les
+objets de données sur Greenfield si les propriétaires ne réagissent pas à la notification dans un délai prédéfini.
+notification dans un délai prédéfini, car d'autres fournisseurs de services souhaitent prendre le
+l'affaire.
 
-### 6.4 Data Read and Download
+### 6.4 Lecture et téléchargement de données
 
-By design, the bytes that are stored and downloaded later for the object
-are exactly the same bytes that were originally uploaded. SPs may use
-their encryption logic as they wish, but when the data is being
-downloaded, it shows the same bytes as it was uploaded. Users may choose
-their own encryption scheme or use the default one provided by the
-client software if they want the data to be unrecognizable by SPs or any
-others, even though SPs have the obligation to not circulate these data
-out of users' instruction.
+Par conception, les octets qui sont stockés et téléchargés ultérieurement pour l'objet
+sont exactement les mêmes octets que ceux qui ont été téléchargés à l'origine. Les PS peuvent utiliser
+leur logique de cryptage comme ils le souhaitent, mais lorsque les données sont
+données sont téléchargées, elles affichent les mêmes octets que lors du téléchargement. Les utilisateurs peuvent choisir
+leur propre schéma de cryptage ou utiliser celui par défaut fourni par le logiciel
+logiciel client s'ils veulent que les données soient méconnaissables par les PS ou toute autre personne.
+SP ou toute autre personne, même si les SP ont l'obligation de ne pas faire circuler ces données
+hors de l'instruction des utilisateurs.
 
-Data objects can be only read and downloaded by the addresses with
-proper read permissions. The Primary SP of the objects is the main
-source to download from. If Primary SP is not available, the owner and
-Greenfield blockchain validators can challenge (described in Part 3) and
-change the object's primary SP to recover the downloading.
+Les objets de données ne peuvent être lus et téléchargés que par les adresses disposant des
+les autorisations de lecture appropriées. Le PS primaire des objets est la principale
+source principale de téléchargement. Si le Primary SP n'est pas disponible, le propriétaire et les validateurs de la blockchain Greenfield peuvent le contester (voir partie 3).
+validateurs de la blockchain Greenfield peuvent contester (décrit dans la partie 3) et
+changer le SP primaire de l'objet pour récupérer le téléchargement.
 
-Each object has a time-based traffic bandwidth quota, which is provided
-free, i.e. nobody needs to pay for downloading a certain amount within a
-certain period. It is expected that this quota can satisfy most of the
-individual download needs as part of the normal usage conditions.
+Chaque objet a un quota de bande passante de trafic basé sur le temps, qui est fourni
+gratuite, c'est-à-dire que personne n'a besoin de payer pour télécharger une certaine quantité dans une
+période donnée. On s'attend à ce que ce quota puisse satisfaire la plupart des
+besoins de téléchargement individuels dans le cadre des conditions normales d'utilisation.
 
-For extra bandwidth to download the object, someone has to pay for the
-data package, which is covered in the payment section.
+Pour disposer d'une bande passante supplémentaire pour télécharger l'objet, il faut payer un forfait de données.
+paquet de données, qui est abordé dans la section sur le paiement.
 
-### 6.5 Permissions and Group
+### 6.5 Permissions et groupes
 
-Permission is the main logic introduced in Greenfield to enable
-potential business models.
+La permission est la principale logique introduite dans Greenfield pour permettre des
+modèles commerciaux potentiels.
 
-The data resources, including the objects, buckets, payment accounts,
-and groups, all have permissions related. These permissions define
-whether each account can perform particular actions.
+Les ressources de données, y compris les objets, les buckets, les comptes de paiement,
+et les groupes, ont toutes des permissions liées. Ces permissions définissent
+si chaque compte peut effectuer des actions particulières.
 
-Group is a list of accounts that can be treated in the same way as a
-single account.
+Un groupe est une liste de comptes qui peuvent être traités de la même manière qu'un
+compte unique.
 
-Examples of permissions are:
+Des exemples de permissions sont :
 
-- Put, List, Get, Delete, Copy, and Execute data objects;
+- Mettre, Lister, Obtenir, Supprimer, Copier et Exécuter des objets de données ;
 
-- Create, Delete, and List buckets
+- Créer, Supprimer, et Lister des seaux
 
-- Create, Delete, ListMembersOf, Leave groups
+- Créer, Supprimer, ListMembersOf, Quitter des groupes
 
-- Create, Associate payment accounts
+- Créer, associer des comptes de paiement
 
-- Grant, Revoke the above permissions
+- Accorder, révoquer les permissions ci-dessus
 
-These permissions are associated with the data resources and
-accounts/groups, and the group definitions are stored on the Greenfield
-blockchain publicly. Now they are in plain text. Later a privacy mode
-will be introduced based on Zero Knowledge Proof technology.
+Ces permissions sont associées aux ressources de données et aux
+comptes/groupes, et les définitions des groupes sont stockées publiquement sur la blockchain Greenfield.
+publiquement. Pour l'instant, elles sont en texte clair. Plus tard, un mode de confidentialité
+sera introduit sur la base de la technologie Zero Knowledge Proof.
 
-One thing that makes the permission operation more interesting is that
-they can be operated from BSC directly, either through smart contracts
-or by an EOA.
+Une chose qui rend l'opération de permission plus intéressante est que
+qu'elles peuvent être exploitées depuis la BSC directement, soit par des smart contracts
+ou par une EOA.
 
 ### 6.6 Fees and Payments
 
 <div align="center"><img src="./assets/6.6%20Payment%20Stream%20Flow.png" height="80%" width="80%"></div>
 <div align="center"><i>Figure 6.1: Payment Stream Flow</i></div>
 
-The storage fee will be charged on Greenfield in a steam payment style
-like
+Les frais de stockage seront facturés sur Greenfield dans un style de paiement à la vapeur
+comme
 *[Superfluid](https://docs.superfluid.finance/superfluid/protocol-overview/in-depth-overview/super-agreements/constant-flow-agreement-cfa)*
 .
+Les frais sont payés sur Greenfield dans le style "Stream" des utilisateurs aux
+comptes récepteurs à un taux constant. Les frais sont "facturés" chaque
+seconde au fur et à mesure de leur utilisation.
 
-The fees are paid on Greenfield in the style of "Stream" from users to
-receiver accounts at a constant rate. The fees are "charged" every
-second as they are used.
+Il existe deux types de frais pour Greenfield : les frais de stockage d'objets et les frais de paquet de données.
+de données.
 
-There are two kinds of fees for Greenfield: object storage fee and data
-package fee.
+Pour le stockage, chaque objet stocké sur Greenfield est facturé au prix suivant
+calculé en fonction de la taille, du nombre de répliques, d'un ratio de prix de base et d'autres paramètres.
+paramètres. Une fois l'objet stocké, le coût total du stockage sera principalement lié au temps et à la durée du stockage.
+ne sera principalement liée qu'au temps et au prix de base.
 
-For storage, every object stored on Greenfield is charged at the price
-calculated by size, replica numbers, a base price ratio, and other
-parameters. Once the object is stored, the total charge of storage will
-be mainly only related to time and the base price.
+Pour le téléchargement de données, il existe un quota gratuit, basé sur le temps, pour chaque seau
+des objets des utilisateurs.
+S'il est dépassé, les utilisateurs peuvent promouvoir leur paquet de données pour obtenir plus de quota.
+de données pour obtenir plus de quota. Chaque paquet de données a un prix fixe pour la
+période définie. Une fois le paquet de données choisi, le coût total du téléchargement sera uniquement lié au temps et au prix du paquet de données.
+téléchargement sera uniquement lié au temps et au prix du paquet de données,
+jusqu'à ce que les paramètres du paquet de données soient à nouveau modifiés.
 
-For data downloading, there is a free, time-based quota for each bucket
-of users' objects. If it's exceeded, users can promote their data
-package to get more quota. Every data package has a fixed price for the
-defined period. Once the data package is picked, the total charge of
-downloading will be only related to time and the data package price,
-until the data package setting is changed again.
+Dans ce cas, la confiance règne entre les utilisateurs et les PS pour le téléchargement de données. Comme
+la bande passante supplémentaire pour le téléchargement est payante et que le journal des téléchargements n'est pas entièrement stocké sur le serveur vert.
+journal de téléchargement n'est pas entièrement stocké sur la blockchain Greenfield. Les prestataires de services doivent
+fournir une interface de point de terminaison permettant aux utilisateurs d'interroger le
+téléchargement avec des journaux détaillés et les signatures des téléchargeurs. Si les utilisateurs et les
+utilisateurs et les prestataires de services ne parviennent pas à se mettre d'accord sur la facture, les utilisateurs peuvent simplement choisir un autre prestataire de services primaires.
+SP PRIMAIRE.
 
-Here there is trust between the users and the SPs for data download. As
-the extra downloading bandwidth will charge a fee and the download
-journal is not fully stored on the Greenfield blockchain. SPs should
-provide an endpoint interface for users to query the download billing
-details with detailed logs and downloaders' signatures. If the users and
-the SPs cannot agree on the bill, users may just select another Primary
-SP.
+Par défaut, l'adresse du propriétaire de l'objet sera utilisée pour payer les objets qu'il possède.
+objets qu'il possède. Mais les utilisateurs peuvent aussi créer plusieurs "comptes de paiement".
+et associer des objets à des comptes de paiement différents pour payer le stockage
+et de la bande passante.
 
-By default, the object owner's address will be used to pay for the
-objects it owns. But users can also create multiple "payment accounts"
-and associate objects to different payment accounts to pay for storage
-and bandwidth.
+Le format de l'adresse du compte de paiement est le même que celui des comptes normaux.
+normaux. Elle est dérivée du hachage de l'adresse de l'utilisateur et de l'index du compte de
+de paiement. Cependant, les comptes de paiement ne sont en fait que logiques
+logiques et n'existent que dans le module de paiement du stockage. Les utilisateurs peuvent déposer
+Les utilisateurs peuvent déposer, retirer et consulter le solde des comptes de paiement sur la blockchain Greenfield.
+Greenfield, mais ils ne peuvent pas utiliser les comptes de paiement pour effectuer des transactions de jalonnement ou d'autres transactions sur la chaîne.
+jalonnement ou d'autres transactions sur la chaîne. Les comptes de paiement peuvent être définis comme
+"non-remboursable". Les utilisateurs ne peuvent pas retirer de fonds de ces comptes de
+de paiement.
 
-The address format of the payment account is the same as normal
-accounts. It's derived by the hash of the user address and payment
-account index. However, the payment accounts are actually only logical
-ones and only exist in the storage payment module. Users can deposit
-into, withdraw from and query the balance of payment accounts on the
-Greenfield blockchain, but users cannot use payment accounts to perform
-staking or other on-chain transactions. Payment accounts can be set as
-"non-refundable". Users cannot withdraw funds from such payment
-accounts.
+D'autres utilisateurs peuvent également parrainer le paiement en faisant don d'un flux de "paiement de flux".
+vers les comptes de paiement "non-remboursables" sélectionnés. Ils peuvent faire une pause à
+quand ils le souhaitent.
 
-Other users can also sponsor the payment by donating a "stream payment"
-flow to selected "non-refundable" payment accounts. They can pause at
-any time they want.
+Tous les frais de stockage et les paquets de données sont tarifés et payés en BNB. Le site
+paramètres système et des oracles de prix provenant des relais Greenfield
+(décrits ci-dessous) pour ajuster la tarification en fonction de la situation commerciale.
+de commercialisation.
 
-All the storage fees and data packages are priced and paid in BNB. There
-are system parameters and price oracles from the Greenfield Relayers
-(described below) to adjust the pricing based on the marketing
-situation.
+Une fois que les comptes de paiement n'ont plus de BNB, les objets associés aux
+ces comptes de paiement souffriront d'une dégradation du service de
+téléchargement, c'est-à-dire que la vitesse de téléchargement et les numéros de connexion seront
+limités. Une fois les fonds transférés sur les comptes de paiement, la qualité du service peut être rétablie immédiatement.
+la qualité du service peut être rétablie immédiatement. Si le service n'est pas rétabli
+Si le service n'est pas rétabli pendant une longue période, les PS peuvent décider d'effacer les données.
+données, de manière similaire à la façon dont les PS prétendent arrêter les services à certains objets.
+certains objets. Dans un tel cas, les données peuvent disparaître complètement de Greenfield
+complètement.
 
-Once the payment accounts run out of BNB, the objects associated with
-these payment accounts will suffer from a downgraded service of
-downloading, i.e. the download speed and connection numbers will be
-limited. Once the fund is transferred to the payment accounts, the
-service quality can be resumed right away. If the service is not resumed
-for a long time, it is the SPs' discretionary decision to clear the data
-out, in a similar way to how SPs claim to stop services to certain
-objects. In such a case, the data may be gone from Greenfield
-completely.
+### 6.7 Défi de l'intégrité et de la disponibilité des données
 
-### 6.7 Data Integrity and Availability Challenge
+Il existe trois aspects de l'intégrité, de la disponibilité et de la redondance des données.
+comme indiqué ci-dessous :
 
-There are 3 aspects of data integrity, availability, and redundancy as
-listed below:
+1. Le SP primaire stocke l'objet correct que l'utilisateur a téléchargé.
 
-1. The primary SP stores the correct object that the user uploaded.
+2. Le SP stocke correctement les segments de données qui lui ont été attribués, soit en tant que rôle de SP primaire, soit en tant que SP secondaire.
+   SP ou SP secondaire, et les éléments de données stockés ne doivent pas être
+   ne sont pas manquants, corrompus ou contrefaits.
 
-2. The SP stores assigned data segments either as the role of primary
-   SP or secondary SP correctly, and the data pieces stored should
-   not be missing, corrupted, or counterfeit.
+3. Les éléments de codage d'effacement stockés dans les PS secondaires peuvent récupérer l'objet original stocké dans la PS primaire.
 
-3. The Erasure Coding pieces stored in the secondary SPs can recover the original object stored in the primary SP.
+L'intégrité et la redondance des données doivent être assurées en premier lieu par la mise en place de la somme de contrôle et de la redondance de la SP primaire.
+La somme de contrôle et la configuration de la redondance des objets. Ils font partie des données
+de données, qui doivent être vérifiées par les SP et les utilisateurs lors de la création des
+objets sont créés. Ces métadonnées seront également stockées sur la blockchain Greenfield
+ainsi que sur la blockchain Greenfield.
 
-The data integrity and redundancy should be first guarded by the
-checksum and redundancy setup of the objects. They are part of the data
-object metadata, which should be verified by the SPs and users when the
-objects are created. This metadata will be stored on the Greenfield
-blockchain as well.
+Greenfield et les PS doivent travailler ensemble pour garantir l'intégrité et la disponibilité des données, en particulier pour le point # ci-dessus.
+et la disponibilité des données, en particulier pour le numéro 2 ci-dessus. Contrairement aux autres
+systèmes de stockage décentralisés, ici une " preuve de défi " est introduite
+pour renforcer la confiance des utilisateurs dans le fait que les données sont bien stockées comme promis.
 
-Both Greenfield and SPs have to work together to ensure data integrity
-and availability, especially for the above #2. Different from other
-decentralized storage systems, here a "Proof-of-Challenge" is introduced
-to build users' confidence that the data is stored well as promised.
+Les challengers peuvent provenir de différentes parties prenantes. Premièrement, les utilisateurs peuvent
+soumettre des transactions de défi ; deuxièmement, tout comme les utilisateurs, les Fournisseurs de Stockage peuvent
+peuvent soumettre des transactions de défi à d'autres SP ; et enfin, la blockchain Greenfield
+émettra également des défis internes de manière aléatoire.
 
-Challengers can come from different stakeholders. Firstly, users can
-submit challenge transactions; secondly, similar to users, SPs can
-submit challenge transactions to other SPs; and lastly, Greenfield
-blockchain will issue internal challenge events randomly as well.
+Le défi peut être déclenché par des transactions Greenfield ou des événements internes à la fin du blocage.
+des événements internes à la fin du blocage. Lorsque les validateurs Greenfield observent un tel
+challenge, ils doivent exécuter une vérification hors chaîne standard contre les données
+des PS contestés. Ces validateurs voteront pour les
+résultats de la contestation par le biais d'un multisig agrégé via un réseau P2P
+et les soumettront à la blockchain Greenfield. L'échec du résultat
+d'un défi entraînera la suppression des PS correspondants. L'expéditeur et les
+validateurs seront récompensés pour de tels défis.
 
-The challenge can be triggered by Greenfield transactions or internal
-events at the end of blocking. Once Greenfield validators observe such a
-challenge, they should run a standard off-chain check against the data
-from the SPs being challenged. These validators will vote for the
-challenge results via an aggregated multisig via an off-chain P2P
-network and submit them to the Greenfield blockchain. The failed result
-for a challenge will slash the corresponding SPs. The submitter and
-validators will get rewards for such challenges.
+Les données qui ont échoué le défi ne seront pas contestées dans un certain temps afin de donner aux PS un peu de temps.
+un certain temps afin de laisser aux PS le temps de se rétablir.
 
-The data that failed the challenge will not be challenged within a
-certain amount of time to give the SPs some time to recover.
+Une autre section de la partie 3 traitera plus en détail des défis de disponibilité des données.
+données de manière plus détaillée.
 
-Another section in Part 3 will cover the data availability challenges in
-greater detail.
+### 6.8 Suppression de données
 
-### 6.8 Data Delete
+Les utilisateurs peuvent demander la suppression de leurs objets de données. Greenfield supprimera
+les métadonnées de l'état de la blockchain, tandis que le SP primaire devrait
+répondre à cette demande et supprimer toutes les répliques et les segments redondants.
+redondants. Le flux de paiement sera fermé avec un rabais de récompense pour encourager la suppression à l'avenir.
+encourager la suppression à l'avenir.
 
-Users can request to delete their data objects. Greenfield will remove
-the metadata from the blockchain state, while the primary SP should
-respond to this request and drop all the replicas and redundant
-segments. The payment stream will be closed with a reward rebate to
-encourage the deletion in the future.
+## 7 Économie des actifs de données
 
-## 7 Economy of Data Assets
+La véritable puissance de l'écosystème Greenfield réside dans le fait que la plateforme est
+n'est pas seulement conçue pour stocker les données, mais aussi pour soutenir la création de
+valeur basée sur les actifs de données et l'économie qui y est associée.
 
-The real power of the Greenfield ecosystem lies in that the platform is
-not only designed to store the data, but also to support the creation of
-value based on the data assets and its related economy.
+Les caractéristiques des actifs des données sont d'abord établies en fonction des permissions,
+par exemple, l'autorisation de lire les données. Lorsque ce droit est déconnecté
+des données elles-mêmes, ils deviennent des actifs négociables et augmentent la valeur des données.
+des données. Cela peut être amplifié lorsque les données elles-mêmes peuvent être
+exécutables (un nouveau type de "code intelligent"), interagir entre elles et générer de nouvelles données.
+générer de nouvelles données. Cela laisse beaucoup de place pour imaginer la construction d'un nouvel environnement informatique sans confiance et à forte intensité de données,
+environnement informatique sans confiance et à forte intensité de données.
 
-The asset traits of the data are firstly established on the permissions,
-e.g. the permission to read the data. When this right is disconnected
-from the data itself, they become tradable assets and enlarge the value
-of the data. This can be amplified when the data itself can be
-executable (a new type of "Smart Code"), interact with each other, and
-generate new data. This creates a lot of room to imagine building a new,
-data-intensive, trustless computing environment.
-
-Secondly, the data permissions can be transferred cross-chain onto BSC
-and become digital assets there. This creates a variety of possibilities
-to integrate these assets with the existing DeFi protocols and models on
+Deuxièmement, les autorisations de données peuvent être transférées d'une chaîne à l'autre sur le BSC
+et y devenir des actifs numériques. Cela crée une variété de possibilités
+d'intégrer ces actifs avec les protocoles et modèles DeFi existants sur BSC.
 BSC.
 
-This gets even further enhanced by the smart contracts on BSC, which
-enjoy the same address format as accounts on the Greenfield blockchain
-and can be the owners of the data objects and inherit different
-permissions. This will unleash many new business opportunities based on
-the data and its operations.
+Ceci est encore amélioré par les contrats intelligents sur BSC, qui
+bénéficient du même format d'adresse que les comptes sur la blockchain Greenfield
+et peuvent être les propriétaires des objets de données et hériter de différentes
+permissions. Cela va libérer de nombreuses nouvelles opportunités commerciales basées sur les données et leurs opérations.
+les données et leurs opérations.
 
-### 7.1 Cross-Chain with BSC
+### 7.1 Chaînes croisées avec BSC
 
-The cross-chain model expects to achieve the following goals:
+Le modèle cross-chain vise à atteindre les objectifs suivants :
 
-- integratable with the existing systems: try to reuse the current
-  infrastructure and dApps as much as possible, such as NFT
-  Marketplace, data indexing, and blockchain explorers.
+- intégration aux systèmes existants : essayer de réutiliser l'infrastructure et les dApps
+  l'infrastructure et les dApps actuelles, telles que NFT Marketplace, l'indexation des données et les explorateurs de blockchain.
+  Marketplace, l'indexation des données et les explorateurs de blockchain.
 
-- programmable: dApps can define how they want to wrap the assets from Greenfield.
+- programmable : les dApps peuvent définir comment elles veulent envelopper les actifs de Greenfield.
 
-- secure and recoverable.
+- sécurisé et récupérable.
 
-The native cross-chain bridge is maintained and secured by the
-validators of Greenfield, via a new relayer system based on an
-aggregated multisig scheme (more details in the later sections).
-Greenfield validators will run the relayers to facilitate the high
-bandwidth and fast bridge.
+Le pont inter-chaînes natif est maintenu et sécurisé par les validateurs de Greenfield, via un système d'échange de données.
+validateurs de Greenfield, par l'intermédiaire d'un nouveau système de relais basé sur un
+schéma multisig agrégé (plus de détails dans les sections suivantes).
+Les validateurs de Greenfield feront fonctionner les relais pour faciliter le pont rapide et à large bande passante.
+bande passante et le pont rapide.
 
-BNB will be transferred from BSC to Greenfield as the first cross-chain
-action. The initial validator set of Greenfield at the genesis will
-first lock a certain amount of BNB into the "Greenfield Token Hub"
-contract on BSC. This contract will also be used as part of the native
-bridge for BNB transferring after the genesis. These initial locked BNB
-will be used as the self-stake of validators and early days gas fees.
+Le BNB sera transféré de BSC à Greenfield comme première action inter-chaînes.
+chaîne. L'ensemble initial de validateurs de Greenfield à la genèse va
+bloquera d'abord un certain montant de BNB dans le contrat "Greenfield Token Hub" sur la BSC.
+sur BSC. Ce contrat sera également utilisé dans le cadre de la passerelle native
+pour le transfert de BNB après la genèse. Ces BNB verrouillés initialement
+verrouillés seront utilisés pour le paiement des validateurs et des frais de gaz des premiers jours.
 
 ### 7.2 Framework
 
-<div align="center"><img src="./assets/7.1%20Cross-chain%20Architecture.jpg"  height="80%" width="80%"></div>
+<div align="center"><img src="./assets/7.1%20Cross-chain%20Architecture.jpg" height="80%" width="80%"></div>
 <div align="center"><i>Figure 7.1: Cross-chain Architecture</i></div>
 
-The bottom layer is a cross-chain **Communication Layer**, which focuses
-on primitive communication package handling and verification. The middle
-layer implements the **Resource Mirror**. It is responsible for managing
-the resource assets that are defined on Greenfield but mirrored onto
-BSC. The top layer is the **Application Layer**, which are the smart
-contracts implemented by community developers on BSC to operate the
-mirrored resource entities with their primitives; Greenfield does not have
-such an application layer since itself does not provide programmability yet.
-The real dApps will have some part in this Application Layer and also
-interact with Greenfield Core and all sorts of supporting infrastructures.
+La couche inférieure est une couche de communication inter-chaînes **Communication Layer**, qui se concentre
+sur la gestion et la vérification des paquets de communication primitifs. La couche intermédiaire
+couche intermédiaire met en œuvre le **Miroir de ressources**. Elle est responsable de la gestion
+les ressources définies sur Greenfield mais reflétées sur BSC.
+BSC. La couche supérieure est la **couche d'application**.
+contrats intelligents mis en œuvre par les développeurs de la communauté sur BSC pour exploiter les
+entités de ressources en miroir avec leurs primitives.
+Greenfield ne dispose pas d'une telle couche d'application puisqu'il ne fournit pas encore de programmabilité.
+Les véritables dApps auront une part dans cette couche d'application et interagiront également avec Noyau GreenField.
+interagir avec Noyau GreenField et toutes sortes d'infrastructures de soutien.
 
-Because of the asymmetric framework, BSC focuses more on the
-application/control plane, while Greenfield is the data plane. To avoid
-state racing, the following rules are introduced:
+En raison de la structure asymétrique, BSC se concentre davantage sur le plan d'application/contrôle, tandis que GreenField se concentre sur le plan de sécurité.
+application/plan de contrôle, tandis que Greenfield est le plan de données. Pour éviter
+la course aux états, les règles suivantes sont introduites :
 
-- Any resources that are initiated to create by BSC can only be controlled by BSC.
+- Toute ressource dont la création est initiée par BSC ne peut être contrôlée que par BSC.
 
-- Any resources that are controlled by BSC can not transfer control rights to Greenfield.
+- Toute ressource contrôlée par BSC ne peut pas transférer les droits de contrôle à Greenfield.
 
-- Any resources that are controlled by Greenfield can transfer control rights to BSC.
+- Toute ressource contrôlée par Greenfield peut transférer des droits de contrôle à BSC.
 
-### 7.3 Communication Layer
+### 7.3 Couche de communicationLa couche de communication est composée d'un ensemble de **Relais Greenfield** :
 
-The communication layer is composed of a set of **Greenfield Relayers**:
+- Chaque validateur doit faire fonctionner un relais. Chaque relais possède une clé privée BLS
+  avec l'adresse de la clé stockée sur la chaîne comme faisant partie des
+  de l'information obligatoire du validateur.
 
-- Each validator should run a relayer. Each relayer possesses a BLS
-  private key, with the address of the key stored on-chain as part
-  of the validator's mandatory information.
+- Le relais surveille tous les événements inter-chaînes qui se produisent sur la BSC et la blockchain Greenfield indépendamment.
+  blockchain Greenfield indépendamment. Après un nombre suffisant de blocs de
+  de confirmation pour atteindre la finalité, le relayeur signera un message par
+  par la clé BLS pour confirmer les événements, et diffuse l'attestation de signature
+  l'attestation de signature, qui est appelée "le vote", à travers un réseau p2p aux
+  d'autres relais.
 
-- The relayer watches all cross-chain events happen on BSC and the
-  Greenfield blockchain independently. After enough blocks of
-  confirmation to reach finality, the relayer will sign a message by
-  the BLS key to confirm the events, and broadcast the signing
-  attestment, which is called "the vote", through a p2p network to
-  other relayers.
+- Une fois qu'un nombre suffisant de votes a été collecté, le relayeur va
+  assemblera un paquet de transactions inter-chaînes et le soumettra au BSC ou au réseau Greenfield.
+  réseau Greenfield.
 
-- Once enough votes from the relayer are collected, the relayer will
-  assemble a cross-chain package transaction and submit it to BSC or
-  Greenfield network.
+### 7.4 Couche miroir de ressources
 
-### 7.4 Resource Mirror Layer
+#### 7.4.1 Miroir d'entité de ressource
 
-#### 7.4.1 Resource Entity Mirror
+Les objectifs de presque tous les paquets inter-chaînes sont de changer l'état des entités de ressources sur la blockchain Greenfield.
+l'état des entités ressources sur la blockchain Greenfield. Ainsi, les
+entités ressources ci-dessous devraient pouvoir être mises en miroir sur la BSC :
 
-The purposes of almost all the cross-chain packages are to change the
-state of the resource entities on the Greenfield blockchain. Thus the
-below resource entities should be able to be mirrored on BSC:
-
-1. Account
+1. Compte
 
 2. BNB
 
 3. Bucket
 
-4. Object
+4. Objet
 
-5. Group
+5. Groupe
 
-The account mapping is natural: as BSC and Greenfield use the same
-address scheme. The same address values on both sides mean the same
-account. They do not require an actual mirror.
+Le mappage des comptes est naturel : la BSC et Greenfield utilisent le même schéma d'adresses.
+schéma d'adresses. Les mêmes valeurs d'adresse des deux côtés signifient le même compte.
+compte. Ils n'ont pas besoin d'un miroir réel.
 
-BNB is a natively pegged token from the genesis of Greenfield. The
-"Token Hub" contract is a smart contract built on BSC to ensure
-that Greenfield cannot inflate BNB and secure the total circulation of
+BNB est un jeton nativement ancré depuis la genèse de Greenfield. Le contrat
+Le contrat "Token Hub" est un contrat intelligent construit sur BSC pour garantir que
+Greenfield ne puisse pas gonfler BNB et sécuriser la circulation totale de BNB.
 BNB.
 
-Bucket, Object, and Group are mirrored onto BSC as NFTs of a new BEP
-revised from the ERC-721 standard. These NFTs have corresponding
-metadata information for the resources. The ownerships of the NFTs on
-BSC stand for the ownerships of these resources on Greenfield. As these
-ownerships are not transferable on Greenfield, these NFTs are not
-transferable on BSC.
+Bucket, Object et Group sont reflétés sur BSC en tant que NFT d'un nouveau BEP
+révisée à partir de la norme ERC-721. Ces NFTs ont des métadonnées correspondantes
+des informations de métadonnées correspondantes pour les ressources. Les propriétaires des NFTs sur
+BSC correspondent aux propriétaires de ces ressources sur Greenfield. Comme ces
+propriétaires ne sont pas transférables sur Greenfield, ces NFT ne sont pas
+transférables sur BSC.
 
-#### 7.4.2 Cross-Chain Operating Primitives
+#### 7.4.2 Primitives d'exploitation inter-chaînes
 
-A few series of cross-chain primitives are defined for dApps to call to
-operate on these resource entities.
+Quelques séries de primitives inter-chaînes sont définies pour que les dApps les appellent afin de
+pour opérer sur ces entités de ressources.
 
-It is worth highlighting that smart contracts can call these primitives
-in a similar way as EOAs.
+Il convient de souligner que les contrats intelligents peuvent appeler ces primitives de la même manière que les EOA.
+de la même manière que les EOA.
 
-Accounts
+Comptes
 
-- create payment accounts on BSC
+- créer des comptes de paiement sur BSC
 
-BNB:
+BNB :
 
-- transfer bidirectionally between BSC and Greenfield among accounts
-  (including even payment accounts)
+- transfert bidirectionnel entre BSC et Greenfield entre les comptes
+  (y compris même les comptes de paiement)
 
-Bucket:
+Bucket :
 
-- create a bucket on BSC
+- création d'un bucket sur BSC
 
-- mirror bucket from Greenfield to BSC
+- miroir de Greenfield vers BSC
 
-Object:
+Objet :
 
-- mirror object from Greenfield to BSC
+- objet miroir de Greenfield à BSC
 
-- create an object on BSC
+- créer un objet sur BSC
 
-- grant/revoke permissions of objects on BSC to accounts/groups
+- accorder/révoquer les permissions des objets sur BSC aux comptes/groupes
 
-- copy objects on BSC
+- copier des objets sur BSC
 
-- Kick off the execution of an object on BSC
+- Lancer l'exécution d'un objet sur BSC
 
-- associate buckets to payment accounts on BSC
+- associer des buckets à des comptes de paiement sur BSC
 
-Group:
+Groupe :
 
-- mirror group from Greenfield to BSC
+- groupe miroir de Greenfield à BSC
 
-- create a group on BSC
+- créer un groupe sur BSC
 
-- change group members on BSC
+- changer les membres d'un groupe sur BSC
 
-- leave a group on BSC
+- quitter un groupe sur BSC
 
-Once these primitives are called by EOA or smart contracts, the
-predefined events will be emitted. Greenfield Relayers should pick up
-these events and relay them over to Greenfield and BSC. As the change
-will happen asynchronously, there will be specific cross-chain packages
-for acknowledgments or errors, which can trigger a callback. The caller
-of the primitives should pay the fees upfront for cross-chain operations
-and also for the potential callback. More details are discussed in Part 3.
+Une fois que ces primitives sont appelées par l'EOA ou les smart contracts, les
+événements prédéfinis seront émis. Les relais de Greenfield doivent capter
+ces événements et les relayer à Greenfield et BSC. Comme le changement
+se produira de manière asynchrone, il y aura des paquets spécifiques à travers la chaîne
+pour les accusés de réception ou les erreurs, qui peuvent déclencher un rappel. L'appelant
+des primitives devrait payer les frais à l'avance pour les opérations inter-chaînes
+et aussi pour le rappel potentiel. Plus de détails sont abordés dans la partie 3.
 
-## 8 "Not" Ending for the Design
+## 8 "Pas" de fin pour la conception
 
-Many details are not covered in Part 1. While some topics will be added
-and expanded in Part 3, some are very strategic items that shoot too far
-for the team to consider now.
+De nombreux détails ne sont pas couverts dans la partie 1. Alors que certains sujets seront ajoutés
+seront ajoutés et développés dans la partie 3, certains sont des éléments très stratégiques qui vont trop loin
+pour que l'équipe les prenne en compte maintenant.
 
-For example, the "execute" trait of a data object. That concept points
-out that some data are runnable programs. Greenfield may create a more
-transparent computing environment. Users are comfortable using or
-devoting their data to particular programs stored on Greenfield because
-they can verify the program, they do not have to worry about the program
-may change after their confirmation, and they know the program can only
-run with their data in a trustful environment provided by Greenfield.
+Par exemple, le trait "execute" d'un objet de données. Ce concept indique
+que certaines données sont des programmes exécutables. Greenfield peut créer un environnement informatique
+environnement informatique plus transparent. Les utilisateurs sont à l'aise pour utiliser ou
+ou de consacrer leurs données à des programmes particuliers stockés sur Greenfield parce que
+ils peuvent vérifier le programme, ils n'ont pas à s'inquiéter que le programme
+peut changer après leur confirmation, et ils savent que le programme peut seulement
+s'exécuter avec leurs données dans un environnement de confiance fourni par Greenfield.
 
-This particular function, together with other new features will be
-researched and studied with the future development of BNB Greenfield.
+Cette fonction particulière, ainsi que d'autres nouvelles fonctionnalités, seront recherchées et étudiées dans le futur.
+recherchées et étudiées dans le cadre du développement futur de BNB Greenfield.
 
-### 8.1 Acknowledgement
+### 8.1 Remerciements
 
-We'd like to especially thank the efforts and ideas from the below teams
-and communities (in no particular order and definitely not an
-exhaustive, full list). BNB Greenfield stands on these giants' shoulders
-to build.
+Nous tenons à remercier tout particulièrement les efforts et les idées des équipes et des communautés suivantes (sans ordre particulier et certainement pas par ordre d'importance)
+et communautés ci-dessous (sans ordre particulier et certainement pas une
+liste exhaustive et complète). BNB Greenfield s'appuie sur les épaules de ces géants
+pour construire.
 
 1. Ethereum
 
@@ -931,12 +905,12 @@ to build.
 
 3. Superfluid
 
-4. Amazon Web Services
+4. Services Web d'Amazon
 
-5. MinIO, and other open-source storage systems
+5. MinIO, et autres systèmes de stockage open-source
 
-6. Filecoin, Arweave, StorJ, and other decentralized storage networks
+6. Filecoin, Arweave, StorJ, et autres réseaux de stockage décentralisés
 
-7. Bitcoin, and
+7. Bitcoin, et
 
-8. all the other folks and projects that strive for the new Web3 economy
+8. toutes les autres personnes et projets qui luttent pour la nouvelle économie du Web3.

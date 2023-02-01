@@ -1,17 +1,17 @@
-# Ending
+# Fin
 
-Greenfield is a giant economy and ecosystem. There are still important components missing from the current versions,
-e.g. the execution environment for the stored object to run. There are also features and interfaces not explained
-clearly in all the details. So the real ending hasn't come as this paper will be revised as time goes on.
+Greenfield est une économie et un écosystème géant. Il manque encore des composants importants dans les versions actuelles,
+par exemple l'environnement d'exécution pour que l'objet stocké s'exécute. Il y a aussi des fonctionnalités et des interfaces qui ne sont pas expliquées
+clairement dans tous les détails. La véritable fin n'est donc pas encore arrivée puisque ce document sera révisé au fil du temps.
 
-Although Greenfield, especially with its handy infrastructure, efficient performance, convenient APIs, and strong
-cross-chain integration with a large DeFi system and compatibility, provides possibilities for new models of Web3, its
-success largely depends on the application layer innovations from the developers and community. The openness of
-Greenfield should be ensured on different levels of the systems and management.
+Bien que Greenfield, en particulier avec son infrastructure pratique, ses performances efficaces, ses API pratiques et sa forte intégration inter-chaînes avec une grande société de gestion de la propriété intellectuelle, n'a pas été en mesure d'atteindre ses objectifs.
+l'intégration transversale avec un grand système DeFi et la compatibilité, offre des possibilités pour de nouveaux modèles de Web3.
+son succès dépend en grande partie des innovations apportées par les développeurs et la communauté au niveau de la couche applicative. L'ouverture de
+Greenfield doit être assurée à différents niveaux des systèmes et de la gestion.
 
-At the end of the paper, we'd like to thank again the efforts and ideas from the below teams and communities (in no
-particular order and definitely not an exhaustive, full list). BNB Greenfield stands on these giants' shoulders to
-build.
+A la fin de ce document, nous aimerions remercier encore une fois les efforts et les idées des équipes et des communautés ci-dessous (sans ordre particulier et certainement pas de façon exhaustive).
+(sans ordre particulier et certainement pas une liste complète et exhaustive). BNB Greenfield s'appuie sur les épaules de ces géants pour
+construire.
 
 1. Ethereum
 
@@ -19,14 +19,14 @@ build.
 
 3. Superfluid
 
-4. Amazon Web Services
+4. Services Web d'Amazon
 
-5. MinIO, and other open-source storage systems
+5. MinIO, et autres systèmes de stockage open-source
 
-6. Filecoin, Arweave, StorJ, and other decentralized storage networks
+6. Filecoin, Arweave, StorJ, et autres réseaux de stockage décentralisés
 
-7. Bitcoin, and
+7. Bitcoin, et
 
-8. all the other folks and projects that strive for the new Web3 economy
+8. toutes les autres personnes et tous les projets qui luttent pour la nouvelle économie du Web3.
 
-Hope everyone enjoys this journey!
+J'espère que vous apprécierez ce voyage !

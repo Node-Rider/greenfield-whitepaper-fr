@@ -1,268 +1,268 @@
-# Part 3 Simplified Technical Specifications
+## Partie 3 : Spécifications techniques simplifiées
 
-## Table of Content
+## Table des matières
 
-- [14 Ecosystem Players](#14-ecosystem-players)
-  - [14.1 Greenfield Validators](#141-greenfield-validators)
-  - [14.2 Storage Providers (SPs)](#142-storage-providers-sps)
-  - [14.3 Greenfield dApps](#143-greenfield-dapps)
-- [15 User Identifier](#15-user-identifier)
-  - [15.1 User Balance](#151-user-balance)
-- [16 Greenfield Blockchain](#16-greenfield-blockchain)
-  - [16.1 Token Economics](#161-token-economics)
-  - [16.2 Consensus and Validator Election](#162-consensus-and-validator-election)
-  - [16.3 Governance Transactions](#163-governance-transactions)
-    - [16.3.1 Create and Edit Validator](#1631-create-and-edit-validator)
-    - [16.3.2 Staking Reward Distribution](#1632-staking-reward-distribution)
-    - [16.3.3 Create Storage Provider](#1633-create-storage-provider)
-    - [16.3.4 Remove Storage Provider](#1634-remove-storage-provider)
-- [17 Storage MetaData Models](#17-storage-metadata-models)
+- [14 Acteurs de l'écosystème](#14-acteurs-de-lécosystème)
+  - [14.1 Greenfield Validators](#141-validateurs-greenfield)
+  - [14.2 Fournisseurs de stockage (SP)](#142-prestataires-de-services-de-stockage-ps)
+  - [14.3 Greenfield dApps](#143-les-dapps-greenfield)
+- [15 Identifiant de l'utilisateur](#15-identifiant-de-lutilisateur)
+  - [15.1 Solde utilisateur](#151-solde-de-lutilisateur)
+- [16 Greenfield Blockchain](#16-blockchain-greenfield)
+  - [16.1 Économie des jetons](#161-économie-des-jetons)
+  - [16.2 Consensus et élection du validateur](#162-consensus-et-élection-du-validateur)
+  - [16.3 Transactions de gouvernance](#163-transactions-de-gouvernance)
+    - [16.3.1 Créer et modifier le validateur](#1631-créer-et-modifier-un-validateur)
+    - [16.3.2 Distribution des récompenses de jalonnement](#1632-distribution-des-récompenses-de-jalonnement)
+    - [16.3.3 Créer un fournisseur de stockage](#1633-create-storage-provider)
+    - [16.3.4 Supprimer le fournisseur de stockage](#1634-supprimer-un-fournisseur-de-stockage)
+- [17 Storage MetaData Models](#17-modèles-de-métadonnées-de-stockage)
   - [17.1 Bucket](#171-bucket)
-  - [17.2 Object](#172-object)
-  - [17.3 Group](#173-group)
+  - [17.2 Objet](#172-objet)
+  - [17.3 Groupe](#173-groupe)
   - [17.4 Permission](#174-permission)
-    - [17.4.1 Ownership](#1741-ownership)
-    - [17.4.2 Permission Definitions](#1742-permission-definitions)
-    - [17.4.3 Permission Removal](#1743-permission-removal)
-    - [17.4.4 Examples](#1744-examples)
-- [18 Payload Storage Management](#18-payload-storage-management)
+    - [17.4.1 Propriété](#1741-propriétaire)
+    - [17.4.2 Définitions de la permission](#1742-définitions-des-permissions)
+    - [17.4.3 Suppression de la permission](#1743-suppression-de-permissions)
+    - [17.4.4 Exemples](#1744-exemples)
+- [18 Gestion du stockage des charges utiles](#18-gestion-du-stockage-des-charges-utiles)
   - [18.1 Segments](#181-segments)
-  - [18.2 Erasure Code and Data Redundancy](#182-erasure-code-and-data-redundancy)
-    - [18.2.1 Data Redundancy Design](#1821-data-redundancy-design)
-    - [18.2.2 Erasure Code](#1822-erasure-code)
-      - [18.2.2.1 Encoding](#18221-encoding)
-      - [18.2.2.2 Decoding: Data Recovery](#18222-decoding-data-recovery)
-- [19 Data Availability Challenge](#19-data-availability-challenge)
-  - [19.1 The Initial Data Integrity and Redundancy Metadata](#191-the-initial-data-integrity-and-redundancy-metadata)
-  - [19.2 Data Availability Challenge Process](#192-data-availability-challenge-process)
-- [20 Storage Transactions](#20-storage-transactions)
-- [21 Billing and Payment](#21-billing-and-payment)
-  - [21.1 Concepts and Formulas](#211-concepts-and-formulas)
-    - [21.1.1 Terminology](#2111-terminology)
-    - [21.1.2 Formula](#2112-formula)
-    - [21.1.3 Types and Interfaces](#2113-types-and-interfaces)
-  - [21.2 Key Workflow](#212-key-workflow)
-    - [21.2.1 Deposit and Withdrawal](#2121-deposit-and-withdrawal)
-    - [21.2.2 Payment Stream](#2122-payment-stream)
-    - [21.2.3 Forced Settlement](#2123-forced-settlement)
-    - [21.2.4 Payment Account](#2124-payment-account)
-    - [21.2.5 Account Freeze and Resume](#2125-account-freeze-and-resume)
-    - [21.2.6 Storage Fee Price and Adjustment](#2126-storage-fee-price-and-adjustment)
-- [22 Cross-Chain Models](#22-cross-chain-models)
-  - [22.1 Communication Channels and Packages](#221-communication-channels-and-packages)
-    - [22.1.1 Vote Poll](#2211-vote-poll)
-    - [22.1.2 Channel and Sequence](#2212-channel-and-sequence)
-    - [22.1.3 Reliability Protocol](#2213-reliability-protocol)
-    - [22.1.4 Validator Update](#2214-validator-update)
-  - [22.2 Economic](#222-economic)
-    - [22.2.1 Fee and Reward of Cross-Chain Packages](#2221-fee-and-reward-of-cross-chain-packages)
-    - [22.2.2 Race to Deliver Cross-Chain Packages](#2222-race-to-deliver-cross-chain-packages)
-    - [22.2.3 Callbacks and Limited Gas](#2223-callbacks-and-limited-gas)
-    - [22.2.4 Cross-Chain Infrastructure Contracts on BSC](#2224-cross-chain-infrastructure-contracts-on-bsc)
-  - [22.3 Error and Failure Handling](#223-error-and-failure-handling)
-- [23 SP APIs](#23-sp-apis)
-  - [23.1 Universal Endpoint](#231-universal-endpoint)
-    - [23.1.1 URI Standard](#2311-uri-standard)
-    - [23.1.2 HTTPS REST API](#2312-https-rest-api)
+  - [18.2 Code d'effacement et redondance des données](#182-code-deffacement-et-redondance-des-données)
+    - [18.2.1 Conception de la redondance des données](#1821-conception-de-la-redondance-des-données)
+    - [18.2.2 Code d'effacement](#1822-code-deffacement)
+      - [18.2.2.1 Codage](#18221-encodage)
+      - [18.2.2.2 Décodage : Récupération des données](#18222-décodage--récupération-des-données)
+- [19 Défi de la disponibilité des données](#19-le-défi-de-la-disponibilité-des-données)
+  - [19.1 Les métadonnées initiales d'intégrité et de redondance des données](#191-the-initial-data-integrity-and-redundancy-metadata)
+  - [19.2 Processus de contestation de la disponibilité des données](#192-data-availability-challenge-process)
+- [20 Storage Transactions](#20-transactions-de-stockage)
+- [21 Facturation et paiement](#21-facturation-et-paiement)
+  - [21.1 Concepts et formules](#211-concepts-et-formules)
+    - [21.1.1 Terminologie](#2111-terminologie)
+    - [21.1.2 Formule](#2112-formule)
+    - [21.1.3 Types et interfaces](#2113-types-et-interfaces)
+  - [21.2 Flux de travail sur les clés](#212-flux-de-travail-clé)
+    - [21.2.1 Dépôt et retrait](#2121-dépôt-et-retrait)
+    - [21.2.2 Flux de paiement](#2122-flux-de-paiement)
+    - [21.2.3 Règlement forcé](#2123-règlement-forcé)
+    - [21.2.4 Compte de paiement](#2124-compte-de-paiement)
+    - [21.2.5 Gel et reprise du compte](#2125-gel-et-reprise-de-compte)
+    - [21.2.6 Prix et ajustement de la redevance de stockage](#2126-prix-et-ajustement-des-frais-de-stockage)
+- [22 Modèles inter-chaînes](#22-modèles-inter-chaînes)
+  - [22.1 Canaux de communication et paquets](#221-canaux-et-paquets-de-communication)
+    - [22.1.1 Vote par sondage](#2211-vote-par-sondage)
+    - [22.1.2 Canal et séquence](#2212-canal-et-séquence)
+    - [22.1.3 Protocole de fiabilité](#2213-protocole-de-fiabilité)
+    - [22.1.4 Mise à jour du validateur](#2214-mise-à-jour-du-validateur)
+  - [22.2 Economique](#222-économique)
+    - [22.2.1 Frais et récompense des paquets inter-chaînes](#2221-frais-et-récompense-des-paquets-inter-chaînes)
+    - [22.2.2 Course à la livraison de paquets inter-chaînes](#2222-course-pour-la-livraison-de-paquets-inter-chaînes)
+    - [22.2.3 Rappels et gaz limité](#2223-callbacks-et-gaz-limité)
+    - [22.2.4 Contrats d'infrastructure inter-chaînes sur BSC](#2224-contrats-dinfrastructure-inter-chaînes-sur-bsc)
+  - [22.3 Gestion des erreurs et des défaillances](#223-traitement-des-erreurs-et-des-défaillances)
+- [23 API de la PS](#23-api-de-sp)
+  - [23.1 Point de terminaison universel](#231-point-daccès-universel)
+    - [23.1.1 URI standard](#2311-norme-uri)
+    - [23.1.2 API REST HTTPS](#2312-https-rest-api)
     - [23.1.3 P2P RPC](#2313-p2p-rpc)
-  - [23.2 List Operations](#232-list-operations)
+  - [23.2 Opérations de liste](#232-opérations-de-liste)
 
-This part of the whitepaper is the most detailed so it is subject to frequent changes. It should be highlighted here and
-widely understood that the content in the part will be continuously updated, much more frequently than the other parts,
-with either new sections added or existing sections revised.
+Cette partie du livre blanc est la plus détaillée et est donc sujette à de fréquentes modifications. Il convient de souligner ici et de bien
+largement compris que le contenu de cette partie sera continuellement mis à jour, beaucoup plus fréquemment que les autres parties,
+avec l'ajout de nouvelles sections ou la révision des sections existantes.
 
-## 14 Ecosystem Players
+## 14 Acteurs de l'écosystème
 
-There are several player roles for the whole Greenfield ecosystem.
+Il existe plusieurs rôles d'acteurs pour l'ensemble de l'écosystème Greenfield.
 
 <div align="center"><img src="./assets/14.1%20All%20Players%20of%20Greenfield.jpg"  height="80%" width="80%"></div>
 <div align="center"><i>Figure 14.1: All Players of Greenfield</i></div>
 
-### 14.1 Greenfield Validators
+### 14.1 Validateurs Greenfield
 
-As a PoS blockchain, the Greenfield blockchain has its own validators.
-These validators are elected based on the Proof-of-Stake logic.
+En tant que blockchain PoS, la blockchain Greenfield a ses propres validateurs.
+Ces validateurs sont élus sur la base de la logique de preuve d'acceptation.
 
-These validators are responsible for the security of the Greenfield
-blockchain. They get involved in the governance and staking of the
-blockchain. They form a P2P network that is similar to other PoS
-blockchain networks.
+Ces validateurs sont responsables de la sécurité de la blockchain Greenfield.
+blockchain. Ils sont impliqués dans la gouvernance et le jalonnement de la
+blockchain. Ils forment un réseau P2P qui est similaire à d'autres réseaux PoS
+blockchain.
 
-Meanwhile, they accept and process transactions to allow users to
-operate their objects stored on Greenfield. They maintain the metadata
-of Greenfield as the blockchain state, which is the control panel for
-both Storage Providers (SPs) and users. These two parties use and update
-these states to operate the object storage.
+En même temps, ils acceptent et traitent les transactions pour permettre aux utilisateurs de
+d'exploiter leurs objets stockés sur Greenfield. Ils maintiennent les métadonnées
+de Greenfield comme l'état de la blockchain, qui est le panneau de contrôle pour les
+fournisseurs de stockage (SP) et des utilisateurs. Ces deux parties utilisent et mettent à jour
+ces états pour faire fonctionner le stockage d'objets.
 
-Greenfield validators also have the obligation to run the relayer system
-for cross-chain communication with BSC.
+Les validateurs de Greenfield sont également tenus d'exploiter le système de relais
+pour la communication inter-chaînes avec le BSC.
 
-The network topology of Greenfield validators is similar to the existing
-secure validator setup of PoS blockchains. "Sentry Nodes" are used to
-defend against DDoS and provide a secure private network, as shown in
-the below diagram.
+La topologie du réseau des validateurs Greenfield est similaire à la configuration existante des validateurs sécurisés de la blockchain PoS.
+validateurs sécurisés existants des blockchains PoS. Les "Sentry Nodes" sont utilisés pour
+défendre contre les DDoS et fournir un réseau privé sécurisé, comme le montre le schéma ci-dessous.
+le schéma ci-dessous.
 
 <div align="center"><img src="./assets/14.2%20Greenfield%20Blockchain%20Network.jpg"  height="80%" width="80%"></div>
 <div align="center"><i>Figure 14.2: Greenfield Blockchain Network</i></div>
 
-### 14.2 Storage Providers (SPs)
+### 14.2 Prestataires de services de stockage (PS)
 
-Storage Providers are professional individuals and organizations who run
-a series of services to provide data services based on the Greenfield
+Les fournisseurs de stockage sont des personnes et des organisations professionnelles qui gèrent
+une série de services pour fournir des services de données basés sur la blockchain Greenfield.
 blockchain.
 
-Each SP should have a good connection with the Greenfield network by
-maintaining its own local full node so that it can watch the state
-change directly, index data properly, and send transaction requests
-timely.
+Chaque SP doit avoir une bonne connexion avec le réseau Greenfield en
+maintenant son propre nœud complet local afin qu'il puisse regarder l'état
+directement l'évolution de l'état, indexer les données correctement et envoyer des demandes de transaction
+en temps voulu.
 
-Different SPs are interconnected as well via both REST APIs and a P2P
-network while providing services to users by responding to their
-requests in REST APIs or P2P RPCs.
+Les différents PS sont également interconnectés via des API REST et un réseau P2P.
+tout en fournissant des services aux utilisateurs en répondant à leurs demandes dans les API REST ou le réseau P2P.
+demandes dans les API REST ou les RPC P2P.
 
-The typical network topology of connected SPs is as the below figure.
+La topologie typique d'un réseau de PS connectés est présentée dans la figure ci-dessous.
 
 <div align="center"><img src="./assets/14.3%20Greenfield%20Storage%20Provider%20Network.jpg" height="80%" width="80%"></div>
 <div align="center"><i>Figure 14.3: Greenfield Storage Provider Network</i></div>
 
-SPs may provide plenty of convenient services for users and dApps to get
-data about Greenfield.
+Les PS peuvent fournir de nombreux services pratiques pour que les utilisateurs et les dApps obtiennent
+données sur Greenfield.
 
-### 14.3 Greenfield dApps
+### 14.3 Les dApps Greenfield
 
-Greenfield dApps are applications that provide functions based on
-Greenfield storage and its related economic traits to solve some
-problems of their users.
+Les dApps Greenfield sont des applications qui fournissent des fonctions basées sur le stockage Greenfield et ses caractéristiques économiques.
+fonctions basées sur le stockage Greenfield et les caractéristiques économiques qui y sont liées pour résoudre certains
+problèmes de leurs utilisateurs.
 
-These dApps may interact with Greenfield or interact with both the
-Greenfield blockchain and the SPs, or most commonly, interact with
-Greenfield blockchain, SPs, and BSC.
+Ces dApps peuvent interagir avec Greenfield ou interagir à la fois avec la blockchain Greenfield et les SP.
+Greenfield blockchain et les Fournisseurs de Stockage, ou le plus souvent, interagir avec
+la blockchain Greenfield, les PS et la BSC.
 
-The dApps can read data from all these data sources to facilitate
-users' interaction with the smart contracts and navigate them through
-the different kinds of use case scenarios.
+Les dApps peuvent lire les données provenant de toutes ces sources de données pour faciliter
+l'interaction des utilisateurs avec les contrats intelligents et les faire naviguer à travers
+les différents types de scénarios d'utilisation.
 
-In Greenfield, similar to other decentralized environments, dApps don't
-need to ask for registration but communicate with users' wallets to get
-users' instructions and other information.
+Dans Greenfield, comme dans d'autres environnements décentralisés, les dApps n'ont pas besoin de demander un enregistrement, mais communiquent avec les utilisateurs.
+n'ont pas besoin de demander une inscription, mais communiquent avec les portefeuilles des utilisateurs pour obtenir des instructions et d'autres informations.
+les instructions et autres informations des utilisateurs.
 
-## 15 User Identifier
+## 15 Identifiant de l'utilisateur
 
-Each user has their own address as the identifier for his/her account.
-The addresses can create objects to store on Greenfield, bear and manage
-the permissions, and pay fees.
+Chaque utilisateur a sa propre adresse comme identifiant pour son compte.
+Les adresses peuvent créer des objets à stocker sur Greenfield, supporter et gérer les
+les permissions, et payer des frais.
 
-Greenfield defines its account in the same format as BSC and Ethereum.
-It starts with ECDSA secp256k1 curve for keys and is compliant with
-[EIP84](https://github.com/ethereum/EIPs/issues/84) for
-full
+Greenfield définit son compte dans le même format que BSC et Ethereum.
+Il commence avec la courbe ECDSA secp256k1 pour les clés et est conforme à
+[EIP84] (https://github.com/ethereum/EIPs/issues/84) pour les clés.
+complet
 [BIP44](https://github.com/bitcoin/bips/blob/master/bip-0044.mediawiki)
-paths. The root HD path for Greenfield-based accounts is
-m/44'/60'/0'/0. In the readable presentation, a Greenfield address is
-a 42-character hexadecimal string derived from the last 20 bytes of the
-public key of the controlling account with 0x as the prefix.
+chemins. Le chemin du disque dur racine pour les comptes basés sur Greenfield est le suivant
+m/44'/60'/0'/0. Dans la présentation lisible, l'adresse Greenfield est la suivante
+une chaîne hexadécimale de 42 caractères, dérivée des 20 derniers octets de la clé publique
+clé publique du compte de contrôle avec 0x comme préfixe.
 
-With this compatible address scheme, the users can reuse existing
-accounts and infrastructure from BSC on Greenfield. For example, they
-can use TrustWallet and Metamask (or other compatible wallets) to
-deposit their BNB from BSC to Greenfield and interact with dApps on
-Greenfield. It is also easy to identify the same owner by referring to
-the same addresses on both BSC and Greenfield.
+Avec ce schéma d'adresse compatible, les utilisateurs peuvent réutiliser les comptes et l'infrastructure existants de BSC sur Greenfield.
+comptes et l'infrastructure existants de BSC sur Greenfield. Par exemple, ils
+peuvent utiliser TrustWallet et Metamask (ou d'autres portefeuilles compatibles) pour
+déposer leur BNB de BSC à Greenfield et interagir avec les dApps sur Greenfield.
+Greenfield. Il est également facile d'identifier le même propriétaire en se référant aux
+les mêmes adresses sur BSC et Greenfield.
 
-Greenfield blockchain is an application-specific chain without EVM, the
-transaction data structure and API are different from BSC. Greenfield
-will not support full functions in existing wallets, e.g. Transfer, Send
-Transactions, etc. But it will enable the existing wallets to sign
-transactions with the
-[EIP712](https://eips.ethereum.org/EIPS/eip-712) standard.
-This standard allows wallets to display data in signing prompts in a
-structured and readable format. This is an
-[example](https://medium.com/metamask/eip712-is-coming-what-to-expect-and-how-to-use-it-bb92fd1a7a26)
-of how to use it in Metamask. Eventually, wallets will start supporting
-Greenfield directly.
+La blockchain Greenfield est une chaîne spécifique à une application sans EVM.
+structure des données de transaction et l'API sont différentes de celles de la BSC. Greenfield
+ne supportera pas toutes les fonctions des portefeuilles existants, par exemple le transfert, l'envoi de transactions, etc.
+Transactions, etc. Mais elle permettra aux portefeuilles existants de signer des
+transactions avec le
+Mais il permettra aux portefeuilles existants de signer des transactions avec la norme [EIP712] (https://eips.ethereum.org/EIPS/eip-712).
+Cette norme permet aux portefeuilles d'afficher les données dans les invites de signature dans un format structuré et lisible.
+format structuré et lisible. Il s'agit d'un
+[exemple](https://medium.com/metamask/eip712-is-coming-what-to-expect-and-how-to-use-it-bb92fd1a7a26)
+de comment l'utiliser dans Metamask. À terme, les portefeuilles commenceront à prendre en charge
+Greenfield directement.
 
-### 15.1 User Balance
+### 15.1 Solde de l'utilisateur
 
-The user identifier is mapped to an account in the ledger of Greenfield.
-The account can hold a balance of BNB. These BNBs can be used to
-participate in staking, pay for gas fees of Greenfield transactions, and
-pay for Greenfield services.
+L'identifiant de l'utilisateur est associé à un compte dans le grand livre de Greenfield.
+Le compte peut contenir un solde de BNB. Ces BNB peuvent être utilisés pour
+participer au jalonnement, payer les frais de gaz des transactions de Greenfield, et
+payer les services de Greenfield.
 
-This balance can be added via native BNB transfer on Greenfield, or
-cross-chain transfer between Greenfield and BSC.
+Ce solde peut être ajouté via un transfert de BNB natif sur Greenfield, ou
+transfert cross-chain entre Greenfield et BSC.
 
-## 16 Greenfield Blockchain
+## 16 Blockchain Greenfield
 
-As an independent blockchain, Greenfield blockchain is built on Cosmos
-SDK and the Tendermint library. It runs in a similar fashion as other
-PoS blockchains that are based on the same framework.
+En tant que blockchain indépendante, la blockchain Greenfield est construite sur Cosmos
+SDK et la bibliothèque Tendermint. Elle fonctionne de la même manière que les autres
+Elle fonctionne de la même manière que les autres blockchains PoS qui sont basées sur le même cadre.
 
-### 16.1 Token Economics
+### 16.1 Économie des jetons
 
-BNB remains the main utility token on Greenfield.
+BNB reste le principal jeton de service sur Greenfield.
 
-BNB can be transferred from BSC to Greenfield blockchain, and vice
-versa. It will be used to:
+BNB peut être transféré de la BSC à la blockchain Greenfield, et vice versa.
+versa. Il sera utilisé pour :
 
-1. self-delegate and delegate as stake, which can earn gas rewards and
-   may suffer slash for improper behaviors.
+1. s'auto-déléguer et déléguer en tant que mise, ce qui permet de gagner des récompenses en gaz et
+   peuvent subir des coupures pour des comportements inappropriés.
 
-2. pay the gas to submit transactions on the Greenfield blockchain,
-   which includes Greenfield local transactions or cross-chain
-   transactions between Greenfield and BSC. This is charged at the
-   time of transaction submission and dispatched to Greenfield
-   validators, and potentially Greenfield Storage Providers for some
+2. payer le gaz pour soumettre des transactions sur la blockchain Greenfield,
+   qui comprend les transactions locales de Greenfield ou les transactions inter-chaînes
+   entre Greenfield et BSC. Cette somme est facturée au
+   au moment de la soumission de la transaction et envoyé aux validateurs de Greenfield
+   validateurs Greenfield, et potentiellement aux fournisseurs de stockage Greenfield pour certaines
    transactions.
 
-3. pay fees for the object storage and download bandwidth data package.
-   This is charged as time goes and dispatched to Greenfield Storage Providers.
+3. payer les frais pour le stockage des objets et le paquet de données de la bande passante de téléchargement.
+   Ces frais sont facturés au fur et à mesure et envoyés aux fournisseurs de stockage Greenfield.
 
-### 16.2 Consensus and Validator Election
+### 16.2 Consensus et élection du validateur
 
-As Proof-of-Stake is adopted in Greenfield, there will be a founding
-validator set in the genesis state. These validators deposit their BNBs
-on a BSC smart contract, which would be locked as their stakes. The new
-validator can be voted by the majority of the current validators to join
-in and gets elected as the active validator based on its delegation
-size. Here are the steps for becoming a new validator:
+Comme la méthode Proof-of-Stake est adoptée dans Greenfield, il y aura un ensemble de validateurs fondateurs dans l'état genesis.
+validateur fondateur dans l'état de genèse. Ces validateurs déposent leurs BNBs
+sur un contrat intelligent BSC, qui seront verrouillés comme leurs enjeux. Le nouveau
+validateur peut être élu par la majorité des validateurs actuels pour les rejoindre.
+et est élu comme validateur actif en fonction de la taille de sa délégation.
+taille. Voici les étapes à suivre pour devenir un nouveau validateur :
 
-1. Self-delegator grants delegate authorization to the gov module account. Delegate
-   authorization allows the grantee to execute MsgDelegate for the granter.
+1. L'autodélégataire accorde une autorisation au délégué pour le compte du module gov. L'autorisation du délégué
+   permet au bénéficiaire d'exécuter MsgDelegate pour le compte du délégant.
 
-2. Initiate a proposal to become a validator.
+2. Initier une proposition pour devenir un valideur.
 
-3. Wait for the current validators to vote on this proposal.
+3. Attendre que les validateurs actuels votent sur cette proposition.
 
-4. Once the proposal has passed, the new validator will be created automatically.
+4. Une fois la proposition adoptée, le nouveau validateur sera créé automatiquement.
 
-A validator may not always be a member of the active validator set,
-which will propose and produce blocks. Only the ones elected by the rank
-of delegation size will be the active validators. The election happens
-every block. The maximum number of active validators is fixed and governed by
-the existing validators.
+Un validateur peut ne pas toujours être membre de l'ensemble des validateurs actifs,
+qui proposera et produira des blocs. Seuls ceux qui sont élus par le rang
+de la taille de la délégation seront les validateurs actifs. L'élection a lieu
+à chaque bloc. Le nombre maximum de validateurs actifs est fixé et régi par
+les validateurs existants.
 
-It should be highlighted that the Greenfield validators are separated
-from the Greenfield Storage Providers. The Greenfield validators are
-responsible for generating Greenfield blocks, maintaining the Greenfield
-blockchain security, challenging the data availability, and maintaining
-cross-chain communication; while the Storage Providers are responsible
-for storing the data objects and responding to downloading requests.
-There is no strong binding relationship between them, although the same
-organization can play two roles at the same time.
+Il convient de souligner que les validateurs de Greenfield sont séparés
+des fournisseurs de stockage Greenfield. Les validateurs Greenfield sont
+Les validateurs Greenfield sont responsables de la génération de blocs Greenfield
+la sécurité de la blockchain Greenfield, de vérifier la disponibilité des données et de maintenir la communication entre les chaînes.
+la disponibilité des données et de la communication entre les chaînes.
+de stocker les objets de données et de répondre aux demandes de téléchargement.
+Il n'y a pas de lien fort entre eux, bien que la même organisation puisse jouer deux rôles en même temps.
+même organisation peut jouer deux rôles en même temps.
 
-### 16.3 Governance Transactions
+### 16.3 Transactions de gouvernance
 
-#### 16.3.1 Create and Edit Validator
+#### 16.3.1 Créer et modifier un validateur
 
-To become a validator, the runner must grant the delegate authorization to the
-gov module account with enough BNB, and then a proposal should be
-submitted to get votes from the existing validators. After the proposal is passed,
-the self-delegation would be done by the gov module, and the validator
-would be created automatically. The self delegation is required,
-and open delegation from other delegators will also be supported later.
+Pour devenir un validateur, le runner doit accorder au délégué une autorisation sur le compte du module
+compte du module gov avec suffisamment BNB, puis une proposition doit être
+soumise pour obtenir les votes des validateurs existants. Après l'adoption de la proposition,
+l'auto-délégation sera faite par le module gov, et le validateur
+sera créé automatiquement. L'autodélégation est obligatoire,
+et la délégation ouverte d'autres délégataires sera également prise en charge ultérieurement.
 
-The validator creation logic should be changed later to reduce the
-concern of Cartels.
+La logique de création du validateur devrait être modifiée ultérieurement pour réduire le problème des cartels.
+préoccupation des cartels.
 
 Message MsgCreateValidator:
 
@@ -281,9 +281,9 @@ type MsgCreateValidator struct {
 }
 ```
 
-A validator can edit its description and commission by submitting an
-"Edit Validator" transaction. The CommissionRate will be verified as a
-proper number.
+Un validateur peut modifier sa description et sa commission en soumettant une transaction de type "Edit Validator".
+transaction "Edit Validator". Le taux de commission sera vérifié comme étant un
+nombre approprié.
 
 Message MsgEditValidator:
 
@@ -298,145 +298,145 @@ type MsgEditValidator struct {
 }
 ```
 
-#### 16.3.2 Staking Reward Distribution
+#### 16.3.2 Distribution des récompenses de jalonnement
 
-Validators will receive transaction fees as the staking reward. The
-rewards will be distributed passively. This is different from BNB Beacon
-Chain, where the system will distribute the rewards automatically.
-Validators can submit withdrawal requests to get all the up-to-date
-transaction rewards, and when validators change commission rates or
-quit, all the transaction rewards that are not withdrawn will also be
-distributed.
+Les validateurs recevront des frais de transaction comme récompense pour le jalonnement. Les récompenses de
+récompenses seront distribuées de manière passive. Ceci est différent de la chaîne de balises BNB
+Chain, où le système distribue les récompenses automatiquement.
+Les validateurs peuvent soumettre des demandes de retrait pour obtenir toutes les récompenses de transaction mises à jour.
+à jour, et lorsque les validateurs changent de taux de commission ou démissionnent
+ou démissionnent, toutes les récompenses de transaction qui n'ont pas été retirées seront également
+distribuées.
 
 #### 16.3.3 Create Storage Provider
 
-To become a storage provider, the runner should submit a proposal, and the current
-active validators can vote on this proposal. Once the proposal is passed, the
-new storage provider will be created automatically.
+Pour devenir un fournisseur de stockage, le coureur doit soumettre une proposition, et les validateurs actifs actuels peuvent voter sur cette proposition.
+validateurs actifs peuvent voter sur cette proposition. Une fois la proposition adoptée, le
+nouveau fournisseur de stockage sera créé automatiquement.
 
-Greenfield separates the roles of validator and storage providers.
-Although it is natural for the validators to maintain a meaningful and
-healthy number of storage providers, there should still be incentives
-for the validators to manage a reasonable number of SPs. Validators
-will get more data challenge rewards if there are more storage
-providers. The payment flow that is used for data challenge rewards
-would be like this:
+Greenfield sépare les rôles de validateur et de fournisseur de stockage.
+Bien qu'il soit naturel pour les validateurs de maintenir un nombre significatif et sain de fournisseurs de stockage, il devrait y avoir un équilibre entre les deux.
+nombre significatif et sain de fournisseurs de stockage, il devrait toujours y avoir des incitations
+pour les validateurs de gérer un nombre raisonnable de PS. Les validateurs
+Les validateurs obtiendront plus de récompenses pour les défis de données s'il y a plus de fournisseurs de stockage.
+fournisseurs de stockage. Le flux de paiement qui est utilisé pour les récompenses de défi de données
+serait le suivant :
 
-$$ data challenge reserves = (1 - \frac{1}{SP Number + 1}) * Maximum Percent $$
+Réserves pour les défis de données = (1 - \frac{1}{Nombre de PS + 1}) * Pourcentage maximum $$$
 
-Data availability challenge will be covered in the later section.
+Le défi de la disponibilité des données sera abordé dans la section suivante.
 
-#### 16.3.4 Remove Storage Provider
+#### 16.3.4 Supprimer un fournisseur de stockage
 
-Anyone can submit a proposal to remove a storage provider for the
-storage provider doesn't provide a good service or prefers to stop
-service. The current active validators can vote on this proposal. Once this
-proposal is passed, the SP will be restricted from accepting new object-storing
-requests, but still has the obligation to serve query requests. Other
-SPs or the data owners should start requesting to move the data off
-this "to-be-removed" SP. The "to-be-removed" SP has to facilitate the data
-moving so that it can get the full deposit back and avoid further slash.
-Actually, even if it chooses to not cooperate, the data can be recovered from
-the other SPs. After all the data has been migrated, this "to-be-removed" SP
-can withdraw all its deposit, and this SP would be removed.
+Toute personne peut soumettre une proposition de retrait d'un fournisseur de stockage pour les raisons suivantes
+le fournisseur de stockage ne fournit pas un bon service ou préfère arrêter
+service. Les validateurs actifs actuels peuvent voter sur cette proposition. Une fois que cette
+proposition est adoptée, le fournisseur de stockage ne pourra plus accepter de nouvelles
+d'accepter de nouvelles demandes de stockage d'objets, mais aura toujours l'obligation de répondre aux demandes de requêtes. Autre
+Fournisseurs de Stockage ou les propriétaires de données devraient commencer à demander de déplacer les données de
+données de ce PE "à supprimer". Le SP "à supprimer" doit faciliter le déplacement des données
+données afin qu'il puisse récupérer l'intégralité de son dépôt et éviter de nouvelles coupures.
+En fait, même s'il choisit de ne pas coopérer, les données peuvent être récupérées auprès des
+les autres SP. Une fois que toutes les données ont été migrées, ce PS "à supprimer" peut retirer tout son dépôt et ce PS "à supprimer" peut retirer tout son dépôt.
+peut retirer tout son dépôt, et ce SP sera supprimé.
 
-## 17 Storage MetaData Models
+## 17 Modèles de métadonnées de stockage
 
-The basic data models for Greenfield storage are:
+Les modèles de données de base pour le stockage Greenfield sont :
 
-- bucket
+- bucket (ou bucket)
 
-- object
+- objet
 
-- group
+- groupe
 
 - permission
 
-These metadata are stored as blockchain state into the persistent
-storage of the Greenfield blockchain.
+Ces métadonnées sont stockées en tant qu'état de la blockchain dans le stockage persistant de la blockchain Greenfield.
+de la blockchain Greenfield.
 
 ### 17.1 Bucket
 
-Bucket is the unit to group storage "objects". BucketName has to be
-globally unique. Every user account can create a bucket. The account
-will become the "owner" of the bucket.
+Bucket est l'unité de regroupement des "objets" de stockage. Le BucketName doit être
+unique au monde. Chaque compte utilisateur peut créer un Bucket. Le compte
+deviendra le "propriétaire" du bucket.
 
-Each bucket should be associated with its own Primary SP, and the payment
-accounts for Read and Store. The owner's address will be the default
-payment account.
+Chaque bucket doit être associé à son propre SP primaire, et aux paiements
+de paiement pour Read et Store. L'adresse du propriétaire sera le compte de paiement
+compte de paiement par défaut.
 
-### 17.2 Object
+### 17.2 Objet
 
-Object is the basic unit to store data on Greenfield. The metadata for
-the object will be stored on the Greenfield blockchain:
+L'objet est l'unité de base pour stocker des données sur Greenfield. Les métadonnées de l'objet
+l'objet seront stockées sur la blockchain de Greenfield :
 
-- name and ID
+- nom et ID
 
-- owner
+- propriétaire
 
-- bucket that hosts it
+- bucket qui l'héberge
 
-- size and timestamps
+- taille et horodatage
 
-- content type
+- type de contenu
 
-- checkSums for the storage pieces
+- somme de contrôle pour les éléments de stockage
 
-- storage status
+- état du stockage
 
-- associated SP information
+- informations sur le SP associé
 
-Object metadata is stored with the bucket name as the prefix of the key.
-It is possible to iterate through all objects under the same bucket, but
-it may be a heavy-lifting job for a large bucket with lots of objects.
+Les métadonnées d'objet sont stockées avec le nom du bucket comme préfixe de la clé.
+Il est possible d'itérer à travers tous les objets sous le même bucket, mais
+il est possible d'itérer à travers tous les objets sous le même godet, mais cela peut être un travail lourd pour un grand godet avec beaucoup d'objets.
 
-### 17.3 Group
+### 17.3 Groupe
 
-A Group is a collection of accounts with the same permissions. The group
-name is not allowed to be duplicated under the same user. However, a
-group **can not create or own** any resource. A group **can not be a
-member** of another group either.
+Un groupe est un ensemble de comptes ayant les mêmes permissions. Le nom du groupe
+n'est pas autorisé à être dupliqué sous le même utilisateur. Cependant, un
+groupe **ne peut pas créer ou posséder** une ressource. Un groupe **ne peut pas être
+membre** d'un autre groupe non plus.
 
-A resource can only have a limited number of groups associated with it
-for permissions. This ensures that the on-chain permission check can be
-finished within a constant time.
+Une ressource ne peut avoir qu'un nombre limité de groupes associés à elle
+pour les permissions. Cela garantit que la vérification des permissions sur la chaîne peut être
+peut être terminée dans un temps constant.
 
 ### 17.4 Permission
 
-Bucket, object, group are all resources (payment account is another type
-of resource but is covered in the payment section later). Each resource
-has a unique ID and the Permission Module uses these IDs to control how
-the resources can be accessed.
+Le bucket, l'objet, le groupe sont tous des ressources (le compte de paiement est un autre type de ressource mais il est traité dans le paiement).
+de ressource, mais il sera traité plus tard dans la section sur les paiements). Chaque ressource
+Chaque ressource a un ID unique et le module de permission utilise ces ID pour contrôler comment
+les ressources sont accessibles.
 
-#### 17.4.1 Ownership
+#### 17.4.1 Propriétaire
 
-The resources owner refers to the account that creates the resource. By
-default, only the resource owner has permission to access its resources.
+Le propriétaire des ressources fait référence au compte qui crée la ressource. Par
+Par défaut, seul le propriétaire de la ressource a le droit d'accéder à ses ressources.
 
-- The resource creator owns the resource.
+- Le créateur de la ressource est propriétaire de la ressource.
 
-- Each resource only has one owner and the ownership cannot be transferred once the resource is created.
+- Chaque ressource n'a qu'un seul propriétaire et la propriété ne peut pas être transférée une fois que la ressource est créée.
 
-- There are features that allow an address to "approve" another
-  address to create and upload objects to be owned by the approver's address, as long as it is within limits.
+- Certaines fonctions permettent à une adresse d'"approuver" une autre adresse.
+  Il existe des fonctionnalités qui permettent à une adresse d'"approuver" une autre adresse pour créer et télécharger des objets qui seront la propriété de l'adresse de l'approbateur, tant que cela reste dans les limites.
 
-- The owner or payment account of the owner pays for the resource.
+- Le propriétaire ou le compte de paiement du propriétaire paie la ressource.
 
-#### 17.4.2 Permission Definitions
+#### 17.4.2 Définitions des permissions
 
-- Ownership Permission: By default, the owner has all permissions to the resource.
+- Permission de propriété : Par défaut, le propriétaire a toutes les permissions sur la ressource.
 
-- Public or Private Permission: By default, the resource is
-  ***private***, only the owner can access the resource.
-  If a resource is ***public***, anyone can access it.
+- Permission publique ou privée : Par défaut, la ressource est
+  ***private***, seul le propriétaire peut accéder à la ressource.
+  Si une ressource est ***public***, tout le monde peut y accéder.
 
-- Shared Permission: These permissions are managed by the permission
-  module. It usually manages who has permission for which resources.
+- Permission partagée : Ces permissions sont gérées par le module
+  d'autorisation. Il gère généralement qui a la permission pour quelles ressources.
 
-There are two types of permissions: **Single User Permission** and **Group User Permission**, which
-are stored in different formats in the blockchain state.
+Il existe deux types de permissions : **La permission d'utilisateur unique** et **La permission d'utilisateur de groupe**, qui
+sont stockées dans des formats différents dans l'état de la blockchain.
 
-##### Single User Permission
+##### Permission d'utilisateur unique
 
 - Bucket: `0x10 | ResouceID(Bucket) | Address(Grantee) ➝ Protobuf(PermissionInfo)`
 - Object: `0x11 | ResouceID(Object) | Address(Grantee) ➝ Protobuf(PermissionInfo)`
@@ -450,7 +450,7 @@ type permissionInfo struct {
 }
 ```
 
-##### Group User Permission
+##### Permission d'un groupe d'utilisateurs
 
 - Bucket: `0x20 | ResouceID(Bucket)  ➝ Protobuf(GroupPermissionInfo)`
 - Object: `0x21 | ResouceID(Object)  ➝ Protobuf(GroupPermissionInfo)`
@@ -460,18 +460,18 @@ type permissionInfo struct {
 type GroupPermissionInfo map[uint32]permissionInfo // groupID ➝ permissionInfo mapping, mapsize limit to 20?
 ```
 
-#### 17.4.3 Permission Removal
+#### 17.4.3 Suppression de permissions
 
-Users can actively remove one or more permissions. However, when a
-resource is deleted, its associated permissions should also be deleted,
-perhaps not by the user taking the initiative to delete it, but by other
-clean-up mechanisms. Because if too many accounts have permission to the
-deleting object, it takes too much time to process within one
-transaction handling.
+Les utilisateurs peuvent supprimer activement une ou plusieurs permissions. Cependant, lorsqu'une
+ressource est supprimée, les permissions qui lui sont associées doivent également être supprimées,
+peut-être pas par l'utilisateur qui prend l'initiative de la supprimer, mais par d'autres
+mécanismes de nettoyage. Car si trop de comptes ont des permissions sur l'objet
+objet à supprimer, cela prend trop de temps à traiter dans le cadre d'une
+traitement de la transaction.
 
-#### 17.4.4 Examples
+#### 17.4.4 Exemples
 
-Typical permissions for the resources are listed below.
+Les permissions typiques pour les ressources sont listées ci-dessous.
 
 | Permission Type | Bucket                                     | Object                                | Group                                        |
 | --------------- | ------------------------------------------ | ------------------------------------- | -------------------------------------------- |
@@ -479,127 +479,125 @@ Typical permissions for the resources are listed below.
 | Read            | ✅ Allow ListObject                         | ✅ Allow GetObject                     | ✅ Allow ListMember As a member of this group |
 | Full Control    | ✅ Allow Put/ListObject, Allow DeleteBucket | ✅ Allow GetObject, Allow DeleteObject | ✅ Allow DeleteMember, Allow ListMember       |
 | Execute         | ❌                                          | ✅ Allow Execute                       | ❌                                            |
+Disons que Greenfield possède deux comptes, Bob(0x1110) et Alice(0x1111). A
+scénario de base serait le suivant :
 
-Let's say Greenfield has two accounts, Bob(0x1110) and Alice(0x1111). A
-basic example scenario would be:
+- Bob a téléchargé une photo nommée avatar.jpg dans un bucket nommé "profil" ;
 
-- Bob uploaded a picture named avatar.jpg into a bucket named "profile";
+- Bob accorde à Alice la permission d'action GetObject pour l'objet avatar.jpg,
+  il stockera une clé `0x11 | ResourceID(profile_avatar.jpg) | Address(Alice)` dans un arbre d'état de permission.
 
-- Bob grants the GetObject action permission for the object avatar.jpg to Alice,
-  it will store a key `0x11 | ResourceID(profile_avatar.jpg) | Address(Alice)` into a permission state tree.
+- Lorsqu'Alice veut lire le fichier avatar.jpg, le SP doit vérifier dans la blockchain Greenfield si la clé est valide.
+  blockchain Greenfield que la clé `Prefix(ObjectPermission) | ResourceID(profile_avatar.jpg) | Address(Alice)` existe dans l'arbre d'état des permissions, et si l'action a été exécutée.
+  l'arbre d'état des permissions, et si la liste d'actions contient GetObject.
+  Passons à des scénarios plus complexes :
 
-- when Alice wants to read the avatar.jpg, the SP should check the
-  Greenfield blockchain that whether the key `Prefix(ObjectPermission) | ResourceID(profile_avatar.jpg) | Address(Alice)` existed in the
-  permission state tree, and whether the action list contains GetObject.
+- Bob a créé un bucket nommé "profil"
 
-Let's move on to more complex scenarios:
+- Bob accorde la permission de l'action PutObject pour le bucket "profil".
+  à Alice, la clé `0x10 | ResourceID(profile) | Address(Alice)`
+  sera placée dans l'arbre d'état des permissions.
 
-- Bob created a bucket named "profile"
+- Quand Alice veut télécharger un objet nommé avatar.jpg dans le bucket "profile", elle crée une action Putject.
+  profil, elle crée une transaction PutObject qui sera exécutée sur la chaîne.
+  exécutée sur la chaîne.
 
-- Bob grants the PutObject action permission for the bucket "profile"
-  to Alice, the key `0x10 | ResourceID(profile) | Address(Alice)`
-  will be put into the permission state tree.
+- La blockchain Greenfield a besoin de confirmer que Alice a la permission
+  d'opérer, elle vérifie donc si la clé `0x10 |
+  ResourceID(profile) | Address(Alice)` existait dans l'arbre d'état de la permission
+  et obtient les informations de permission si elles existent.
 
-- When Alice wants to upload an object named avatar.jpg into the
-  bucket profile, it creates a PutObject transaction and will be
-  executed on the chain.
+- Si les informations de permission montrent qu'Alice a la permission de l'action PutObject
+  du profil du bucket, elle peut alors effectuer l'opération PutObject.
 
-- The Greenfield blockchain needs to confirm that Alice has permission
-  to operate, so it checks whether the key `0x10 |
-  ResourceID(profile) | Address(Alice)` existed in the permission
-  state tree and got the permission information if it existed.
+Un autre scénario plus complexe qui contient des groupes :
 
-- If the permission info shows that Alice has the PutObject action
-  permission of the bucket profile, then she can do PutObject operation.
+- Bob crée un groupe nommé "Games", et crée un bucket nommé "profile".
 
-Another more complex scenario that contains groups:
+- Bob ajoute Alice au groupe "Games", la clé `0x12 | ResourceID(Games)
+  | Adresse(Alice)` sera placée dans l'arbre des permissions.
 
-- Bob creates a group named "Games", and creates a bucket named "profile".
+- Bob met une image avatar.jpg dans le bucket profile et accorde la permission de l'action
+  CopyObject au groupe Games.
 
-- Bob adds Alice to the Games group, the key `0x12 | ResourceID(Games)
-  | Address(Alice)` will be put into the permission state tree
-
-- Bob put a picture avatar.jpg to the bucket profile and grants the
-  CopyObject action permission to the group Games
-
-- When Alice wants to copy the object avatar.jpg . First, Greenfield
-  blockchain checks whether she has permission via the key `0x11 |
-  ResourceID(avatar.jpg) | Address(Alice)`; if it is a miss,
-  Greenfield will iterate all groups that the object avatar.jpg
-  associates and check whether Alice is a member of one of these
-  groups by checking, e.g. if the key `0x21 | ResourceID(group, e.g.
-  Games)` existed, then iterate the `permissionInfo` map, and determine if Alice is in
-  a group which has the permission to do CopyObject operation via the key
+- Quand Alice veut copier l'objet avatar.jpg . Tout d'abord, la blockchain Greenfield
+  vérifie si elle a la permission via la clé `0x11 |
+  ResourceID(avatar.jpg) | Address(Alice)` ; si c'est un échec,
+  Greenfield va itérer tous les groupes que l'objet avatar.jpg
+  associe et vérifiera si Alice est membre de l'un de ces groupes en contrôlant
+  groupes en vérifiant, par exemple, si la clé `0x21 | ResourceID(groupe, par ex.
+  Jeux)` existait, puis itérer la carte `permissionInfo`, et déterminer si Alice est dans
+  un groupe qui a la permission d'effectuer l'opération CopyObject par le biais de la clé
   `0x12| ResourceID(Games) | Address(Alice)`
 
-## 18 Payload Storage Management
+## 18 Gestion du stockage des charges utiles
 
-Although the metadata will be stored on the Greenfield blockchain, the
-content data to be stored on Greenfield is here called "payload" and
-they are stored off-chain, on the Storage Providers.
+Même si les métadonnées seront stockées sur la blockchain Greenfield, les
+données de contenu qui seront stockées sur Greenfield sont ici appelées "payload" et
+elles sont stockées hors chaîne, sur les fournisseurs de stockage.
 
-The unit of such storage is "Object", and each object is split and
-stored in an integral and redundant way to ensure the availability.
+L'unité de ce stockage est l'"objet", et chaque objet est divisé et stocké de manière intégrale et redondante.
+et stocké de manière intégrale et redondante pour garantir la disponibilité.
 
 ### 18.1 Segments
 
-Segment is the basic storage structure of an object. An object payload
-is composed of one or many segments in sequence. The default segment
-size is 16MB. If the object's size is less than 16MB, it has only one
-segment and the segment size is the same as the object's size. For
-larger objects, the payload data will be broken into segments.
+Le segment est la structure de stockage de base d'un objet. La charge utile d'un objet
+est composée d'un ou plusieurs segments en séquence. La taille du segment par
+par défaut est de 16MB. Si la taille de l'objet est inférieure à 16 Mo, il n'a qu'un seul segment et la taille du segment est la même que celle de l'objet.
+segment et la taille du segment est la même que celle de l'objet. Pour
+objets plus grands, les données utiles seront divisées en segments.
 
-Please note the payload data of an object will be split into the same
-size segment but the last segment, which is the actual size. For
-example, if one object has a size 50MB, only the size of the last
-segment is 2 MB and the other segments' sizes are all 16MB.
+Veuillez noter que les données utiles d'un objet sont divisées en segments de même taille.
+segment de même taille, sauf le dernier segment, qui correspond à la taille réelle. Pour
+Par exemple, si un objet a une taille de 50 Mo, seule la taille du dernier segment est de 2 Mo.
+segment est de 2 Mo et les tailles des autres segments sont toutes de 16 Mo.
 
 <div align="center"><img src="./assets/18.1%20Object%20Segmentation.jpg"  height="50%" width="50%"></div>
 <div align="center"><i>Figure 18.1 Object Segmentation</i></div>
 
-### 18.2 Erasure Code and Data Redundancy
+### 18.2 Code d'effacement et redondance des données
 
-#### 18.2.1 Data Redundancy Design
+#### 18.2.1 Conception de la redondance des données
 
-Although each SP may provide a more stable service and won't go offline
-as enough BNB are staking to be one SP, Greenfield still establish its
-own redundancy strategy to get rid of the dependency on a single SP and
-support the data availability in a decentralized way. Here below is the
-basic design idea.
+Bien que chaque SP puisse fournir un service plus stable et ne s'arrêtera pas
+et ne s'éteindra pas, car suffisamment BNB s'associent pour former un SP.
+stratégie de redondance afin de se débarrasser de la dépendance à l'égard d'un seul SP et d'assurer la disponibilité des données dans un système décentralisé.
+de soutenir la disponibilité des données de manière décentralisée. Voici l'idée de base de la
+idée de base de la conception.
 
-First, all segments of each object are stored in primary SP as "pieces",
-which can be regarded as one replica of the object. Users may download
-this data directly from the primary SP as it is supposed to provide the
-full data in a low latency way.
+Premièrement, tous les segments de chaque objet sont stockés dans le SP primaire en tant que "morceaux",
+qui peuvent être considérés comme une réplique de l'objet. Les utilisateurs peuvent télécharger
+ces données directement à partir du SP primaire, car il est censé fournir les
+données complètes avec une faible latence.
 
-Second, Erasure Code (EC) is introduced to get efficient data
-redundancy. Segment is the boundary to perform erasure encoding. By
-erasure encoding one segment at a time, it allows streaming the
-processing of the object upload without waiting for the whole object
-payload to finish. The default EC strategy is 4+2, 4 data chunks, and 2
-parity chunks for one segment. The data chunk size is ¼ of the segment.
-As one typical segment is 16M, one typical data chunk of EC is 4M.
-Specialized customization on EC parameters for each user may be provided
-via special transactions.
+Ensuite, le code d'effacement (EC) est introduit pour obtenir une redondance efficace des données.
+redondance des données. Le segment est la limite pour effectuer le codage d'effacement. En
+En codant l'effacement d'un segment à la fois, il est possible d'effectuer le
+traitement du téléchargement de l'objet sans attendre la fin de la charge utile
+l'ensemble de la charge utile de l'objet. La stratégie EC par défaut est 4+2, 4 morceaux de données et 2 morceaux de parité pour un segment.
+chunks de parité pour un segment. La taille des morceaux de données est de ¼ du segment.
+Comme un segment typique est de 16M, un morceau de données typique de EC est de 4M.
+Une personnalisation spécialisée des paramètres de l'EC pour chaque utilisateur peut être fournie
+via des transactions spéciales.
 
-All EC chunks of each object are stored in some secondary SPs as pieces,
-which can be regarded as more than one EC replica of the object. If one
-or more segments of the object are lost from the primary SP, any 4
-chunks from 6 SPs can recover the segments.
+Tous les morceaux EC de chaque objet sont stockés dans certains SP secondaires en tant que morceaux,
+qui peuvent être considérés comme plus d'une réplique EC de l'objet. Si un
+Si un ou plusieurs segments de l'objet sont perdus dans le SP primaire, n'importe quel 4
+chunks de 6 Fournisseurs de Stockage peuvent récupérer les segments.
 
-All these segments and SPs information are stored on the Greenfield
-blockchain as the metadata of the object. The same object's each
-segment's EC replicas are stored in the same sequence of secondary SPs.
-This convention is to save the metadata size. An example of a 50M object
-stored with one primary SP, SP0, and 6 secondary SPs, SP1-SP6 is shown
-in the below diagram.
+Toutes ces informations sur les segments et les Fournisseurs de Stockage sont stockées sur la blockchain Greenfield
+en tant que métadonnées de l'objet. Les répliques EC de chaque segment du même objet
+segments sont stockés dans la même séquence de Fournisseurs de Stockage secondaires.
+Cette convention permet d'économiser la taille des métadonnées. Un exemple d'un objet de 50M
+stocké avec un SP primaire, SP0, et 6 SP secondaires, SP1-SP6.
+dans le diagramme ci-dessous.
 
 <div align="center"><img src="./assets/18.2%20EC%20for%20Segments%20in%20Different%20Secondary%20SPs.jpg"  height="80%" width="80%"></div>
-<div align="center"><i>Figure 18.2 EC for Segments in Different Secondary SPs</i></div>
+<div align="center"><i>Figure 18.2 EC pour les segments dans différents fournisseurs de Stockage secondaires</i></div>
 
-#### 18.2.2 Erasure Code
+#### 18.2.2 Code d'effacement
 
-The EC module is defined as the following structure.
+Le module EC est défini comme la structure suivante.
 
 ```go
 type Erasure struct {
@@ -609,30 +607,29 @@ type Erasure struct {
     chunkSize                int64
 }
 ```
+Le *encodeur* indique le type de fonction de l'algorithme EC. Les *blocs de données*
+et *parityBlock* sont les principaux paramètres de l'algorithme EC. L'adresse
+*chunkSize* indique la taille de chaque tesson après le codage. En considérant
+le scénario d'application de Greenfield, *dataBlocks* est fixé à 4 ;
+*parityBlocks* est de 2 ; et le *chunkSize* est configuré à 16MB, ce qui correspond à la taille du morceau.
+correspondant à la taille de la pièce. Reed-Solomon est utilisé comme algorithme EC
+est utilisé comme algorithme EC. Le module EC possède une fonction Encode pour diviser les données et les coder en 6 blocs (4 blocs de données).
+données et les coder en 6 blocs (4 blocs de données et 2 blocs de parité).
+pour reconstruire les données à partir des blocs.
 
-The *encoder* indicated the EC algorithm function type. The *dataBlocks*
-and *parityBlock* are the main parameters of the EC algorithm. The
-*chunkSize* indicated the size of each shard after encodes. Considering
-the application scenario of Greenfield, the *dataBlocks* is set to 4;
-*parityBlocks* is 2; and the *chunkSize* is configured to 16MB which is
-corresponding to the piece size. Reed-Solomon is used as the EC
-algorithm. The EC module has an Encode function to split data and encode
-it into 6 blocks (4 data blocks and 2 parity blocks) and a Decode
-function to reconstruct data from blocks.
+Le module EC dispose de deux fonctions supplémentaires：
 
-The EC module has two additional functions：
+1. Remplissage automatique. Si la taille du dernier bloc n'est pas divisible par 4,
+   le module d'encodage EC ajoutera des données de remplissage dans le segment.
+   segment qui n'est pas plus de 3 octets ;
 
-1. Automatic padding. If the size of the last block is not divisible by 4,
-   the EC encoding module will add some padding data into the
-   segment which is no more than 3 bytes;
+2. Traitement parallèle basé sur la taille des tessons pour une vitesse optimale.
 
-2. Parallel processing based on shard size for the optimal speed.
+##### 18.2.2.1 Encodage
 
-##### 18.2.2.1 Encoding
+Voici une configuration détaillée de l'encodage EC.
 
-Here is a detailed EC encoding setup.
-
-<div align="center"><img src="./assets/18.3%20EC%20Encoding.jpg"  height="80%" width="80%"></div>
+<div align="center"><img src="./assets/18.3%20EC%20Encoding.jpg" height="80%" width="80%"></div>
 <div align="center"><i>Figure 18.3 EC Encoding</i></div>
 
 As the example shown in the figure above, the 50M payload of the object
@@ -652,61 +649,61 @@ the segments have been encoded, we have got 16 pieces which are 16M, and
 6 pieces which are 0.5M.
 
 Both the users' client software and the primary SP are responsible for
-encoding the EC. Client software may not upload the EC parity but only
-the checksum for the primary SP to verify.
+l'encodage de l'EC. Le logiciel client peut ne pas télécharger la parité de l'EC mais seulement
+mais seulement la somme de contrôle pour que le SP primaire la vérifie.
 
-From the primary SP to the secondary SPs, each EC chunk is treated as a
-piece object and a data stream is maintained for each secondary SP for
-parallel processing. Pieces will be stored in a data structure as "piece
-store" on different SPs. As a reference implementation, the key of the
-piece object is *objId_s+segIndex\_ spIndex+ ECIndex* for each segment.
-The *spIndex* can indicate which secondary will be forwarded to. The
-*ECIndex* is the index of EC chucks, with which 0-3 are data blocks and
-4-5 are parity blocks. For example, the piece called obj0Id_s1_sp1 is
-the 2nd segment of the object and will be forwarded to SP1.
+Du SP primaire aux SP secondaires, chaque fragment d'EC est traité comme un objet pièce et un flux de données est maintenu.
+objet et un flux de données est maintenu pour chaque SP secondaire pour un traitement
+traitement parallèle. Les morceaux sont stockés dans une structure de données appelée "piece
+store" sur les différents Fournisseurs de Stockage. Comme implémentation de référence, la clé de l'objet
+pièce est *objId_s+segIndex\_ spIndex+ ECIndex* pour chaque segment.
+Le *spIndex* peut indiquer vers quel secondaire le message sera acheminé. L'adresse
+*ECIndex* est l'index des mandrins EC, avec lesquels 0-3 sont des blocs de données et
+4-5 sont des blocs de parité. Par exemple, le morceau appelé obj0Id_s1_sp1 est
+le 2ème segment de l'objet et sera transmis à SP1.
 
-##### 18.2.2.2 Decoding: Data Recovery
+##### 18.2.2.2 Décodage : Récupération des données
 
-When the primary SP loses some segment, it or other SPs can recover the
-data via the EC chunks. As designed, the ECIndex with values 0-3 are
-data blocks while 4-5 are parity blocks. There are two processing cases
-to reconstruct the object payload:
+Lorsque le SP primaire perd un segment, lui ou d'autres SP peuvent récupérer les
+données par l'intermédiaire des chunks EC. Tel qu'il est conçu, l'indice ECIndex avec les valeurs 0-3 sont des blocs de données tandis que 4-5 sont des blocs de parité.
+blocs de données tandis que 4-5 sont des blocs de parité. Il existe deux cas de traitement
+pour reconstruire la charge utile de l'objet :
 
-1. All data blocks are fully stored in secondary SPs. The recovery
-   initiator can just read the pieces which are data blocks
-   sequentially and stitch them together;
+1. Tous les blocs de données sont entièrement stockés dans les PS secondaires. L'initiateur de la récupération
+   initiateur de la récupération peut juste lire les pièces qui sont des blocs de données
+   séquentiellement et les assembler ;
 
-2. Some data blocks have been lost by secondary SPs. The recovery
-   initiator needs to read all the data blocks and parity blocks and
-   use the Decode function of the EC module to recover the content of
-   all the segments.
+2. Certains blocs de données ont été perdus par les PS secondaires. L'initiateur de la récupération
+   initiateur de récupération doit lire tous les blocs de données et les blocs de parité et
+   utiliser la fonction Decode du module EC pour récupérer le contenu de tous les segments.
+   tous les segments.
 
-## 19 Data Availability Challenge
+## 19 Le défi de la disponibilité des données
 
-It is always the first priority of any decentralized storage network to
-guarantee data integrity and availability. Many of the existing
-solutions rely on intensive computing to generate proofs. However,
-Greenfield chooses the path of social monitoring and challenges.
+La première priorité de tout réseau de stockage décentralisé est toujours de
+garantir l'intégrité et la disponibilité des données. La plupart des solutions existantes
+solutions existantes reposent sur le calcul intensif pour générer des preuves. Cependant,
+Greenfield choisit la voie de la surveillance sociale et des défis.
 
-The holistic target for Greenfield is to ensure that the storage provider(SP)
-stores the data as expected are as below:
+L'objectif global de Greenfield est de s'assurer que le fournisseur de stockage (SP) stocke les données comme prévu.
+stocke les données comme prévu sont les suivants :
 
-a. The primary SP splits the original object that the user uploads into
-segments correctly.
+a. Le SP primaire divise correctement l'objet original que l'utilisateur télécharge en
+segments correctement.
 
-b. The primary SP encodes the segments into redundant Erasing Code pieces
-correctly, and distributes them to the secondary SP as agreed.
+b. La SP primaire code les segments en morceaux redondants de code d'effacement
+et les distribue au SP secondaire comme convenu.
 
-c. The SP stores assigned pieces either as the role of primary SP
-or secondary SP correctly, and the data pieces stored should not be corrupted
-or falsified.
+c. Le SP stocke les pièces attribuées soit en tant que rôle du SP primaire
+ou de PS secondaire, et les données stockées ne doivent pas être corrompues ou falsifiées.
+ou falsifiés.
 
-A user needs to ensure that the object stored on Greenfield is really
-his object without downloading the whole object and comparing the
-contents. And also, each SP should store the correct piece for each
-object as required, and this information should be verified on the
-Greenfield blockchain. A special metadata structure is introduced for
-every object for data challenges as below:
+Un utilisateur doit s'assurer que l'objet stocké sur Greenfield est bien le sien sans télécharger l'ensemble de l'objet.
+son objet sans télécharger l'objet entier et en comparer le contenu.
+contenu. De plus, chaque SP doit stocker le bon élément pour chaque objet.
+objet, et cette information doit être vérifiée sur la blockchain de Greenfield.
+blockchain Greenfield. Une structure spéciale de métadonnées est introduite pour
+chaque objet pour les défis de données comme ci-dessous :
 
 ```go
 type ObjectInfo struct {
@@ -716,18 +713,17 @@ type ObjectInfo struct {
     …
 }
 ```
-
 Each storage provider will keep a local manifest for the pieces of each
 object that are stored on it. For the primary SP, the local manifest
 records each segment's hashes. The "*root*" field of the object's
 metadata in the above code stores the hash of the whole local manifest
 of the primary SP, e.g., it is the "*PiecesRootHash(SP0)*" in the below
-diagram. For the secondary SPs, the local manifest records each piece's
+diagram. For the secondary Fournisseurs de Stockage, the local manifest records each piece's
 hashes, and the hash of their local manifest files are recorded in the
 subRooList field in order, e.g. the 4th element of this list will store
 the 4th secondary SP's "*PiecesRootHash(SP4)*" in the below diagram.
 
-<div align="center"><img src="./assets/19.1%20Hashes%20for%20Data%20Integrity.jpg"  height="80%" width="80%"></div>
+<div align="center"><img src="./assets/19.1%20Hashes%20for%20Data%20Integrity.jpg" height="80%" width="80%"></div>
 <div align="center"><i>Figure 19.1 Hashes for Data Integrity</i></div>
 
 These root hashes serve as the checksum for the data segments and
@@ -739,300 +735,299 @@ The user-side client software will perform some work:
 
 1. Split the object file into segments if necessary;
 
-2. Compute the root hash across all the segments;
+2. Calculer le hachage racine de tous les segments ;
 
-3. Compute the EC and calculate the hashes for the parity pieces;
+3. Calculer l'EC et calculer les hachages pour les pièces de parité ;
 
-4. Send transactions to the Greenfield blockchain to request creating
-   the object with the above information.
+4. Envoyer des transactions à la blockchain Greenfield pour demander la création de
+   l'objet avec les informations ci-dessus.
 
-Besides sending the information to the Greenfield blockchain, the client
-software also sends the same to the primary SP and uploads the payload
-data onto it. For the primary SP stores the original segments of the
-object, the SP has to verify the root hash to check the integrity of the
-segment. The SP also has to compute the EC pieces by itself and verify
-the hash. All the hashes will be recorded on a manifest file stored
-locally with the SP, and the root hash of the file will be submitted to
-the Greenfield blockchain in the "Seal" transaction. Greenfield
-blockchain will verify the hashes in the Seal transaction against the
-object creation request transaction to ensure data integrity as they are
-the agreed value across Primary SPs and the users.
+En plus d'envoyer les informations à la blockchain Greenfield, le logiciel client les envoie également à la SP primaire et télécharge l'objet.
+client envoie également les mêmes informations au SP primaire et télécharge les données de
+sur celui-ci. Pour que le SP primaire stocke les segments originaux de l'objet, il doit vérifier l'identité de l'objet.
+l'objet, le SP doit vérifier le hash racine pour vérifier l'intégrité du segment.
+segment. Le SP doit également calculer les pièces EC par lui-même et vérifier le hachage.
+le hachage. Tous les hachages seront enregistrés dans un fichier manifeste stocké
+manifeste stocké localement chez le PS, et le hash racine du fichier sera soumis à la blockchain
+la blockchain Greenfield dans la transaction "Seal". La blockchain Greenfield
+vérifiera les hachages de la transaction Seal par rapport à la transaction de demande de création d'objet afin de garantir l'intégrité des données.
+transaction de demande de création d'objet afin d'assurer l'intégrité des données, puisqu'elles sont
+la valeur convenue entre les PS primaires et les utilisateurs.
 
-These hashes and the corresponding manifest files will be used to verify
-the data in the data availability challenge as described below.
-
+Ces hachages et les fichiers manifestes correspondants seront utilisés pour vérifier les données dans le défi de la disponibilité des données, comme le montre le tableau ci-dessous.
+les données dans le défi de la disponibilité des données, comme décrit ci-dessous.
 ### 19.2 Data Availability Challenge Process
 
 <div align="center"><img src="./assets/19.2%20Data%20Availability%20Challenge.jpg"  height="80%" width="80%"></div>
 <div align="center"><i>Figure 19.2 Data Availability Challenge</i></div>
+Ce problème de disponibilité des données est illustré dans la figure 19.2 ci-dessus.
 
-This data availability challenge is illustrated in figure 19.2 above.
+Les validateurs Greenfield ont la responsabilité de vérifier la disponibilité des données auprès des PS.
+disponibilité des données auprès des PS. Ils forment un comité de vote pour exécuter cette
+Ils forment un comité de vote pour exécuter cette tâche en incitant les PS à payer des frais et des amendes potentielles (barres obliques).
 
-The Greenfield validators have the responsibility to verify the data
-availability from the SPs. They form a voting committee to execute this
-task by the incentive of fees and potential fines (slashes) on SPs.
+Une logique de multi-signature, par exemple une multi-signature basée sur BLS, est utilisée pour atteindre un autre niveau de consensus hors chaîne entre les PS.
+un autre niveau de consensus hors chaîne parmi les validateurs Greenfield.
+Lorsque le validateur vote pour le défi de données, il cosigne une attestation et la soumet à la chaîne.
+attestation et la soumettent dans la chaîne.
 
-A multi-signing logic, e.g., BLS-based multi-sig, is used to reach
-another level of off-chain consensus among the Greenfield validators.
-When the validator votes for the data challenge, they co-sign an
-attestation and submit on-chain.
+Le mécanisme global de contestation de la disponibilité des données fonctionne comme suit :
 
-The overall data availability challenge mechanism works as below:
+1. N'importe qui peut soumettre une transaction pour contester la disponibilité des données. L'information de contestation de
+   Les informations de contestation seront écrites dans l'événement on-chain
+   déclenché après le traitement de la transaction.
 
-1. Anyone can submit a transaction to challenge data availability. The
-   challenge information will be written into the on-chain event
-   triggered after the transaction is processed.
+2. La deuxième façon de déclencher la contestation est plus courante : à la fin de la phase de traitement des blocs de chaque bloc, Greenfield utilisera une fonction de contestation de la disponibilité des données.
+   à la fin de la phase de traitement de chaque bloc, Greenfield utilisera un
+   algorithme aléatoire pour générer certains événements de défi de disponibilité des données.
+   de données. Toutes les informations relatives au défi seront conservées sur la chaîne
+   jusqu'à ce que le défi soit confirmé ou expiré.
 
-2. The second way to trigger the challenge is more common: at the end
-   of the block process phase of each block, Greenfield will use a
-   random algorithm to generate some data availability challenge
-   events. All challenge information will be persisted on the chain
-   until the challenge has been confirmed or expired.
+3. Chaque validateur doit exécuter un module de vérification de la disponibilité des données hors chaîne.
+   module. Ce programme garde la trace des informations de défi sur la chaîne
+   et lance ensuite une vérification de la disponibilité des données hors chaîne.
+   de données hors chaîne. Il vérifie si une donnée est disponible dans la PS spécifiée en réponse à l'événement de défi.
+   SP spécifiée en réponse à l'événement de défi, peu importe que l'événement soit
+   que l'événement soit déclenché par le challenger individuel ou par la
+   chaîne Greenfield elle-même. Il y a trois étapes pour effectuer la
+   vérification :
 
-3. Each validator should run an off-chain data availability check
-   module. This program keeps tracking the on-chain challenge
-   information and then initiates an off-chain data availability
-   check. It checks whether a data piece is available in the
-   specified SP in response to the challenge event, no matter whether
-   the event is triggered by the individual challenger or the
-   Greenfield chain itself. There are three steps to perform the
-   check:
+   a. Demandez au PE contesté cette donnée et le manifeste local de l'objet.
+   de l'objet. Si les données attendues ne peuvent pas être téléchargées, la pièce doit être considérée comme indisponible.
+   l'objet doit être considéré comme indisponible.
 
-   a. Ask the challenged SP for this data piece and the local manifest
-   of the object. If the expected data can't be downloaded, the
-   piece should be regarded as unavailable.
+   b. Calculer le hachage du manifeste local et le comparer avec le hachage de la racine qui est enregistré dans les métadonnées.
+   avec le hachage racine correspondant qui est enregistré dans les métadonnées de l'objet.
+   l'objet. S'ils sont différents, la pièce doit être considérée comme étant
+   indisponible.
 
-   b. Compute the hash of the local manifest, and compare it with the
-   related root hash that is recorded in the metadata of the
-   object. If they are different, the piece should be regarded as
-   unavailable.
+   c. Calculer la somme de contrôle de la pièce contestée et la comparer à la somme de contrôle connexe enregistrée dans la base de données locale.
+   avec la somme de contrôle correspondante enregistrée dans le manifeste local.
+   local. S'ils sont différents, la pièce doit être considérée comme indisponible.
+   comme indisponible.
 
-   c. Compute the checksum hash of the challenged piece, and compare
-   it with the related checksum that is recorded in the local
-   manifest. If they are different, the piece should be regarded
-   as unavailable.
+   L'un ou l'autre des cas d'"indisponibilité" ci-dessus marquera le succès de la contestation
+   que la donnée est indisponible, et le validateur votera
+   "indisponible".
 
-   Any of the above "unavailable" cases will mark the challenge success
-   that the data is unavailable, and the validator will vote
-   "unavailable".
+4. Le validateur utilise sa clé privée BLS pour signer un vote de contestation de données en fonction du résultat.
+   en fonction du résultat. Les données à voter doivent être les mêmes pour
+   tous les validateurs : elles doivent inclure l'en-tête du bloc qui contient le
+   bloc qui contient le défi, l'information sur le défi de données, et le résultat du défi.
+   le résultat du défi.
+   
+5. Les votes du défi de la disponibilité des données sont propagés à travers le réseau p2p.
 
-4. The validator uses its BLS private key to sign a data challenge vote
-   according to the result. The data to vote should be the same for
-   all validators to sign: it should include the block header of the
-   block that contains the challenge, data challenge information, and
-   the challenge result.
+6. Une fois qu'un validateur a recueilli un accord de plus de 2/3 validateurs, une "attestation" est conclue.
+   "attestation" est conclue. Le validateur peut agréger les signatures, assembler l'attestation de défi de données et soumettre une attestation.
+   l'attestation de défi de données, et soumettre une transaction d'attestation. Afin de
+   de résoudre le problème des validateurs qui se contentent de suivre les résultats des autres
+   et n'effectuent pas la vérification eux-mêmes, une logique de " commit-and-reveal " sera
+   introduite.
 
-5. The data availability challenge votes are propagated through the p2p network.
+7. La transaction d'attestation du défi des données sera exécutée
+   sur la chaîne. Le premier validateur qui soumet l'attestation
+   peut obtenir une récompense pour la soumission, tandis que la soumission ultérieure sera
+   rejetée. Plus le validateur accumule de votes, plus il peut obtenir de récompenses.
+   il peut obtenir. Outre les récompenses de soumission, il existe des récompenses d'attestation.
+   également des récompenses d'attestation. Seuls les validateurs dont les votes ont été intégrés dans l'attestation seront récompensés.
+   l'attestation seront récompensés, il se peut donc que certains validateurs
+   aient voté, mais que leurs votes n'aient pas été assemblés par le validateur. Ils
+   ne seront pas récompensés pour ces défis de disponibilité des données. De même, pour
+   résultats différents, les récompenses seront différentes : le résultat "indisponible" qui
+   Le résultat "indisponible" qui réduit les PS obtiendra plus de récompenses pour les validateurs.
 
-6. Once a validator collects an agreement from more than 2/3 validators, an
-   "attestment" is concluded. The validator can aggregate the signatures, assemble
-   data challenge attestation, and submit an attestation transaction. In order
-   to solve the concern that validators may just follow the others' results
-   and not perform the check themselves, a "commit-and-reveal" logic will be
-   introduced.
+8. Au bout d'un certain nombre de blocs, par exemple 100 blocs, le défi de la disponibilité des données expirera même si les soumissions de données sont toujours en cours.
+   défi expirera même si les soumissions d'attestations ne sont pas
+   arrivées. Dans un tel cas, le défi expirera simplement sans autre action.
 
-7. The data challenge attestation transaction will be executed
-   on-chain. The first validator who submits the attestation
-   can get a submission reward, while the later submission will be
-   rejected. The more votes the submitter aggregates, the more reward
-   it can get. Besides the submission rewards, there are attestment
-   rewards too. Only the validators whose votes wrapped into the
-   attestation will be rewarded, so it may be that some validators
-   voted, but their votes were not assembled by the validator. They
-   won't get rewarded for these data availability challenges. Also, for
-   different results, the rewards will be different: the "unavailable"
-   result that slashes the SPs will get validators more rewards.
+9. Une fois qu'un cas de disponibilité des données est contesté avec succès, c'est-à-dire que
+   c'est-à-dire qu'il est confirmé que les données ne sont pas disponibles avec un service de qualité, il y aura un délai de réflexion pour que les données soient disponibles.
+   service de qualité, les PS disposeront d'un délai de réflexion pour retrouver, récupérer ou
+   récupérer ou déplacer cette donnée.
 
-8. After a number of blocks, for example, 100 blocks, the data availability
-   challenge will expire even if the submissions of attestments haven't
-   arrived. In such a case, the challenge will just expire with no further actions.
+10. Une fois le délai de réflexion expiré, la disponibilité de cette donnée peut être à nouveau remise en cause si cette donnée n'est pas disponible.
+   être remise en question si cette donnée est toujours indisponible,
+   le PEI sera à nouveau réduit.
 
-9. Once a case of data availability is successfully challenged, i.e.
-   the data is confirmed not available with quality service, there
-   will be a cooling-off period for the SPs to regain, recover, or
-   shift this piece of data.
+## 20 Transactions de stockage
 
-10. Once the cooling-off period time expires, this data availability can
-   be challenged again if this piece of data is still unavailable,
-   the SP would be slashed again.
+La blockchain Greenfield prend en charge une série de transactions pour créer,
+mettre à jour et supprimer les ressources Greenfield.
 
-## 20 Storage Transactions
+Les transactions de création de seaux et d'objets doivent interagir avec les SP pour s'assurer qu'ils sont prêts.
+Fournisseurs de Stockage pour s'assurer qu'ils sont prêts, tandis que les opérations liées aux groupes et aux
+n'ont pas besoin de cela.
 
-The Greenfield blockchain supports a series of transactions to create,
-update, and delete the Greenfield resources.
+Les utilisateurs doivent toujours créer un bucket avant de pouvoir stocker des objets.
+objets.
 
-The bucket and object creation transactions have to interact with the
-SPs to ensure they are ready, while group and permission-related
-operations do not require that.
+Le nom du bucket Greenfield suit la même spécification de nommage que le nom du bucket AWS S3
+bucket name. Il doit être unique au niveau mondial.
 
-The users should always create a bucket before they can store any
-objects.
+La transaction CreateBucket doit comporter les informations suivantes :
 
-Greenfield bucket name follows the same naming specification as AWS S3
-bucket name. It must be globally unique.
+- expéditeur, qui peut être dérivé du signataire de la transaction
 
-The CreateBucket transaction must have the below information:
+- nom du bucket
 
-- sender, which can be derived from the transaction signer
+- l'identifiant du SP que le bucket et tous les objets sous ce bucket
+  utiliseront comme SP primaire
 
-- bucket name
-
-- the ID of the SP that the bucket and all objects under this bucket
-  will use as the Primary SP
-
-There is a corresponding DeleteBucket transaction. It requires that all
-the objects under the bucket must be deleted first. As described in the
-earlier section, the bucket owner can delete any object under his/her
+Il existe une transaction DeleteBucket correspondante. Elle exige que tous
+les objets sous le bucket doivent être supprimés en premier. Comme décrit dans la
+section précédente, le propriétaire du bucket peut supprimer n'importe quel objet sous son
 bucket.
 
-Object creation is described in Part 1. There is a corresponding
-DeleteObject transaction. The deletion will tell Greenfield to refund
-the reserved fees and reduce the payment stream.
+La création d'objets est décrite dans la partie 1. Il existe une transaction correspondante
+DeleteObject correspondante. La suppression indique à Greenfield de rembourser
+les frais réservés et de réduire le flux de paiement.
 
-There are group creation, deletion, and member management transactions.
+Il existe des transactions de création et de suppression de groupes et de gestion des membres.
 
-There are transactions about permission creation and deletion, as they
-are the cornerstone functionality for the economy.
+Il existe des transactions de création et de suppression de permissions, car elles
+sont la fonctionnalité de base de l'économie.
 
-More worthy of highlighting, all of these transactions can be triggered
-via cross-chain infrastructure from BSC smart contracts and EOAs.
+Plus digne d'être souligné, toutes ces transactions peuvent être déclenchées
+via l'infrastructure cross-chain des contrats intelligents de la BSC et des EOA.
 
-There are a few transactions about changing the Primary SP of users'
-buckets. It will be asynchronous as the action may take some time based
-on the number and size of the objects in the bucket. The bucket needs to
-be "Sealed" again by the new Primary SP.
+Il y a quelques transactions concernant la modification du SP primaire des utilisateurs.
+des utilisateurs. Elles seront asynchrones car l'action peut prendre un certain temps en fonction du nombre et de la taille des objets.
+sur le nombre et la taille des objets dans le bucket. Le bucket doit
+être "scellé" à nouveau par le nouveau SP primaire.
 
-## 21 Billing and Payment
+## 21 Facturation et paiement
 
-Greenfield will charge the users in two parts. Firstly, every
-transaction will require gas fees to pay the Greenfield validator to
-write the metadata on-chain. Secondly, the SPs charge the users for
-their storage service. Such payment also happens on the Greenfield. This
-section is about the latter: how such off-chain service fees are billed
-and charged.
+Greenfield facturera les utilisateurs en deux parties. Premièrement, chaque
+transaction nécessitera des frais de gaz pour payer le validateur Greenfield pour
+écrire les métadonnées sur la chaîne. Deuxièmement, les fournisseurs de services facturent aux utilisateurs
+leur service de stockage. Ce paiement s'effectue également sur le Greenfield. Cette section
+Cette section traite de ce dernier point : comment ces frais de service hors-chaîne sont facturés
+et facturés.
 
-There are two kinds of fees for the off-chain service: object storage
-fee and read package fee:
+Il existe deux types de frais pour le service hors chaîne : les frais de stockage d'objets et les frais de lecture de paquets.
+stockage d'objets et les frais de lecture :
 
-1. Every object stored on Greenfield is charged a fee based on its
-   size, content type, and other parameters.
+1. Chaque objet stocké sur Greenfield est facturé en fonction de sa taille, de son type de contenu et d'autres paramètres.
+   taille, du type de contenu et d'autres paramètres.
 
-2. There is a free quota for users' objects to be read based on their
-   size, content types, and more. If exceeded, i.e. the object data
-   has been downloaded too many times, SP will limit the bandwidth
-   for more downloads. Users can raise their data package level to
-   get more download quota. Every data package has a fixed price.
+2. Il existe un quota gratuit pour la lecture des objets des utilisateurs en fonction de leur taille, de leur type de contenu, etc.
+   taille, du type de contenu et d'autres paramètres. En cas de dépassement, c'est-à-dire si les données de l'objet
+   données de l'objet ont été téléchargées trop de fois, SP limitera la bande passante
+   pour d'autres téléchargements. Les utilisateurs peuvent augmenter le niveau de leur forfait de données pour
+   pour obtenir plus de quotas de téléchargement. Chaque paquet de données a un prix fixe.
 
-As described in Part 1, the fees are paid on Greenfield in the style of
-"Stream" from users to the SPs at a constant rate. The fees are charged
-every second as they are used.
+Comme décrit dans la partie 1, les frais sont payés sur Greenfield à la manière de
+"flux" des utilisateurs vers les PS à un taux constant. Les frais sont facturés
+chaque seconde au fur et à mesure de leur utilisation.
 
-### 21.1 Concepts and Formulas
+### 21.1 Concepts et formules
 
-Streaming is a constant by-the-second movement of funds from a sending
-account to a receiving account. Instead of sending payment transactions
-now and then, Greenfield records the static balance, the latest update
-timestamp, and flow rate in its payment module, and calculates the
-dynamic balance with a formula using this data in the records. If the
-net flow rate is not zero, the dynamic balance will change as time
-elapses.
+Le flux est un mouvement constant, à la seconde près, de fonds d'un compte émetteur vers un compte récepteur.
+compte émetteur à un compte récepteur. Au lieu d'envoyer des transactions de paiement
+de paiement, Greenfield enregistre le solde statique, la dernière mise à jour, l'horodatage et le débit dans son module de paiement.
+de la dernière mise à jour, l'horodatage et le débit dans son module de paiement.
+solde dynamique avec une formule utilisant ces données dans les enregistrements. Si le
+débit net n'est pas nul, le solde dynamique changera au fil du temps.
+s'écoule.
 
-#### 21.1.1 Terminology
+#### 21.1.1 Terminologie
 
-- **Payment Module:** This is a special module and ledger system
-  managing the billing and payment on the Greenfield blockchain.
-  Funds will be deposited or charged into it from users' balance or
-  payment accounts in this Payment Module.
+- **Module de paiement:** Il s'agit d'un module spécial et d'un système de grand livre
+  gérant la facturation et le paiement sur la blockchain Greenfield.
+  Les fonds seront déposés ou facturés à partir du solde ou des comptes de paiement des utilisateurs dans ce module de paiement.
+  comptes de paiement des utilisateurs dans ce module de paiement.
 
-- **Stream Account**: The Payment Module has its own ledger for
-  billing management. Users can deposit and withdraw funds into
-  their corresponding "accounts" on the payment module ledger. These
-  accounts are called "Stream Account", which will directly interact
-  with the stream payment functions and bill the users for the
-  storage and data service.
+- **Compte de flux** : Le module de paiement possède son propre grand livre pour
+  gestion de la facturation. Les utilisateurs peuvent déposer et retirer des fonds dans
+  leurs "comptes" correspondants sur le grand livre du module de paiement. Ces
+  Ces comptes sont appelés "comptes de flux", qui interagissent directement
+  avec les fonctions de paiement de flux et facturent aux utilisateurs le service de
+  service de stockage et de données.
 
-- **Payment Account**: Payment account has been discussed in other
-  sections of Part 1 and Part 3 already. It is actually a type of
-  Stream Account. Users can create different payment accounts and
-  associate it with different buckets for different purposes.
+- Compte de paiement** : Le compte de paiement a déjà été abordé dans d'autres
+  sections de la partie 1 et de la partie 3. Il s'agit en fait d'un type de
+  compte de flux. Les utilisateurs peuvent créer différents comptes de paiement et
+  et l'associer à des buckets différents à des fins différentes.
 
-- **Payment Stream:** Whenever the users add/delete/change a storage
-  object or download a data package, they add or change one or more
-  "payment streams" for that service provided by SPs.
+- **Payment Stream:** Chaque fois que les utilisateurs ajoutent/suppriment/modifient un objet de stockage ou téléchargent un paquet de données, ils ajoutent ou modifient un ou plusieurs comptes de paiement.
+  de données, ils ajoutent ou modifient un ou plusieurs "flux de paiement" pour ce service.
+  "flux de paiement" pour ce service fourni par les PS.
 
-- **Flow Rate**: The per-second rate at which a sender decreases its
-  net outflow stream and increases a receiver's net inflow stream
-  when creating or updating a payment stream.
+- **Flow Rate** : Le taux par seconde auquel un expéditeur diminue son flux de sortie net et augmente le flux de réception.
+  flux de sortie net et augmente le flux d'entrée net d'un récepteur.
+  lors de la création ou de la mise à jour d'un flux de paiement.
 
-- **Netflow Rate**: The per-second rate that an account's balance is
-  changing. It is the sum of the account's inbound and outbound
-  flow rates.
+- **Taux de flux net** : Le taux par seconde auquel le solde d'un compte change.
+  change. Il s'agit de la somme des flux entrants et sortants du compte.
+  du compte.
 
-- **Sender**: The stream account that starts the payment stream by
-  specifying a receiver and a flow rate at which its net flow
-  decreases.
+- **Emetteur** : Le compte de flux qui démarre le flux de paiement en
+  spécifiant un récepteur et un débit à partir duquel son flux net diminue.
+  diminue.
 
-- **Receiver**: The stream account on the receiving end of one or more payment streams.
+- **Récepteur** : Le compte de flux à l'extrémité de réception d'un ou plusieurs flux de paiement.
 
-- **CRUD Timestamp**: The timestamp of when the user creates, updates,
-  or deletes a payment stream.
+- **CRUD Timestamp** : L'horodatage du moment où l'utilisateur crée, met à jour,
+  ou supprime un flux de paiement.
 
-- **Delta Balance**: The amount of the stream account's balance has
-  changed since the latest CRUD timestamp due to the flow. It can be
-  positive or negative.
+- **Solde delta** : Le montant du solde du compte de flux qui a
+  changé depuis le dernier horodatage CRUD en raison du flux. Il peut être
+  positif ou négatif.
 
-- **Static Balance**: The balance of the stream account at the latest
-  CRUD timestamp.
+- **Solde statique** : Le solde du compte de flux au dernier
+  horodatage CRUD.
 
-- **Dynamic Balance**: The actual balance of a stream account. It is
-  the sum of the Static Balance and the Delta Balance.
+- Solde dynamique** : Le solde réel d'un compte de streaming. Il s'agit de
+  la somme de la balance statique et de la balance delta.
 
-When a user's stream account is initiated in the payment module by
-deposit, several fields will be recorded for this stream account:
+Lorsque le compte de flux d'un utilisateur est initié dans le module de paiement par
+dépôt, plusieurs champs seront enregistrés pour ce compte de flux :
 
-- CRUD Timestamp - will be the timestamp at the time.
+- CRUD Timestamp - sera l'horodatage du moment.
 
-- Static Balance - will be the deposit amount.
+- Static Balance - sera le montant du dépôt.
 
-- Netflow Rate - will be 0.
+- Netflow Rate - sera égal à 0.
 
-- Buffer Balance - will be 0.
+- Buffer Balance - sera égal à 0.
 
-#### 21.1.2 Formula
+#### 21.1.2 Formule
 
-*Static Balance = Initial Balance at latest CRUD timestamp*
+*Solde statique = Solde initial au dernier horodatage CRUD*.
 
-*Delta Balance = Netflow Rate \* Seconds elapsed since latest CRUD timestamp*
+*Solde delta = Taux de débit net \* Secondes écoulées depuis le dernier horodatage CRUD*.
 
-*Current Balance = Static Balance + Delta Balance*
+*Solde actuel = solde statique + solde delta*.
 
-*Buffer Balance = - Netflow Rate \* pre-configed ReserveTime if Netflow Rate is negative*
+*Solde du tampon = - débit net *Temps de réserve préconfiguré si le débit net est négatif*.
+
 
 <div align="center"><img src="./assets/21.1%20How%20a%20User%20Receives%20Inflow%20and%20Outflow%20of%20Funds.jpg"  height="60%" width="60%"></div>
 <div align="center"><i>Figure 21.1 How a User Receives Inflow and Outflow of Funds</i></div>
 
-Every time a user creates, updates, or deletes a payment stream, many
-variables in the above formulas will be updated and the users' stream accounts in the
-payment module will be settled.
+Chaque fois qu'un utilisateur crée, met à jour ou supprime un flux de paiement, de nombreuses variables des formules ci-dessus sont mises à jour.
+variables des formules ci-dessus seront mises à jour et les comptes de flux des utilisateurs dans le module de
+module de paiement seront réglés.
 
-- The net flow for the user's stream account in the payment module
-  will be re-calculated to net all of its inbound and outbound flow
-  rates by adding/removing the new payment stream against the
-  current NetFlow Rate. E.g. when a user creates a new object whose
-  price is \$0.4/month, its NetFlow Rate will add -\$0.4/month.
+- Le flux net du compte de flux de l'utilisateur dans le module de paiement
+  sera recalculé pour compenser tous ses flux entrants et sortants en ajoutant/supprimant les nouveaux flux.
+  d'entrée et de sortie en ajoutant/supprimant le nouveau flux de paiement par rapport au
+  débit net actuel. Par exemple, lorsqu'un utilisateur crée un nouvel objet dont le
+  dont le prix est de 0,4 $/mois, son débit net sera augmenté de 0,4 $/mois.
 
-- If the NetFlow rate is negative, the associated amount of BNB will
-  be reserved in a buffer balance. It is used to avoid the dynamic
-  balance becoming negative. When the dynamic balance becomes under
-  the threshold, the account will be forced settled.
+- Si le taux de flux net est négatif, la quantité de BNB associée sera
+  être réservé dans un solde tampon. Il est utilisé pour éviter que le solde dynamique
+  dynamique ne devienne négatif. Lorsque le solde dynamique devient inférieur au seuil
+  le seuil, le compte sera réglé de manière forcée.
 
-- CRUD Timestamp will become the current timestamp.
+- L'horodatage CRUD deviendra l'horodatage actuel.
 
-- Static Balance will be re-calculated. The previous dynamic balance
-  will be settled. The new static Balance will be the Current
-  Balance plus the change of the Buffer Balance.
+- Le solde statique sera recalculé. Le solde dynamique précédent
+  sera réglé. Le nouveau solde statique sera le solde actuel
+  Le nouveau solde statique sera le solde actuel plus le changement du solde de la mémoire tampon.
 
-#### 21.1.3 Types and Interfaces
+#### 21.1.3 Types et interfaces
 
 ```go
 type PaymentConfig struct {
@@ -1061,128 +1056,127 @@ type PaymentKeeperI interface {
     LiquidateAccount(addr Address) error
 }
 ```
+### 21.2 Flux de travail clé
 
-### 21.2 Key Workflow
+#### 21.2.1 Dépôt et retrait
 
-#### 21.2.1 Deposit and Withdrawal
+Tous les utilisateurs (y compris les PS) peuvent déposer et retirer des BNB dans le module de paiement.
+module. Le StaticBalance dans la structure de données StreamPayment sera
+sera "réglée" en premier : l'horodateur CRUDTimeStamp sera mis à jour et le StaticBalance
+sera compensé par le DeltaBalance. Ensuite, les numéros de dépôt et de retrait
+essaieront d'ajouter/réduire le StaticBalance dans l'enregistrement. Si le solde statique
+est inférieur au montant du retrait, le retrait échouera.
 
-All users(including SPs) can deposit and withdraw BNB in the payment
-module. The StaticBalance in the StreamPayment data struct will be
-"settled" first: the CRUDTimeStamp will be updated and StaticBalance
-will be netted with DeltaBalance. Then the deposit and withdrawal number
-will try to add/reduce the StaticBalance in the record. If the static
-balance is less than the withdrawal amount, the withdrawal will fail.
+Le dépôt/retrait via cross-chain sera également pris en charge pour permettre aux
+aux utilisateurs de déposer ou de retirer directement de la BSC.
 
-Deposit/withdrawal via cross-chain will also be supported to enable
-users to deposit/withdraw from BSC directly.
+Plus précisément, le dépôt de paiement peut être déclenché automatiquement pendant
+la création d'objets ou l'ajout de paquets de données. Tant que
+les utilisateurs disposent d'actifs dans leurs comptes d'adresse et de paiement, le module de
+module de paiement peut facturer directement les utilisateurs en déplaçant les fonds des comptes d'adresses.
+comptes d'adresses.
 
-Specifically, the payment deposit can be triggered automatically during
-the creation of objects or the addition of data packages. As long as
-users have assets in their address accounts and payment accounts, the
-payment module may directly charge the users by moving the funds from
-address accounts.
+#### 21.2.2 Flux de paiement
 
-#### 21.2.2 Payment Stream
+Les flux de paiement circulent dans un seul sens. Chaque fois que les utilisateurs déposent
+de leurs comptes d'adresses vers les comptes de flux (y compris le compte de paiement par
+compte de paiement par défaut des utilisateurs et d'autres comptes de paiement), les fonds vont d'abord
+les fonds passent d'abord des comptes d'adresses des utilisateurs à un compte système géré par le module de paiement.
+module de paiement, bien que la taille des fonds et les autres paramètres de paiement soient enregistrés sur le compte de flux des utilisateurs.
+seront enregistrés sur le compte de flux des utilisateurs, c'est-à-dire l'enregistrement StreamPayment,
+dans le grand livre du module de paiement. Lorsque le paiement est réglé, les fonds
+passeront du compte système aux comptes d'adresses des PS en fonction de leur
+leur calcul du flux entrant.
 
-Payment streams are flowing in one direction. Whenever the users deposit
-from their address accounts into the stream accounts (including users'
-default payment account and other payment accounts), the funds first go
-from the users' address accounts to a system account maintained by the
-Payment Module, although the fund size and other payment parameters will
-be recorded on the users' stream account, i.e. the StreamPayment record,
-in the Payment Module ledger. When the payment is settled, the funds
-will go from the system account to SPs' address accounts according to
-their in-flow calculation.
+Chaque fois que les utilisateurs effectuent les actions suivantes, leur enregistrement StreamPayment sera
+sera mis à jour :
 
-Every time users do the actions below, their StreamPayment record will
-be updated:
+- La création d'un objet créera un nouveau flux vers le compte système.
 
-- Creating an object will create a new stream to the system account
+- La suppression d'un objet entraîne la suppression d'un flux sur le compte système.
 
-- Deleting an object will delete a stream to the system account
+- L'ajustement des paquets de données pour la lecture/téléchargement permettra de
+  créer/supprimer/mettre à jour les flux associés.
 
-- Adjusting the data packages for read/download will
-  create/delete/update the associated streams
+Le flux du compte système vers les fournisseurs de stockage sera mis à jour
+ensemble lorsque les utilisateurs effectuent les actions ci-dessus. Le débit entrant de
+SP sera également enregistré avec précision dans le module de paiement, comme par exemple
+la taille totale stockée (en tant que PS primaire ou secondaire), etc. Le flux entrant total
+Le flux entrant total sera réparti entre les PS en fonction des enregistrements.
 
-The stream from the system account to storage providers will be updated
-together when the users do the above actions. The in-flow flow rate of
-SP will be recorded accurately in the payment module as well, such as
-the total size stored(as primary or secondary SP), etc. The total
-inbound flow will be split among the SPs according to the records.
+#### 21.2.3 Règlement forcé
 
-#### 21.2.3 Forced Settlement
+Si un utilisateur ne dépose pas pendant une longue période, son dépôt précédent peut être utilisé pour les objets stockés.
+épuisé pour les objets stockés. Greenfield dispose d'un mécanisme de règlement forcé
+pour s'assurer que suffisamment de fonds sont garantis pour les frais de service ultérieurs.
 
-If a user doesn't deposit for a long time, his previous deposit may be
-all used up for the stored objects. Greenfield has a forced settlement
-mechanism to ensure enough funds are secured for further service fees.
+Il existe deux configurations, ReserveTime et ForcedSettleTime. Disons que
+7 jours et 1 jour. Si un utilisateur veut stocker un objet au prix de
+environ 0,1 $ par mois(0,00000004 $/seconde), il doit réserver des frais
+pour 7 jours dans le solde du tampon, qui est de `0,00000004 $ * 7 * 86400 =
+$0.024192`. Si l'utilisateur dépose initialement 1$, l'enregistrement du paiement du flux
+sera le suivant.
 
-There are two configurations, ReserveTime and ForcedSettleTime. Let's say
-7 days and 1 day. If a user wants to store an object at the price of
-approximately $0.1 per month($0.00000004/second), he must reserve fees
-for 7 days in buffer balance, which is `$0.00000004 * 7 * 86400 =
-$0.024192`. If the user deposits $1 initially, the stream payment
-record will be as below.
+- Horodatage CRUD : 100
 
-- CRUD Timestamp: 100
+- Solde statique : $0.975808
 
-- Static Balance: $0.975808
+- Taux de flux net : -0,00000004 $/seconde
 
-- Netflow Rate: -$0.00000004/sec
+- Solde du tampon : $0.024192
 
-- Buffer Balance: $0.024192
+Après 10000 secondes, le solde dynamique de l'utilisateur est `0.975808 - 10000 * 0.00000
 
-After 10000 seconds, the dynamic balance of the user is `0.975808 - 10000 * 0.00000004 = 0.975408`.
+Après 24395200 secondes (environ 282 jours), le solde dynamique de l'utilisateur deviendra négatif.
+l'utilisateur deviendra négatif. Les utilisateurs devraient avoir des alarmes pour de tels
+alarmes qui leur rappellent de fournir des fonds supplémentaires à temps.
 
-After 24395200 seconds(approximately 282 days), the dynamic balance of
-the user will become negative. Users should have some alarms for such
-events that remind them to supply more funds in time.
+Si aucun fonds supplémentaire n'est fourni et que le solde dynamique plus le solde tampon sont inférieurs au seuil de règlement forcé, le solde dynamique sera négatif.
+tampon est inférieur au seuil de règlement forcé, le compte sera réglé de force.
+règlement forcé. Tous les flux de paiement du compte seront fermés et le compte sera marqué comme étant hors service.
+et le compte sera marqué comme étant déséquilibré. La vitesse de téléchargement pour tous les
+objets associés au compte ou au compte de paiement sera
+déclassée. Les objets seront supprimés par les PS si aucun financement n'est
+fourni dans le cadre du seuil prédéfini.
 
-If no more funds are supplied and the dynamic balance plus buffer
-balance is under the forced settlement threshold, the account will be
-forcibly settled. All payment streams of the account will be closed and
-the account will be marked as out of balance. The download speed for all
-objects associated with the account or payment account will be
-downgraded. The objects will be deleted by the SPs if no fund is
-provided within the predefined threshold.
+Le règlement forcé entraînera également des frais, ce qui constitue une autre incitation pour les utilisateurs à réapprovisionner les fonds de manière proactive.
+incitant les utilisateurs à réapprovisionner les fonds de manière proactive.
 
-The forced settlement will also charge some fees which is another
-incentive for users to replenish funds proactively.
+Disons que le ForceSettlementTime est de 1 jour. Après 24913601
+secondes (environ 288 jours), le solde dynamique devient `0.975808 -
+24913601 *0.00000004 = -0.02073604`, et le solde tampon est de
+$0.00345596. Le seuil de règlement forcé est de `86400* 0.00000004 =
+0.003456`. Le règlement forcé sera déclenché, et l'enregistrement de l'utilisateur sera le suivant : - 1.
+l'enregistrement de l'utilisateur sera le suivant :
 
-Let's say the ForceSettlementTime is 1 day. After 24913601
-seconds(approximately 288 days), the dynamic balance becomes `0.975808 -
-24913601 *0.00000004 = -0.02073604`, plus the buffer balance is
-$0.00345596. The forced settlement threshold is `86400* 0.00000004 =
-0.003456`. The forced settlement will be triggered, and the record of the
-user will become as below:
+- CRUD Timestamp : 24913701
 
-- CRUD Timestamp: 24913701
+- Balance statique : \$0
 
-- Static Balance: \$0
+- Débit net : \$0/sec
 
-- Netflow Rate: \$0/sec
+- Solde de la mémoire tampon : \$0
 
-- Buffer Balance: \$0
+Les validateurs recevront les 0,00345596 $ restants comme récompense. Le compte
+compte sera marqué comme "insuffisant" et ses objets seront déclassés
+par les PS.
 
-The validators will get the remaining $0.00345596 as a reward. The
-account will be marked as "insufficient" and his objects get downgraded
-by SPs.
+Chaque fois qu'un enregistrement de flux est mis à jour, Greenfield calcule le moment
+où le compte sera déséquilibré. Ainsi, Greenfield peut garder une
+liste on-chain pour tracer les horodatages du règlement forcé potentiel.
+règlement forcé. La liste sera vérifiée à la fin du traitement de chaque bloc.
+traitement. Lorsque l'heure du bloc dépasse l'horodatage du règlement forcé,
+le règlement des comptes de flux associés sera déclenché
+automatiquement.
 
-Every time a stream record is updated, Greenfield calculates the time
-when the account will be out of balance. So Greenfield can keep an
-on-chain list to trace the timestamps for the potential forced
-settlement. The list will be checked by the end of every block
-processing. When the block time passes the forced settlement timestamp,
-the settlement of the associated stream accounts will be triggered
-automatically.
+#### 21.2.4 Compte de paiement
 
-#### 21.2.4 Payment Account
+Le compte de paiement est un type spécial de "compte de flux" dans le module de paiement.
+de paiement. Les utilisateurs peuvent créer plusieurs comptes de paiement et ont la
+l'autorisation de lier des buckets à différents comptes de paiement pour payer le
+stockage et le paquet de données.
 
-Payment account is a special "Stream Account" type in the Payment
-Module. Users can create multiple payment accounts and have the
-permission to link buckets to different payment accounts to pay for
-storage and data package.
-
-The relevant data structures and interface are as the following:
+Les structures de données et l'interface pertinentes sont les suivantes :
 
 ```go
 // PaymentAccountNum mapping
@@ -1209,66 +1203,66 @@ type PaymentKeeperI interface {
 }
 ```
 
-The payment accounts have the below traits:
+Les comptes de paiement ont les caractéristiques suivantes :
 
-- Every user can create multiple payment accounts. The payment
-  accounts created by the user are recorded with a map on the
-  Greenfield blockchain.
+- Chaque utilisateur peut créer plusieurs comptes de paiement. Les comptes
+  comptes de paiement créés par l'utilisateur sont enregistrés avec une carte sur la
+  blockchain Greenfield.
 
-- The address format of the payment account is the same as normal
-  accounts. It's derived by the hash of the user address and
-  payment account index. The payment account only exists in the
-  storage payment module. Users can deposit into, withdraw from and
-  query the balance of payment accounts in the payment module, which
-  means payment accounts cannot be used for transfer or staking.
+- Le format de l'adresse du compte de paiement est le même que celui des comptes normaux.
+  normaux. Elle est dérivée du hachage de l'adresse de l'utilisateur et de
+  l'index du compte de paiement. Le compte de paiement n'existe que dans le
+  module de paiement de stockage. Les utilisateurs peuvent effectuer des dépôts, des retraits et
+  et consulter le solde des comptes de paiement dans le module de paiement.
+  ce qui signifie que les comptes de paiement ne peuvent pas être utilisés pour le transfert ou le jalonnement.
 
-- Users can only associate their buckets with their payment accounts
-  to pay for storage and bandwidth. Users cannot associate their own
-  buckets with others' payment accounts, and users cannot associate
-  others' buckets with their own payment accounts.
+- Les utilisateurs peuvent seulement associer leurs buckets à leurs comptes de paiement
+  pour payer le stockage et la bande passante. Les utilisateurs ne peuvent pas associer leurs propres
+  Les utilisateurs ne peuvent pas associer leurs propres buckets avec les comptes de paiement des autres, et les utilisateurs ne peuvent pas associer les buckets des autres avec leurs propres comptes de paiement.
+  d'autres avec leurs propres comptes de paiement.
 
-- The owner of a payment account is the user who creates it. The owner
-  can set it non-refundable. It's a one-way setting and can not be
-  revoked. Thus users can set some objects as "public goods" which
-  can receive donations for storage and bandwidth while preserving
-  the ownership.
+- Le propriétaire d'un compte de paiement est l'utilisateur qui l'a créé. Le propriétaire
+  peut le rendre non-remboursable. Il s'agit d'un paramètre à sens unique qui ne peut pas être
+  révoqué. Ainsi, les utilisateurs peuvent définir certains objets comme des "biens publics" qui
+  peuvent recevoir des dons pour le stockage et la bande passante tout en conservant la
+  la propriété.
 
-#### 21.2.5 Account Freeze and Resume
+#### 21.2.5 Gel et reprise de compte
 
-If a payment account is out of balance, it will be settled and set a
-flag as out of balance.
+Si un compte de paiement est en déséquilibre, il est soldé et un indicateur de déséquilibre lui est attribué.
+comme étant en déséquilibre.
 
-The NetflowRate will be set to 0, while the current settings of the
-stream pay will be backed up in another data structure. The download
-speed for all objects under this account will be downgraded.
+Le NetflowRate sera mis à 0, tandis que les paramètres actuels du
+stream pay sera sauvegardé dans une autre structure de données. La vitesse de téléchargement
+de tous les objets de ce compte sera réduite.
 
-If someone deposits into a frozen account and the static balance is
-enough for reserved fees, the account will be resumed automatically. The
-stream pay will be recovered from the backup.
+Si quelqu'un dépose sur un compte gelé et que le solde statique est
+suffisant pour les frais réservés, le compte sera repris automatiquement. L'adresse
+paiement du flux sera récupéré à partir de la sauvegarde.
 
-During the OutOfBalance period, no objects can be associated with this
-payment account again, which results in no object can be created under
-the bucket associated with the account.
+Pendant la période OutOfBalance, aucun objet ne peut être associé à ce
+compte de paiement, ce qui a pour conséquence qu'aucun objet ne peut être créé sous
+le bucket associé au compte.
 
-If the associated object is deleted, the backup stream pay settings will
-be changed accordingly to ensure it reflects the latest once the account
-is resumed.
+Si l'objet associé est supprimé, les paramètres de paiement du flux de sauvegarde seront modifiés en conséquence pour s'assurer qu'ils reflètent la nouvelle situation.
+seront modifiés en conséquence pour s'assurer qu'ils reflètent la dernière version du compte
+est repris.
 
-#### 21.2.6 Storage Fee Price and Adjustment
+#### 21.2.6 Prix et ajustement des frais de stockage
 
-The object storage fee is calculated with a function of object metadata
-and time. The unit of the price will be US dollars. The payment actually
-charged on Greenfield is BNB, and the price of BNB will be submitted by
-the oracle.
+Les frais de stockage des objets sont calculés en fonction des métadonnées de l'objet
+et du temps. L'unité du prix sera le dollar US. Le paiement effectivement
+facturé sur Greenfield est le BNB, et le prix du BNB sera soumis par l'oracle.
+l'oracle.
 
-For example, if the price is 0.03 USD / GB / month, the current BNB
-price on-chain is 258 USD, 70% of the storage fee will be received by
-the primary SP, and the rest are split by secondary SPs.
+Par exemple, si le prix est de 0,03 USD / GB / mois, le prix actuel de BNB
+actuel sur la chaîne est de 258 USD, 70% des frais de stockage seront reçus par le
+70% des frais de stockage seront perçus par le SP primaire, le reste étant réparti entre les SP secondaires.
 
-When an object of 123, 456, 789 bytes(approximately 123 MB) is sealed,
-there will be 7 payment streams updated. The fee rate is `0.03 / 258 *
+Lorsqu'un objet de 123, 456, 789 octets (environ 123 Mo) est scellé,
+il y aura 7 flux de paiement mis à jour. Le taux de frais est de `0.03 / 258 *
 123456789 / (1024*1024*1024) / (30*24*60*60) = 5.158003812501789e-12`
-BNB/second.
+BNB/seconde.
 
 Let's set the rate as R.
 
@@ -1286,47 +1280,47 @@ Let's set the rate as R.
 
 - User -\> Secondary SP 6 flow rate: 0.05 \* R
 
-The stream records of the payment accounts will be adjusted. If the
-reserved time is 6 months, the user has to reserve `(R * 6 * 30 * 24 * 60 * 60) = 8.021727529202782e-05` BNB in
-the Buffer Balance. If the balance of the payment account is not enough, either the trigger
-transaction will fail or the account will be marked as "insufficient".
+Les enregistrements des flux des comptes de paiement seront ajustés. Si la
+temps réservé est de 6 mois, l'utilisateur doit réserver `(R * 6 * 30 * 24 * 60 * 60) = 8,021727529202782e-05` BNB dans le solde tampon.
+le solde tampon. Si le solde du compte de paiement n'est pas suffisant, soit l'opération de déclenchement échouera, soit le compte sera clôturé.
+échouera ou le compte sera marqué comme "insuffisant".
 
-The BNB price will be submitted by an oracle from the Greenfield
-validator relayers periodically. When the price updates, all payment
-prices will be calculated with the latest price. But all the flow rates
-of existing payments will remain unchanged until the next settlement,
-triggered by either the user's new actions like putting a new object or
-the auto-settlement.
+Le prix du BNB sera soumis par un oracle des relais validateurs Greenfield
+validateurs relais périodiquement. Lorsque le prix est mis à jour, tous les prix des paiements
+prix des paiements seront calculés avec le dernier prix. Mais tous les débits
+des paiements existants resteront inchangés jusqu'au prochain règlement,
+déclenché soit par les nouvelles actions de l'utilisateur comme mettre un nouvel objet ou
+le règlement automatique.
 
-The object storage fee price formula is expected to be steady since the
-price unit is USD and the cost of storage changes slowly over time. The
-formula might be flexible enough so it can be hard-coded on-chain.
+La formule de tarification des frais de stockage des objets devrait être stable puisque l'unité de prix est le dollar américain et que le coût des frais de stockage des objets n'est pas le même.
+l'unité de prix est l'USD et que le coût du stockage évolue lentement dans le temps. Le site
+formule pourrait être suffisamment flexible pour être codée en dur sur la chaîne.
 
-There may be a chance the SPs want to change the formula(e.g. for
-business model update). That will be achieved by SPs and validators'
-coordinated governance.
+Il se peut que les PS veuillent changer la formule (par exemple pour une mise à jour du modèle commercial).
+mise à jour du modèle commercial). Cela sera réalisé par la gouvernance coordonnée des PS et des validateurs.
+gouvernance coordonnée des PS et des validateurs.
 
-## 22 Cross-Chain Models
+## 22 Modèles inter-chaînes
 
-The Cross-chain framework has been introduced in Part 1. Here more
-details about the communication layer and economics will be explained.
+Le cadre des chaînes croisées a été présenté dans la partie 1. Ici, plus de
+détails sur la couche de communication et l'économie seront expliqués ici.
 
-### 22.1 Communication Channels and Packages
+### 22.1 Canaux et paquets de communication
 
-#### 22.1.1 Vote Poll
+#### 22.1.1 Vote par sondage
 
-A new p2p communication across the cross-chain relayers will be
-introduced, called "Vote Poll". This Vote Poll will gossip about the
-signed votes within the network. To avoid message flooding, all the
-signed votes will expire after a fixed time. The Greenfield relayers can
-either put votes to or fetch votes from the poll and assemble it as
-cross-chain package transactions.
+Une nouvelle communication p2p à travers les relais cross-chain sera introduite.
+sera introduite, appelée "Vote Poll". Ce Vote Poll permettra d'échanger des informations sur les
+votes signés au sein du réseau. Pour éviter l'inondation de messages, tous les
+votes signés expireront après un temps fixe. Les relais Greenfield peuvent
+soit mettre des votes, soit récupérer des votes du sondage et les assembler en tant que
+transactions de paquets inter-chaînes.
 
-#### 22.1.2 Channel and Sequence
+#### 22.1.2 Canal et séquence
 
-To allow multiplexing and replay attack resistance, "Channel" and
-"Sequence" concepts are introduced to manage any type of communication.
-Following is an example definition:
+Pour permettre le multiplexage et la résistance aux attaques par relecture, les concepts de "canal" et de "séquence" sont introduits pour gérer tout type de communication.
+canal" et "séquence" sont introduits pour gérer tout type de communication.
+Voici un exemple de définition :
 
 ```go
 type Package struct {
@@ -1341,215 +1335,216 @@ type Package struct {
 }
 ```
 
-The packages in the same channel must be processed in sequence, while
-they can be processed in parallel if they belong to different channels.
+Les paquets d'un même canal doivent être traités en séquence, tandis que
+ils peuvent être traités en parallèle s'ils appartiennent à des canaux différents.
 
-The operation messages on different Greenfield resources are mapped to
-different channels. For example, buckets and storage objects belong to
-different channels.
+Les messages d'opération sur les différentes ressources Greenfield sont mappés sur des
+différents canaux. Par exemple, les buckets et les objets de stockage appartiennent à
+différents canaux.
 
-#### 22.1.3 Reliability Protocol
+#### 22.1.3 Protocole de fiabilité
 
-Here a protocol is defined to ensure reliable stream delivery of data
-between BSC and Greenfield.
+Un protocole est défini ici pour garantir la fiabilité de la transmission des données en continu
+entre BSC et Greenfield.
 
-The protocol must recover the scenarios when the cross-chain data is
-damaged, duplicated, or delivered out of order by the relayers. It
-assigns a sequence number to each package and requires a positive
-acknowledgment (ACK) from the target chain. Here there are three kinds
-of packages:
+Le protocole doit permettre de récupérer les scénarios dans lesquels les données inter-chaînes sont
+endommagées, dupliquées ou livrées hors service par les relais. Il
+attribue un numéro de séquence à chaque paquet et exige un accusé de réception positif (ACK) de la part des relais.
+positif (ACK) de la chaîne cible. Ici, il y a trois types
+de paquets :
 
-1. SYN: the initial cross-chain packages started by either users or dApps.
+1. SYN : les paquets initiaux inter-chaînes lancés par les utilisateurs ou les dApps.
 
-2. ACK: the positive acknowledgment sent by the resource layer of the
-   target chain.
+2. ACK : l'accusé de réception positif envoyé par la couche ressource de la chaîne cible.
+   chaîne cible.
 
-3. FAIL_ACK: the negative acknowledgment sent by the communication
-   layer of the target chain, usually caused by damaged data or
-   protocol inconsistency triggered by the edge case.
+3. FAIL_ACK : l'acquittement négatif envoyé par la couche de communication de la
+   de la chaîne cible, généralement causé par des données endommagées ou une
+   une incohérence de protocole déclenchée par le cas limite.
 
-Each communication package must start with SYN and end with ACK or
-FAIL_ACK. The handler code and contracts on each side must handle these
+Chaque paquet de communication doit commencer par SYN et se terminer par ACK ou
+FAIL_ACK. Le code du gestionnaire et les contrats de chaque côté doivent gérer ces
 primitives.
 
-#### 22.1.4 Validator Update
+#### 22.1.4 Mise à jour du validateur
 
-With an aggregatable multi-signature scheme, e.g. BLS, the cross-chain
-can be quite light-weighted. However sufficient data must be appended
-onto the package to indicate the validators who sign the events, this
-can be achieved by combining a bitmap and a validator set on-chain.
-However the Greenfield validator set is volatile, Greenfield validators
-have to sync the information to BSC once there is an update about the
-Greenfield validator set. This is implemented by building a Greenfield
-light client on BSC, which is similar to the light client implemented
-for BNB Beacon Chain on BSC.
+Avec un schéma multi-signatures agrégeable, par exemple BLS, la chaîne croisée peut être assez légère.
+peut être assez légère. Cependant, des données suffisantes doivent être ajoutées
+sur le paquet pour indiquer les validateurs qui signent les événements.
+Cela peut être réalisé en combinant un bitmap et un ensemble de validateurs sur la chaîne.
+Cependant, l'ensemble des validateurs Greenfield est volatile.
+doivent synchroniser les informations avec le BSC dès qu'il y a une mise à jour de l'ensemble de
+ensemble de validateurs Greenfield. Ceci est mis en œuvre en construisant un client Greenfield
+Greenfield sur BSC, qui est similaire au client léger implémenté pour la chaîne de balises BNB sur BSC.
+pour BNB Beacon Chain sur BSC.
 
-### 22.2 Economic
+### 22.2 Économique
 
-The Greenfield relayers play an important role in relaying inter-chain
-packages. A proper incentive is required to keep relayers making their
-long-term contribution.
+Les relais Greenfield jouent un rôle important dans le relais des paquets inter-chaînes.
+chaîne. Une incitation adéquate est nécessaire pour que les relais continuent à apporter leur contribution à long terme.
+contribution à long terme.
 
-#### 22.2.1 Fee and Reward of Cross-Chain Packages
+#### 22.2.1 Frais et récompense des paquets inter-chaînes
 
-Both SYN and ACK/FAIL_ACK packages cost gas to relay, the users (or
-smart contracts) will need to pay the fee to cover both of them when
-they start the SYN cross-chain packages.
+Les paquets SYN et ACK/FAIL_ACK coûtent tous deux de l'essence pour être relayés, les utilisateurs (ou les
+les utilisateurs (ou les smart contracts) devront payer les frais pour couvrir les deux lorsqu'ils
+ils lancent les paquets SYN cross-chain.
 
-To encourage Greenfield relayers to sign cross-chain packages:
+Pour encourager les relais Greenfield à signer des paquets cross-chain :
 
-1. The package deliverer will get a fixed ratio of the relay fee as a reward.
+1. Le livreur du paquet recevra un ratio fixe des frais de relais comme récompense.
 
-2. The rest relay fee will be distributed equally among those who sign the vote.
+2. Le reste des frais de relais sera distribué de manière égale entre ceux qui signent.
 
-#### 22.2.2 Race to Deliver Cross-Chain Packages
+#### 22.2.2 Course pour la livraison de paquets inter-chaînes
 
-There are multiple Greenfield relayers, and they may compete to submit
-the aggregated multi-signed packages onto the Greenfield blockchain and
-BSC. To avoid racing transactions caused by the competition, which
-wastes gas, the relayers are rotated to relay transactions, e.g. taking
-shifts every 10 minutes. Each cross-chain package gets a timestamp, if
-it is not relayed within a limited delay when the designated relayer
-doesn't perform the duty, any other Greenfield relayers are allowed to
-relay such a package.
+Il y a plusieurs relais Greenfield, et ils peuvent se faire concurrence pour soumettre
+les paquets multisignés agrégés sur la blockchain Greenfield et la BSC.
+BSC. Pour éviter les transactions de course causées par la compétition, qui
+concurrence, ce qui entraîne un gaspillage de gaz, les relayeurs effectuent une rotation pour relayer les transactions, par exemple en se relayant toutes les 10 minutes.
+toutes les 10 minutes. Chaque paquet cross-chain reçoit un horodatage, si
+il n'est pas relayé dans un délai limité lorsque le relayeur désigné
+désigné ne remplit pas sa fonction, d'autres relais Greenfield sont autorisés à
+relayer un tel paquet.
 
-#### 22.2.3 Callbacks and Limited Gas
+#### 22.2.3 Callbacks et gaz limité
 
-BSC dApps, i.e. smart contracts on BSC, are allowed to implement their
-own logic to handle ACK or FAIL_ACK packages. The smart contracts can
-register callback functions to handle the ACK packages. As it is
-impossible for the cross-chain infrastructure to predict the gas
-consumption of the callback, a gas limitation estimate should be defined
-from the smart contracts that register the callbacks.
+Les dApps BSC, c'est-à-dire les contrats intelligents sur BSC, sont autorisés à mettre en œuvre leur propre logique pour gérer les ACK ou FA.
+propre logique pour traiter les paquets ACK ou FAIL_ACK. Les contrats intelligents peuvent
+enregistrer des fonctions de rappel pour traiter les paquets ACK. Comme il est
+impossible pour l'infrastructure cross-chain de prévoir la consommation de
+consommation de gaz du callback, une estimation de la limitation de gaz doit être définie
+par les contrats intelligents qui enregistrent les fonctions de rappel.
 
-For any cross-chain packages that start from BSC, the smart contract
-needs to specify the gas limitation for the ACK or FAIL_ACK package, the
-relayer fee is prepaid accordingly on BSC. Relayers may refund the
-excessive fees later.
+Pour tous les paquets cross-chain qui partent du BSC, le contrat intelligent doit spécifier la limitation de gaz pour le BSC.
+doit spécifier la limitation de gaz pour le paquet ACK ou FAIL_ACK, les frais du
+Les frais de relais sont prépayés en conséquence sur BSC. Les relais peuvent rembourser les
+rembourser les frais excessifs plus tard.
 
-#### 22.2.4 Cross-Chain Infrastructure Contracts on BSC
+#### 22.2.4 Contrats d'infrastructure inter-chaînes sur BSC
 
-The cross-chain logic is also implemented on Greenfield as smart
-contracts. But these contracts will not be implemented on BSC as the
-genesis contract anymore, but just upgradeable contracts. The upgrade
-will be controlled by the agreement of the Greenfield validators through
-a governance process. The design can take full advantage of normal
-contracts, such as working around the 24k size limitation by delegating
-different logic to different implementation contracts.
+La logique inter-chaînes est également mise en œuvre sur Greenfield sous forme de contrats intelligents.
+contrats intelligents. Mais ces contrats ne seront plus implémentés sur BSC comme le
+Mais ces contrats ne seront plus implémentés sur BSC en tant que contrat de genèse, mais simplement en tant que contrats évolutifs. La mise à niveau
+La mise à niveau sera contrôlée par l'accord des validateurs de Greenfield à travers
+un processus de gouvernance. La conception peut tirer pleinement parti des contrats normaux
+normaux, par exemple en contournant la limite de taille de 24k en déléguant
+en déléguant différentes logiques à différents contrats d'implémentation.
 
-### 22.3 Error and Failure Handling
+### 22.3 Traitement des erreurs et des défaillances
 
-There are errors and failures that can happen during cross-chain
-communication.
+Des erreurs et des défaillances peuvent se produire pendant la communication
+chaîne.
 
-One type of error is from the cross-chain protocol itself and is marked
-by "FAIL_ACK". This means the protocol itself meets some fatal errors,
-and it cannot complete the cross-chain package transport even before it
-touches the layer above the communication layer. It is usually caused by
-system bugs that result in data corruption or inconsistency.
+Un type d'erreur provient du protocole inter-chaînes lui-même et est marqué par
+par "FAIL_ACK". Cela signifie que le protocole lui-même rencontre des erreurs fatales,
+et qu'il ne peut pas achever le transport du paquet inter-chaînes avant même qu'il ne soit
+avant de toucher la couche supérieure à la couche de communication. Ce problème est généralement causé par
+des bogues du système qui entraînent une corruption ou une incohérence des données.
 
-The other type is the error above the communication layer, for example,
-the errors triggered by improper logic or bugs in the resource mirror
-layer or the application layer. Such cases should still return "ACK" at
-the communication layer, but the ACK package should contain enough
-information for the resource mirror layer or the application layer to
-recover to the original state.
+L'autre type est l'erreur au-dessus de la couche de communication, par exemple,
+les erreurs déclenchées par une logique incorrecte ou des bogues dans la couche miroir des ressources
+ou la couche d'application. Ces cas doivent toujours renvoyer un "ACK" à la couche de
+la couche de communication, mais le paquet ACK doit contenir suffisamment d'informations
+suffisamment d'informations pour que la couche miroir des ressources ou la couche application
+pour revenir à l'état initial.
 
 <div align="center"><img src="./assets/22.3%20Error%20and%20Failure%20Handling.jpg"  height="60%" width="60%"></div>
 <div align="center"><i>Figure 22.1 Cross-chain Error and Failure Handling</i></div>
 
-When Greenfield emits an ACK or FAIL_ACK package, the registered
-callbacks of BSC dApps (i.e. the smart contracts) will be called up to
-handle the package, but these functions may fail to handle the
-ACK/FAIL_ACK packages due to the bugs or exceptions in the callbacks,
-these packages will be put under in another queue that belongs to the
+Lorsque Greenfield émet un paquet ACK ou FAIL_ACK, les callbacks enregistrés de
+callbacks enregistrés des dApps BSC (c'est-à-dire les contrats intelligents) seront appelés pour traiter le paquet, mais ces fonctions peuvent échouer à traiter le paquet.
+traiter le paquet, mais ces fonctions peuvent échouer à traiter les paquets
+ACK/FAIL_ACK en raison de bogues ou d'exceptions dans les callbacks,
+ces paquets seront placés dans une autre file d'attente qui appartient aux
 BSC dApps.
 
-The corresponding BSC dApps can retry the package, e.g. with a higher
-gas limit, or just skip the package to tolerate failure, or even upgrade
-its contract to handle corner cases. The BSC dApps can not start new
-cross-chain packages if there are any pending failed packages in their
-queue. It asks the BSC dApps must handle the failed packages in
-sequence.
+Les dApps BSC correspondants peuvent réessayer le paquet, par exemple avec une limite de gaz plus élevée, ou simplement sauter le paquet.
+limite de gaz plus élevée, ou simplement sauter le paquet pour tolérer l'échec, ou même mettre à niveau
+son contrat pour gérer les cas particuliers. Les dApps BSC ne peuvent pas démarrer de nouveaux
+paquets cross-chain s'il y a des paquets en attente d'échec dans leur file d'attente.
+file d'attente. Il demande aux dApps BSC de traiter les paquets défaillants en
+séquence.
 
-The communication layer can catch any exception thrown by the resource mirror
-layer or application layer, so that package delivery won't be blocked by any
-customized applications.
+La couche de communication peut attraper n'importe quelle exception lancée par la couche miroir des ressources ou par la couche d'application, de sorte que la livraison des paquets soit assurée.
+ou la couche applicative, de sorte que la livraison des paquets ne soit pas bloquée par des
+applications personnalisées.
 
-## 23 SP APIs
+## 23 API de SP
 
-SP should provide plenty of APIs to facilitate users to look up
-information, download the objects, recover the data, and send
-transactions onto the Greenfield blockchain. This section will be
-extended as time goes on.
+La PS doit fournir de nombreuses API pour faciliter la recherche d'informations par les utilisateurs, le téléchargement d'objets, la récupération de données, etc.
+informations, de télécharger les objets, de récupérer les données, et d'envoyer des
+transactions sur la blockchain Greenfield. Cette section sera
+étendue au fil du temps.
 
-All SPs should provide APIs listed in this section.
+Tous les prestataires de services devraient fournir les API énumérées dans cette section.
 
-### 23.1 Universal Endpoint
+### 23.1 Point d'accès universel
 
-#### 23.1.1 URI Standard
+#### 23.1.1 Norme URI
 
-All objects can be identified and accessed via a universal path:
+Tous les objets peuvent être identifiés et accessibles via un chemin universel :
 
-*gnfd://\<bucket_name\>\<object_name\>*?\[parameter\]*
+*gnfd://\<nom_du_bucket\>\<nom_de_l'objet\>*?\[paramètre\]*
 
-*where:*
+*où:*
 
-- *"gnfd://" is the fixed leading identifier, which is mandatory*
+- *"gnfd://" est l'identifiant principal fixe, qui est obligatoire*.
 
-- *bucket_name is the bucket name of the object, which is mandatory*
+- *nom_du_bucket est le nom du bucket de l'objet, obligatoire*.
 
-- *object_name is the name of the object, which is mandatory*
+- *object_name est le nom de l'objet, obligatoire*.
 
-- *parameter is a list of key-value pair for the additional information for the URI, which is optional*
+- *parameter est une liste de paires clé-valeur pour les informations supplémentaires pour l'URI, ce qui est facultatif*.
 
-This path should be 1:1 mapped to an object. It is worth mentioning here that if
-we want to refer to the same object even if it was deleted and recreated, we can
-add the `If-Match-Checksum` parameter to the URI. E.g *gnfd://mybucket/myobject?If-Match-Checksum=qUiQTy8PR5uPgZdpSzAYSw0u0cHNKh7A+4XSmaGSpEc=*.
+Ce chemin doit être mappé 1:1 à un objet. Il est utile de mentionner ici que si
+nous voulons faire référence au même objet même s'il a été supprimé et recréé, nous pouvons
+ajouter le paramètre `If-Match-Checksum` à l'URI. Par exemple *gnfd://mybucket/myobject?If-Match-Checksum=qUiQTy8PR5uPgZdpSzAYSw0u0cHNKh7A+4XSmaGSpEc=*.
+
 
 #### 23.1.2 HTTPS REST API
 
-Each SP will register multiple endpoints to access their services, e.g.
-"SP1" may ask their users to download objects via
+Chaque SP enregistrera plusieurs points de terminaison pour accéder à ses services, par ex.
+"SP1" peut demander à ses utilisateurs de télécharger des objets via
 [https://greenfield.sp1.com/download](https://greenfield.sp1.com/download).
 
-The most important endpoint is the one for users to download objects. To
-download an object, users can just substitute the "gnfd://" in the URI
-standard with the SP endpoint. For example, to access
-gnfd://mybucket/foo/bar.jpg, users can just visit SP1 at
+Le point d'accès le plus important est celui qui permet aux utilisateurs de télécharger des objets. Pour
+Pour télécharger un objet, les utilisateurs n'ont qu'à remplacer le "gnfd://" de l'URI standard par le point d'extrémité SP.
+par le point de terminaison SP. Par exemple, pour accéder à
+gnfd://mybucket/foo/bar.jpg, les utilisateurs peuvent simplement visiter SP1 à l'adresse suivante
 [https://greenfield.sp1.com/download/mybucket/foo/bar.jpg](https://greenfield.sp1.com/download/mybucket/foo/bar.jpg).
 
-When SP1 receives the request to this path, SP1 should understand the
-users want to download the object at
-gnfd://mybucket/foo/bar/my-cool-object-id. SP1 should first get which SP
-is the current primary SP of this object, if it's SP1 herself, SP1
-should start sending the data to the user; otherwise, SP1 will send an
-HTTP 302 to redirect the request to the primary SP's download endpoint.
+Lorsque SP1 reçoit la requête vers ce chemin d'accès, il doit comprendre que les
+utilisateurs veulent télécharger l'objet à
+gnfd://mybucket/foo/bar/my-cool-object-id. SP1 doit d'abord déterminer quelle SP
+est le SP primaire actuel de cet objet, si c'est le SP1 lui-même, le SP1
+devrait commencer à envoyer les données à l'utilisateur ; sinon, SP1 enverra un
+HTTP 302 pour rediriger la demande vers le point final de téléchargement du SP primaire.
 
 #### 23.1.3 P2P RPC
 
-Please note that both Greenfield blockchain full nodes (including
-validators) and SPs will provide P2P RPCs to access different data.
+Veuillez noter que les nœuds complets de la blockchain Greenfield (y compris les validateurs) et les SP fourniront des RPC P2P pour accéder à différentes données.
+validateurs) et les PS fourniront des RPC P2P pour accéder à différentes données.
 
-Greenfield blockchain full node RPC will be access points to read and
-change the blockchain data, e.g. users can check the current block
-height and validator set information, or send transactions to create a
+Les RPC des nœuds complets de la blockchain Greenfield seront des points d'accès pour lire et modifier les données de la blockchain.
+lire et modifier les données de la blockchain, par exemple, les utilisateurs peuvent vérifier la hauteur actuelle du bloc et les informations sur l'ensemble des validateurs.
+les utilisateurs peuvent vérifier la hauteur actuelle des blocs et les informations sur l'ensemble des validateurs, ou envoyer des transactions pour créer un bloc.
 bucket.
 
-SP P2P RPCs are under a different P2P protocol mostly for data reading,
-which is designed based on the BitTorrent protocol. Any client software
-that wants to use this feature must build in this P2P protocol.
+Les SP P2P RPCs sont sous un protocole P2P différent principalement pour la lecture des données,
+qui est conçu sur la base du protocole BitTorrent. Tout logiciel client
+qui veut utiliser cette fonctionnalité doit intégrer ce protocole P2P.
 
-One thing to note is that Greenfield enforces permission and access
-control so that the data forwarded to the P2P network should be
-encrypted with the users' public keys.
+Une chose à noter est que Greenfield met en œuvre la permission et le contrôle d'accès afin que les données transférées vers le serveur soient protégées.
+d'accès de sorte que les données transmises au réseau P2P doivent être
+cryptées avec les clés publiques des utilisateurs.
 
-### 23.2 List Operations
+### 23.2 Opérations de liste
 
-There are multiple operations related to "list" some information about
-Greenfield. For example, list all objects under a bucket, list all the
-members in a group or list all the objects associated with a payment
-account. These operations are usually too heavy to be supported directly
-via a Greenfield blockchain full node RPCs. Here SPs should provide
-these functions via corresponding APIs so that the users have a better
-experience to store, check, download, and manage the objects.
+Il existe de nombreuses opérations permettant de "lister" des informations sur Greenfield.
+Greenfield. Par exemple, il est possible d'énumérer tous les objets d'un bucket, tous les membres d'un groupe ou tous les utilisateurs d'une base de données.
+membres d'un groupe ou tous les objets associés à un compte de paiement.
+de paiement. Ces opérations sont généralement trop lourdes pour être prises en charge directement
+par le biais d'une blockchain Greenfield full node RPCs. Les prestataires de services doivent donc fournir
+fonctions via les API correspondantes afin que les utilisateurs aient une meilleure
+expérience pour stocker, vérifier, télécharger et gérer les objets.
