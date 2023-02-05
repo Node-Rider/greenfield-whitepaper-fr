@@ -2,29 +2,23 @@ Livre blanc # Greenfield
 
 L'objectif de BNB Greenfield est de libérer le pouvoir de la technologie décentralisée de la blockchain et du stockage sur la propriété et l'économie des données.
 
-BNB Greenfield n'est pas seulement une nouvelle blockchain dans BNB, mais aussi une infrastructure et un écosystème visant à faciliter le développement de la blockchain décentralisée.
-mais aussi une infrastructure et un écosystème destinés à faciliter l'économie des données
-économie de données décentralisée. Elle tente d'y parvenir en facilitant le processus de stockage et de gestion de l'accès aux données et en reliant la propriété des données à l'économie des données.
-et de gérer l'accès aux données et en liant la propriété des données au contexte massif de DeFi
-dans le contexte de la BSC.
+BNB Greenfield n'est pas seulement une nouvelle blockchain dans BNB, mais aussi une infrastructure et un écosystème visant à faciliter l'économie des données décentralisées.
+Elle tente d'y parvenir en facilitant le processus de stockage, de gestion de l'accès aux données et en reliant la propriété des données au contexte massif de la DeFi de la BSC.
 
-Il se concentre sur 3 parties qui diffèrent des systèmes de stockage centralisés et décentralisés existants : les
-systèmes de stockage centralisés et décentralisés existants :
+Il se concentre sur 3 parties qui diffèrent des systèmes de stockage centralisés et décentralisés existants : 
 
 - Il permet aux adresses compatibles avec Ethereum de créer et de gérer à la fois des données et des actifs de jetons.
 
-- Il lie nativement les permissions et la logique de gestion des données au BSC en tant qu'actifs échangeables et programmes de contrats intelligents
+- Il lie nativement les permissions et la logique de gestion des données sur la BSC en tant qu'actifs échangeables et programmes de contrats intelligents
   avec tous les autres actifs.
 
-- Il offre aux développeurs des primitives d'API et des performances similaires à celles du stockage dans le cloud Web2 existant.
+- Il offre aux développeurs des primitives d'API et des performances similaires à celles du stockage dans le cloud Web2 actuel.
 
-Greenfield devrait constituer un terrain de jeu et d'essai
-pour les nouveaux modèles d'économie des données et de dApp, qui finiront par faire partie des
+Greenfield devrait constituer un terrain de jeu et d'essai pour les nouveaux modèles d'économie des données et de dApp, qui finiront par faire partie de
 la base du Web3.
 
-Le livre blanc de ce dépôt décrit la conception et la mise en œuvre principales de la plateforme.
-mise en œuvre de la plateforme. De nombreuses idées sont basées sur les grandes
-contributions d'autres protocoles et équipes de premier plan. Veuillez vous référer aux
+Le livre blanc de ce dépôt décrit la conception et la mise en œuvre principale de la plateforme.
+De nombreuses idées sont basées sur les grandes contributions d'autres protocoles et équipes de premier plan. Veuillez vous référer aux
 sections de remerciements.
 
 Toutes les opinions constructives, les idées et les commentaires sont les bienvenus.
