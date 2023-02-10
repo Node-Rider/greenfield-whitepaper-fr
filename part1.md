@@ -43,36 +43,22 @@
   - [8.1 Remerciements](#81-Remerciements)
 
 La partie 1 décrit les principes généraux et les considérations relatives à la conception BNB Greenfield. Elle couvre l'architecture
-et l'analyse des fonctionnalités. Bien que la véritable innovation du modèle se situe au niveau de la chaîne croisée avec BSC, il est également important de souligner les principes fondamentaux du stockage unique.
-fondamentaux du stockage sont également importants à souligner.
+et l'analyse des fonctionnalités. Bien que la véritable innovation du modèle se situe au niveau de l'inter-chaîne avec la BSC, il est également important de souligner les principes fondamentaux du stockage unique.
 
 ## 1 Principes de conception
 
 1. **Simplicité** - La conception privilégie ce premier principe par rapport aux autres considérations. Les solutions simples sont non seulement
-   faciles à mettre en œuvre, à exécuter, à maintenir et à étendre, mais aussi favorables aux performances du logiciel, qui est un objectif principal de la
-   conception. Par exemple, une preuve à forte intensité de calcul, comme celle adoptée par [Filecoin] (https://filecoin.io/filecoin.pdf),
+   faciles à mettre en œuvre, à exécuter, à maintenir et à étendre, mais aussi favorables aux performances logiciels, qui est un objectif principal de        la conception. Par exemple, une preuve à forte intensité de calcul, comme celle adoptée par [Filecoin] (https://filecoin.io/filecoin.pdf),
    est exclue selon ce principe.
 
-2. **Améliorable et en constante évolution** - Un système parfait en une seule fois n'est pas l'objectif de la conception. Nous nous attendons à ce que l
-   Nous nous attendons à ce que l'ensemble de l'architecture, les différents composants, et même ce livre blanc, évoluent et soient améliorés en fonction des réactions de la communauté et du marché et des futurs développements technologiques.
-   communauté et du marché, ainsi que des développements technologiques futurs. L'infrastructure devrait avoir "juste assez" d'établissement pour
+2. **Améliorable et en constante évolution** - Un système parfait en une seule fois n'est pas l'objectif de la conception. Nous nous attendons à ce que      l'ensemble de l'architecture, les différents composants, et même ce livre blanc, évoluent et soient améliorés en fonction des réactions de la              communauté et du marché ainsi que des futurs développements technologiques. L'infrastructure devrait avoir une constitution "suffisante" pour
    se développer et se mettre à niveau au fil du temps.
 
-3. **Plate-forme ouverte - La plus grande leçon tirée de l'industrie de la cryptographie et de l'écosystème de BNB est que la communauté a le plus de talent et de pouvoir pour construire davantage de technologies.
-   est que la communauté a le plus de talent et de pouvoir pour construire plus d'applications et d'infrastructures de différentes manières autonomes. La conception
-   devrait se concentrer sur la plateforme de base et les fondations techniques qui fournissent suffisamment d'interface, d'outils et d'autres facilités à la communauté des développeurs pour qu'ils puissent créer des applications et des infrastructures.
-   et d'autres facilités à la communauté des développeurs pour qu'elle puisse s'appuyer sur elles.
+3. **Plate-forme ouverte** - La plus grande leçon tirée de l'industrie de la cryptographie et de l'écosystème BNB est que la communauté a le plus de          talent et de pouvoir pour construire plus d'applications et d'infrastructures de différentes manières en autonomie. La conception devrait se concentrer    sur la plateforme de base et les fondations techniques qui fournissent suffisamment d'interface, d'outils et d'autres facilités à la communauté des        développeurs pour qu'ils puissent créer des applications et des infrastructures.
 
-4. **Adoption massive** - L'économie vise non seulement les clients actuels de la chaîne BNB, mais aussi les utilisateurs et les développeurs traditionnels du Web2.
-   développeurs. La conception du système doit essayer d'être aussi compatible que possible avec les normes populaires du Web2 et du Web3.
+4. **Adoption massive** - L'économie vise non seulement les clients actuels de la chaîne BNB chaîne, mais aussi les utilisateurs et les développeurs          traditionnels du Web2. La conception du système doit essayer d'être aussi compatible que possible avec les normes populaires du Web2 et du Web3.
 
-5. **La décentralisation est un voyage** - Prenons l'exemple du système de stockage, il y a deux extrémités au spectre de la décentralisation.
-   de la décentralisation. D'un côté, les utilisateurs doivent créer et stocker toutes leurs données auprès d'un seul fournisseur de services.
-   l'autre extrémité, les utilisateurs peuvent créer et stocker leurs données sur le terminal informatique de n'importe quel foyer (il ne doit même pas s'agir d'un bureau).
-   bureau). La conception ne s'imposera pas dès le départ sur ce dernier point. Elle choisit la solution la plus simple
-   solution la plus simple qui fait avancer l'aiguille vers une plus grande décentralisation et qui s'améliorera au fil du temps. Dans ce sens, la
-   En ce sens, la première étape de Greenfield consiste à offrir la liberté de choisir parmi une multitude de fournisseurs de services à tout moment, avec des
-   à tout moment avec des coûts insignifiants car ils possèdent les données.
+5. **La décentralisation est un voyage** - Prenons l'exemple du système de stockage, il y a deux extrémités au spectre de la décentralisation. D'un côté,    les utilisateurs doivent créer et stocker toutes leurs données auprès d'un seul fournisseur de services. Et de l'autre extrémité, les utilisateurs        peuvent créer et stocker leurs données sur le terminal informatique de n'importe quel foyer (il ne doit même pas s'agir d'un bureau). La conception ne    s'imposera pas dès le départ sur ce dernier point. Elle choisit la solution la plus simple qui fait avancer l'aiguille vers une plus grande                décentralisation et qui s'améliorera au fil du temps. En ce sens, la première étape de Greenfield consiste à offrir la liberté de choisir parmi une        multitude de fournisseurs de services à tout moment, avec des coûts insignifiants car ils possèdent les données.
 
 <div align="center"><img src="./assets/1%20Decentralization%20Spectrum.png" height="80%" width="80%"></div>
 <div align="center"><i>Figure 1.1: Decentralization Spectrum</i></div>
@@ -81,57 +67,30 @@ fondamentaux du stockage sont également importants à souligner.
 
 La plus grande hypothèse pour la conception est :
 
-***Greenfield est un écosystème économiquement durable, orienté vers les services.
-économiquement durable et orienté vers les services. ***
+***Greenfield est un écosystème économiquement durable, orienté vers les services.***
 
-Par "autonome", on entend que les fournisseurs et les consommateurs de services
-consommateurs de services correspondants de Greenfield sont rationnels ; ils se
-se complètent mutuellement. Les fournisseurs et les validateurs de la blockchain seront
-seront payés équitablement pour le service qu'ils fournissent, tandis que les utilisateurs sont prêts à payer pour le service qu'ils utilisent.
-prêts à payer pour le service qu'ils utilisent.
+Par "autonome", on entend que les fournisseurs et les consommateurs de services de Greenfield sont rationnels ; ils se
+se complètent mutuellement. Les fournisseurs et les validateurs de la blockchain seront payés équitablement pour le service qu'ils fournissent, tandis que les utilisateurs sont prêts à payer pour le service qu'ils utilisent.
 
-Par "orienté service", cela signifie que la valeur a été créée à Greenfield
-en fournissant un service aux utilisateurs de l'écosystème. Il n'y a pas de
-valeur intrinsèque en soi.
+Par "orienté service", cela signifie que la valeur a été créée au sein de Greenfield en fournissant un service aux utilisateurs de l'écosystème. Il n'y a pas de valeur intrinsèque en soi.
 
-L'hypothèse implicite qui sous-tend ces deux traits est que la majorité
-des fournisseurs et des validateurs de blockchain sont des entités et des individus
-individus raisonnables. Ils ne feront pas le mal étant donné que le profit qu'ils gagnent est plus grand
-que la fortune qu'ils peuvent piller.
+L'hypothèse implicite qui sous-tend ces deux traits est que la majorité des fournisseurs et des validateurs de blockchain sont des entités et des individus raisonnables. Ils ne feront pas le mal étant donné que le profit qu'ils gagnent est plus grand que la fortune qu'ils peuvent piller.
 
-Il s'agit d'une confiance auto-justifiable pour que l'ensemble de l'écosystème existe : si un
-pourcentage substantiel de fournisseurs et de validateurs de blockchain font le mal
-et que l'écosystème ne peut pas se guérir en éliminant ces acteurs malveillants, l'ensemble de l'écosystème ne sera pas en mesure d'exister.
-malveillants, l'ensemble de l'écosystème ne sera pas utilisé et n'aura aucune valeur pour
-existant. Si cela se produit, personne ne gagne, même pour une courte période.
+Il s'agit d'une confiance auto-justifiable pour que l'ensemble de l'écosystème existe : si un pourcentage substantiel de fournisseurs et de validateurs de blockchain font le mal et que l'écosystème ne peut pas se guérir en éliminant ces acteurs malveillants, l'ensemble de l'écosystème ne sera pas en mesure d'exister. Si cela se produit, personne ne gagne, même pour une courte période.
 
 Avec cette confiance implicite intégrée, de nombreuses conceptions sont simplifiées.
 comme décrit dans les sections suivantes.
 
-Une autre hypothèse est que tant le fournisseur de services que le consommateur
-s'attendraient à ce que les "contrats de service" réels entre les deux permettent une responsabilité limitée et offrent des options de sortie, même si elles ne sont pas obligatoires.
-responsabilité limitée et prévoient des options de sortie, même si les contrats sont essentiellement
-exécutés principalement par code. Dans l'intérêt des consommateurs, ils ne veulent pas
-payer d'emblée une somme importante et souhaiteraient pouvoir choisir un meilleur
-meilleur fournisseur au sein des écosystèmes ou même en dehors quand ils le souhaitent. Sur
-De l'autre côté, dans l'intérêt des fournisseurs de services, ils ne veulent pas devenir une poubelle de données ou aider à la circulation des données.
-devenir un gâchis de données ou aider à faire circuler du contenu contre leurs propres principes.
-principes.
+Une autre hypothèse est que tant le fournisseur de services que le consommateur s'attendraient à ce que les "contrats de service" réels entre les deux permettent une responsabilité limitée et offrent des options de sortie, même si les contrats sont essentiellement exécutés par du code. Dans l'intérêt des consommateurs, ils ne veulent pas payer d'emblée une somme importante et souhaiteraient pouvoir choisir un meilleur fournisseur au sein des écosystèmes ou même en dehors quand ils le souhaitent. De l'autre côté, dans l'intérêt des fournisseurs de services, ils ne veulent pas devenir une poubelle de données ou aider à faire circuler du contenu contre leurs propres principes.
 
 Le paiement, la vérification de la disponibilité des données et quelques autres fonctions clés sont conçus sur la base de cette hypothèse.
-sont conçues sur la base de cette hypothèse.
 
-La dernière grande hypothèse est que les données ont une valeur et que les utilisateurs voudront extraire cette valeur avec l'automatisation des contrats intelligents.
-extraire cette valeur grâce à l'automatisation des contrats intelligents, à la confidentialité et à la
-transparence. Cela se traduit par une conception considérable de la chaîne croisée
-entre BNB Greenfield et BNB Smart Chain (BSC). Cela devrait être l'hypothèse la plus importante
-hypothèse la plus importante et, espérons-le, proche de la vérité.
-
+La dernière grande hypothèse est que les données ont une valeur et que les utilisateurs voudront extraire cette valeur grâce à l'automatisation des contrats intelligents, à la confidentialité et à la transparence. Cela se traduit par une conception considérable de l'inter-chaîne entre BNB Greenfield et BNB Smart Chain (BSC). Cela devrait être l'hypothèse la plus importante et, espérons-le, proche de la vérité.
 
 ## 3 L'architecture en général
 
 <div align="center"><img src="./assets/3%20Greenfield%20Economy%20General%20Architecture.png"></div>
-<div align="center"><i>Figure 3.1: Greenfield Economy General Architecture</i></div>
+<div align="center"><i>Figure 3.1: Architecture générale de l'économie Greenfield</i></div>
 
 L'écosystème de Greenfield est une "trinité" comme le montre la figure ci-dessus.
 
@@ -145,18 +104,10 @@ couches.
 
 2. Un réseau composé de "fournisseurs de stockage".
 
-La blockchain Greenfield BNB maintient le grand livre pour les utilisateurs et les métadonnées de stockage comme données d'état communes de la blockchain.
-métadonnées de stockage comme données d'état communes de la blockchain. Elle dispose de BNB,
-transféré de la Smart Chain BNB, comme son jeton natif pour le gaz et la
-gouvernance. BNB Greenfield blockchain also has its own staking logic for
-la gouvernance.
+La blockchain BNB Greenfield maintient le registre pour les utilisateurs et les métadonnées de stockage comme données d'état communes de la blockchain. Elle dispose du BNB, transféré de la BNB Smart Chain, comme son jeton natif pour le gaz et la gouvernance. La blockchain BNB Greenfield blockchain a aussi sa propre logique de staking pour la gouvernance.
 
-Les fournisseurs de stockage (FS) sont des infrastructures de services de stockage que
-organisations ou individus fournissent et les rôles correspondants qu'ils
-qu'ils jouent. Ils utilisent Greenfield comme grand livre de comptes et comme source unique de vérité.
-Chaque fournisseur de services de stockage peut répondre et répondra aux demandes des utilisateurs pour écrire (télécharger) et lire (télécharger) des données.
-read (download) data, and serve as the gatekeeper for user rights and
-authentifications.
+Les fournisseurs de stockage (FS) sont des infrastructures de services de stockage que les organisations ou individus fournissent et les rôles correspondants qu'ils jouent. Ils utilisent Greenfield comme grand livre de comptes et comme source unique de vérité.
+Chaque fournisseur de services de stockage peut répondre et répondra aux demandes des utilisateurs pour écrire (Envoyer) et lire (télécharger) des données, en servant de gardien des droits et authentifications des utilisateurs.
 
 Dans un premier temps, un certain nombre de validateurs, gérés soit par la communauté BNB, soit par des FS, se lancent dans la genèse de BNB Greenfield.
 ou des prestataires de services, passent par la genèse du lancement de BNB Greenfield, tandis que quelques prestataires de services lanceront également l'infrastructure de stockage correspondante et s'inscriront dans la base de données.
