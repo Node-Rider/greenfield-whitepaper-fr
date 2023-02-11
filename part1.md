@@ -445,9 +445,7 @@ En raison de la structure asymétrique, BSC se concentre davantage sur le plan d
 
 #### 7.4.1 Miroir d'entité de ressource
 
-Les objectifs de presque tous les paquets inter-chaînes sont de changer l'état des entités de ressources sur la blockchain Greenfield.
-l'état des entités ressources sur la blockchain Greenfield. Ainsi, les
-entités ressources ci-dessous devraient pouvoir être mises en miroir sur la BSC :
+Les objectifs de presque tous les paquets inter-chaînes sont de changer l'état des entités de ressources sur la blockchain Greenfield. Ainsi, les entités ressources ci-dessous devraient pouvoir être mises en miroir sur la BSC :
 
 1. Compte
 
@@ -459,100 +457,70 @@ entités ressources ci-dessous devraient pouvoir être mises en miroir sur la BS
 
 5. Groupe
 
-Le mappage des comptes est naturel : la BSC et Greenfield utilisent le même schéma d'adresses.
-schéma d'adresses. Les mêmes valeurs d'adresse des deux côtés signifient le même compte.
-compte. Ils n'ont pas besoin d'un miroir réel.
+Le mappage des comptes est naturel : la BSC et Greenfield utilisent le même schéma d'adresses. Les mêmes valeurs d'adresse des deux côtés signifient le même compte. Ils n'ont pas besoin d'un miroir réel.
 
-BNB est un jeton nativement ancré depuis la genèse de Greenfield. Le contrat
-Le contrat "Token Hub" est un contrat intelligent construit sur BSC pour garantir que
-Greenfield ne puisse pas gonfler BNB et sécuriser la circulation totale de BNB.
-BNB.
+Le BNB est un jeton nativement ancré depuis la genèse de Greenfield. Le contrat "Token Hub" est un contrat intelligent construit sur la BSC pour garantir que Greenfield ne puisse pas gonfler le BNB et sécuriser la circulation totale de BNB.
 
-Bucket, Object et Group sont reflétés sur BSC en tant que NFT d'un nouveau BEP
-révisée à partir de la norme ERC-721. Ces NFTs ont des métadonnées correspondantes
-des informations de métadonnées correspondantes pour les ressources. Les propriétaires des NFTs sur
-BSC correspondent aux propriétaires de ces ressources sur Greenfield. Comme ces
-propriétaires ne sont pas transférables sur Greenfield, ces NFT ne sont pas
-transférables sur BSC.
+Les Bucket, Object et Group sont reflétés sur la BSC en tant que NFT d'un nouveau BEP révisée à partir de la norme ERC-721. Ces NFTs ont des informations de métadonnées correspondantes pour les ressources. Les propriétaires des NFTs sur la BSC correspondent aux propriétaires de ces ressources sur Greenfield. Comme ces propriétaires ne sont pas transférables sur Greenfield, ces NFT ne sont pas transférables sur la BSC.
 
 #### 7.4.2 Primitives d'exploitation inter-chaînes
 
-Quelques séries de primitives inter-chaînes sont définies pour que les dApps les appellent afin de
-pour opérer sur ces entités de ressources.
+Quelques séries de primitives inter-chaînes sont définies pour que les dApps les appellent pour opérer sur ces entités de ressources.
 
 Il convient de souligner que les contrats intelligents peuvent appeler ces primitives de la même manière que les EOA.
-de la même manière que les EOA.
 
 Comptes
 
-- créer des comptes de paiement sur BSC
+-Créer des comptes de paiement sur la BSC
 
 BNB :
 
-- transfert bidirectionnel entre BSC et Greenfield entre les comptes
-  (y compris même les comptes de paiement)
+- Transfert bidirectionnel entre les comptes de la BSC et Greenfield (y compris les comptes de paiement)
 
 Bucket :
 
-- création d'un bucket sur BSC
+- Création d'un bucket sur la BSC
 
-- miroir de Greenfield vers BSC
+- Miroir de Greenfield vers la BSC
 
 Objet :
 
-- objet miroir de Greenfield à BSC
+- Objet miroir de Greenfield à la BSC
 
-- créer un objet sur BSC
+- Créer un objet sur la BSC
 
-- accorder/révoquer les permissions des objets sur BSC aux comptes/groupes
+- Accorder/révoquer les permissions des objets sur la BSC aux comptes/groupes
 
-- copier des objets sur BSC
+- Copier des objets sur la BSC
 
-- Lancer l'exécution d'un objet sur BSC
+- Lancer l'exécution d'un objet sur la BSC
 
-- associer des buckets à des comptes de paiement sur BSC
+- Associer des buckets à des comptes de paiement sur la BSC
 
 Groupe :
 
-- groupe miroir de Greenfield à BSC
+- Groupe miroir de Greenfield à la BSC
 
-- créer un groupe sur BSC
+- Créer un groupe sur la BSC
 
-- changer les membres d'un groupe sur BSC
+- Changer les membres d'un groupe sur la BSC
 
-- quitter un groupe sur BSC
+- Quitter un groupe sur la BSC
 
-Une fois que ces primitives sont appelées par l'EOA ou les smart contracts, les
-événements prédéfinis seront émis. Les relais de Greenfield doivent capter
-ces événements et les relayer à Greenfield et BSC. Comme le changement
-se produira de manière asynchrone, il y aura des paquets spécifiques à travers la chaîne
-pour les accusés de réception ou les erreurs, qui peuvent déclencher un rappel. L'appelant
-des primitives devrait payer les frais à l'avance pour les opérations inter-chaînes
-et aussi pour le rappel potentiel. Plus de détails sont abordés dans la partie 3.
+Une fois que ces primitives sont appelées par l'EOA ou les smart contracts, les événements prédéfinis seront émis. Les relais de Greenfield doivent capter
+ces événements et les relayer à Greenfield et la BSC. Comme le changement se produira de manière asynchrone, il y aura des paquets spécifiques à travers la chaîne pour les accusés de réception ou les erreurs, qui peuvent déclencher un rappel. L'appelant des primitives devrait payer les frais à l'avance pour les opérations inter-chaînes et aussi pour le rappel potentiel. Plus de détails sont abordés dans la partie 3.
 
 ## 8 "Pas" de fin pour la conception
 
-De nombreux détails ne sont pas couverts dans la partie 1. Alors que certains sujets seront ajoutés
-seront ajoutés et développés dans la partie 3, certains sont des éléments très stratégiques qui vont trop loin
-pour que l'équipe les prenne en compte maintenant.
+De nombreux détails ne sont pas couverts dans la partie 1. Alors que certains sujets seront ajoutés et développés dans la partie 3, certains sont des éléments très stratégiques qui vont trop loin pour que l'équipe les prenne en compte maintenant.
 
-Par exemple, le trait "execute" d'un objet de données. Ce concept indique
-que certaines données sont des programmes exécutables. Greenfield peut créer un environnement informatique
-environnement informatique plus transparent. Les utilisateurs sont à l'aise pour utiliser ou
-ou de consacrer leurs données à des programmes particuliers stockés sur Greenfield parce que
-ils peuvent vérifier le programme, ils n'ont pas à s'inquiéter que le programme
-peut changer après leur confirmation, et ils savent que le programme peut seulement
-s'exécuter avec leurs données dans un environnement de confiance fourni par Greenfield.
+Par exemple, le trait "execute" d'un objet de données. Ce concept indique que certaines données sont des programmes exécutables. Greenfield peut créer un environnement informatique plus transparent. Les utilisateurs sont à l'aise pour utiliser ou consacrer leurs données à des programmes particuliers stockés sur Greenfield parce qu'ils peuvent vérifier le programme, ils n'ont pas à s'inquiéter que le programme puisse changer après leur confirmation, et ils savent que le programme peut seulement s'exécuter avec leurs données dans un environnement de confiance fourni par Greenfield.
 
-Cette fonction particulière, ainsi que d'autres nouvelles fonctionnalités, seront recherchées et étudiées dans le futur.
-recherchées et étudiées dans le cadre du développement futur de BNB Greenfield.
+Cette fonction particulière, ainsi que d'autres nouvelles fonctionnalités, seront recherchées et étudiées dans le cadre du développement futur de BNB Greenfield.
 
 ### 8.1 Remerciements
 
-Nous tenons à remercier tout particulièrement les efforts et les idées des équipes et des communautés suivantes (sans ordre particulier et certainement pas par ordre d'importance)
-et communautés ci-dessous (sans ordre particulier et certainement pas une
-liste exhaustive et complète). BNB Greenfield s'appuie sur les épaules de ces géants
-pour construire.
+Nous tenons à remercier tout particulièrement les efforts et les idées des équipes et des communautés suivantes (sans ordre particulier et certainement pas par ordre d'importance). BNB Greenfield s'appuie sur les épaules de ces géants pour construire.
 
 1. Ethereum
 
