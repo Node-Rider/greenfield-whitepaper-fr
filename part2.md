@@ -106,7 +106,7 @@ Un autre grand avantage de Greenfield est qu'il permet de créer facilement des 
 
 ### 11.2 Registre de listes décentralisées
 
-[Registre de listes dites décentralisées] (https://hackernoon.com/what-are-token-curated-registries-and-decentralized-lists-d33fa42ba167) ont été largement discutés et étudiés en 2018. Mais ils n'ont pas acquis une grande reconnaissance dans les cas d'utilisation réels. L'une des raisons peut être qu'il est difficile et coûteux de sauvegarder les différentes listes et de les présenter de manière crédible.
+[Registre de listes dites décentralisées](https://hackernoon.com/what-are-token-curated-registries-and-decentralized-lists-d33fa42ba167) ont été largement discutés et étudiés en 2018. Mais ils n'ont pas acquis une grande reconnaissance dans les cas d'utilisation réels. L'une des raisons peut être qu'il est difficile et coûteux de sauvegarder les différentes listes et de les présenter de manière crédible.
 
 BNB Greenfield offre une solution parfaite pour les listes établies à l'aide de jetons. Un contrat intelligent sur la BSC peut supporter toute la gouvernance et la logique d'incitation de l'enregistrement, et possède en même temps les droits de créer des objets de chaque liste sous le bucket désigné pour l'entreprise. La liste d'objets et l'historique complet des changements sont des fonctions inestimables pour de telles idées de vote et de gouvernance décentralisés.
 
